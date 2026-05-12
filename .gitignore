@@ -1,0 +1,29 @@
+# dependencies
+node_modules/
+
+# nuxt
+.nuxt/
+.output/
+dist/
+lib/
+
+# env
+.env
+.env.*
+!.env.example
+
+# firebase
+.data/
+.firebase/
+
+# logs
+*.log
+
+# testing
+coverage/
+playwright-report/
+test-results/
+
+# os
+.DS_Store
+Thumbs.db
