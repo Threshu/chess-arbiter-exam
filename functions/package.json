@@ -7,7 +7,11 @@
   "engines": {
     "node": "22"
   },
-  "scripts": {},
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
   "dependencies": {
     "firebase-admin": "^13.9.0",
     "firebase-functions": "^7.2.5",

@@ -1,0 +1,89 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() { return request.auth != null; }
+    function isAdmin()    { return isSignedIn() && request.auth.token.role == 'admin'; }
+    function isOwner(uid) { return isSignedIn() && request.auth.uid == uid; }
+
+    match /users/{uid} {
+      allow read: if isOwner(uid) || isAdmin();
+      allow update: if isOwner(uid)
+        && request.resource.data.diff(resource.data).affectedKeys()
+             .hasOnly(['displayName', 'locale', 'photoURL']);
+      allow create, delete: if false;
+    }
+
+    match /userExamState/{uid} {
+      allow read: if isOwner(uid) || isAdmin();
+      allow write: if false;
+    }
+
+    match /userExamAccess/{accessId} {
+      allow read: if isAdmin()
+        || (isSignedIn() && resource.data.userId == request.auth.uid);
+      allow write: if false;
+    }
+
+    match /questions/{qid} {
+      allow read: if isAdmin()
+        || (isSignedIn() && resource.data.status == 'published');
+      allow create, update, delete: if isAdmin();
+    }
+
+    match /exams/{eid} {
+      allow read: if isAdmin()
+        || (isSignedIn() && resource.data.status == 'published');
+      allow write: if isAdmin()
+        && request.resource.data.status != 'published';
+
+      match /snapshot/{v} {
+        allow read, write: if false;
+      }
+    }
+
+    match /examSessions/{sid} {
+      allow read: if isAdmin() || resource.data.userId == request.auth.uid;
+      allow write: if false;
+
+      match /answers/{qid} {
+        allow read: if isAdmin()
+          || get(/databases/$(database)/documents/examSessions/$(sid))
+               .data.userId == request.auth.uid;
+        allow create, update: if
+          get(/databases/$(database)/documents/examSessions/$(sid)).data.userId == request.auth.uid
+          && get(/databases/$(database)/documents/examSessions/$(sid)).data.status == 'active'
+          && get(/databases/$(database)/documents/examSessions/$(sid)).data.expiresAt > request.time
+          && request.resource.data.keys().hasOnly(['selectedOptionId', 'answeredAt', 'clientTimeSpentMs'])
+          && request.resource.data.selectedOptionId is string;
+        allow delete: if false;
+      }
+
+      match /events/{eid} {
+        allow read: if isAdmin()
+          || get(/databases/$(database)/documents/examSessions/$(sid))
+               .data.userId == request.auth.uid;
+        allow create: if
+          get(/databases/$(database)/documents/examSessions/$(sid)).data.userId == request.auth.uid
+          && get(/databases/$(database)/documents/examSessions/$(sid)).data.status == 'active'
+          && request.resource.data.type is string;
+        allow update, delete: if false;
+      }
+    }
+
+    match /examResults/{rid} {
+      allow read: if isAdmin() || resource.data.userId == request.auth.uid;
+      allow write: if false;
+    }
+
+    match /auditLogs/{lid} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+
+    match /settings/{doc} {
+      allow read: if isSignedIn();
+      allow write: if isAdmin();
+    }
+  }
+}

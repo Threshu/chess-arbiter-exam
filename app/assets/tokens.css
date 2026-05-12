@@ -1,0 +1,43 @@
+@theme {
+  --color-bg: #faf7f2;
+  --color-fg: #0f1115;
+  --color-surface: #f5f0e8;
+  --color-border: #dcd5c8;
+  --color-muted: #6b6a66;
+
+  --color-primary: #1a2d4d;
+  --color-primary-fg: #faf7f2;
+
+  --color-success: #5a7850;
+  --color-danger: #a53c32;
+  --color-warning: #b5832c;
+
+  --font-display: 'Fraunces', ui-serif, Georgia, serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-fast: 150ms;
+  --duration-base: 200ms;
+}
+
+.dark {
+  --color-bg: #0f1115;
+  --color-fg: #f5f0e8;
+  --color-surface: #161a21;
+  --color-border: #2a2f38;
+  --color-muted: #8a8b90;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
