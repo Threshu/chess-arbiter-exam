@@ -48,6 +48,7 @@ Within each band, keep ordering top-down: things used at the top of the file sho
 - Type imports always use `import type { ... }` to keep runtime bundles clean.
 - Interface names: PascalCase. Type aliases: PascalCase. No `I` prefix.
 - Shared types live in `shared/types/`. Anything used by both the client and Cloud Functions belongs there. If only the client uses it, keep it under `app/`.
+- **Import shared from `~~/shared/...`, never `~/shared/...`.** In Nuxt 4 with `srcDir: 'app/'`, the single-tilde alias `~` resolves to `app/`, so `~/shared/...` would mean `app/shared/...` at build time and fail. `~~` is Nuxt's built-in alias for the project root. Inside `functions/` and inside `shared/` itself, use relative imports with explicit `.js` extensions (required by Node ESM under `module: NodeNext`).
 
 ## Zod schemas
 
