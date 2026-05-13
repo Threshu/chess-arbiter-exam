@@ -18,7 +18,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier --write .",
     "test": "pnpm test:unit && pnpm test:rules && pnpm --filter functions test",
-    "test:unit": "vitest run",
+    "test:unit": "vitest run --passWithNoTests",
     "test:unit:watch": "vitest",
     "test:rules": "firebase emulators:exec --only firestore \"vitest run --config vitest.rules.config.ts\"",
     "test:e2e": "playwright test",

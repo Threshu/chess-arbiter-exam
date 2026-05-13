@@ -1,1 +1,32 @@
-{}
+{
+  "app": {
+    "name": "Chess Arbiter"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "login": "Sign in",
+    "logout": "Sign out",
+    "app": "App",
+    "admin": "Admin"
+  },
+  "languageToggle": {
+    "label": "Language",
+    "pl": "Polski",
+    "en": "English"
+  },
+  "actions": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next"
+  },
+  "errors": {
+    "generic": "Something went wrong. Please try again.",
+    "network": "Cannot reach the server.",
+    "unauthorized": "You are not authorized to perform this action.",
+    "notFound": "The requested resource was not found."
+  }
+}

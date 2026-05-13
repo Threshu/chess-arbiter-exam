@@ -1,1 +1,32 @@
-{}
+{
+  "app": {
+    "name": "Chess Arbiter"
+  },
+  "nav": {
+    "home": "Strona główna",
+    "about": "O projekcie",
+    "login": "Zaloguj się",
+    "logout": "Wyloguj się",
+    "app": "Aplikacja",
+    "admin": "Panel administratora"
+  },
+  "languageToggle": {
+    "label": "Język",
+    "pl": "Polski",
+    "en": "English"
+  },
+  "actions": {
+    "save": "Zapisz",
+    "cancel": "Anuluj",
+    "delete": "Usuń",
+    "confirm": "Potwierdź",
+    "back": "Wstecz",
+    "next": "Dalej"
+  },
+  "errors": {
+    "generic": "Coś poszło nie tak. Spróbuj ponownie.",
+    "network": "Brak połączenia z serwerem.",
+    "unauthorized": "Brak uprawnień do tej operacji.",
+    "notFound": "Nie znaleziono żądanego zasobu."
+  }
+}
