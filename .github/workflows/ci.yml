@@ -7,7 +7,6 @@ on:
 
 env:
   NODE_VERSION: 22
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 jobs:
   install:
@@ -99,7 +98,7 @@ jobs:
   deploy-preview:
     name: Deploy preview channel (PR)
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
+    if: success() && github.event_name == 'pull_request'
     needs: build
     steps:
       - uses: actions/checkout@v4
@@ -117,7 +116,7 @@ jobs:
   deploy-dev:
     name: Deploy to dev
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    if: success() && github.event_name == 'push' && github.ref == 'refs/heads/main'
     needs: build
     steps:
       - uses: actions/checkout@v4
