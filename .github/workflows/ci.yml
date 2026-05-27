@@ -95,6 +95,7 @@ jobs:
           name: nuxt-output
           path: .output
           if-no-files-found: error
+          include-hidden-files: true
 
   deploy-preview:
     name: Deploy preview channel (PR)
