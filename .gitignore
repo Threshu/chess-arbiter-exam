@@ -5,7 +5,9 @@ node_modules/
 .nuxt/
 .output/
 dist/
-lib/
+
+# compiled output
+functions/lib/
 
 # env
 .env
