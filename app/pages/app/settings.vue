@@ -59,6 +59,11 @@ async function save() {
   }
 }
 
+function cancelDelete() {
+  showConfirmDelete.value = false
+  deleteTypeWord.value = ''
+}
+
 async function onDeleteConfirm() {
   if (deleteTypeWord.value.trim().toUpperCase() !== t('settings.deleteConfirmWord')) return
   deleting.value = true
@@ -134,14 +139,7 @@ async function onDeleteConfirm() {
               >
                 {{ deleting ? t('settings.deleting') : t('settings.deleteConfirm') }}
               </UiButton>
-              <UiButton
-                variant="ghost"
-                :disabled="deleting"
-                @click="
-                  showConfirmDelete = false
-                  deleteTypeWord = ''
-                "
-              >
+              <UiButton variant="ghost" :disabled="deleting" @click="cancelDelete">
                 {{ t('settings.deleteCancel') }}
               </UiButton>
             </div>
