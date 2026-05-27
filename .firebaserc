@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "chess-arbiter-exam"
+    "default": "chess-arbiter-exam",
+    "dev": "chess-arbiter-exam",
+    "prod": "chess-arbiter-exam"
   }
 }

@@ -112,7 +112,7 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEV }}
-          projectId: chess-arbiter-dev
+          projectId: chess-arbiter-exam
           expires: 7d
 
   deploy-dev:
@@ -136,5 +136,5 @@ jobs:
         with:
           repoToken: ${{ secrets.GITHUB_TOKEN }}
           firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_DEV }}
-          projectId: chess-arbiter-dev
+          projectId: chess-arbiter-exam
           channelId: live
