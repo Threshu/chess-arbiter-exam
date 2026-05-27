@@ -1,0 +1,69 @@
+{
+  "dashboard": {
+    "title": "Hello, {name}",
+    "subtitle": "Your progress and learning.",
+    "statsAttempts": "Attempts",
+    "statsCorrect": "Correct",
+    "statsAccuracy": "Accuracy",
+    "continueCta": "Practice",
+    "settingsCta": "Settings"
+  },
+  "settings": {
+    "title": "Account settings",
+    "subtitle": "Change your details or delete your account.",
+    "displayName": "Display name",
+    "locale": "Language",
+    "localePl": "Polski",
+    "localeEn": "English",
+    "save": "Save changes",
+    "saved": "Saved.",
+    "deleteSection": "Account deletion",
+    "deleteDescription": "Account deletion is irreversible. All your attempts and stats will be wiped.",
+    "delete": "Delete account",
+    "deleteConfirmTitle": "Delete your account?",
+    "deleteConfirmType": "Type DELETE to confirm",
+    "deleteConfirmWord": "DELETE",
+    "deleteConfirm": "Yes, delete",
+    "deleteCancel": "Cancel",
+    "deleting": "Deleting…",
+    "deleteFailed": "Could not delete account. Sign out and back in, then try again."
+  },
+  "practice": {
+    "title": "Practice mode",
+    "setupTitle": "Configure session",
+    "filterLevel": "Level",
+    "filterType": "Question type",
+    "filterAll": "All",
+    "filterLimit": "Question count",
+    "filterLimitAll": "All",
+    "start": "Start",
+    "noResults": "No questions match these filters. Loosen the constraints or wait for more questions.",
+    "backToSetup": "Back to setup",
+    "history": {
+      "title": "Practice history",
+      "empty": "No saved answers yet. Start a practice session.",
+      "columns": {
+        "question": "Question",
+        "result": "Result",
+        "when": "When"
+      },
+      "loadMore": "Load more"
+    },
+    "loading": "Loading questions…",
+    "empty": "No published questions yet. Come back later.",
+    "progress": "Question {current} of {total}",
+    "submit": "Check",
+    "showModel": "Show model answer",
+    "next": "Next",
+    "finish": "Finish",
+    "correct": "Correct",
+    "incorrect": "Wrong",
+    "explanation": "Explanation",
+    "modelAnswer": "Model answer",
+    "yourAnswerPlaceholder": "Type your answer…",
+    "openEndedNote": "Open-ended questions do not affect your stats.",
+    "diagramPlaceholder": "Chess diagram (rendering lands in a later phase)",
+    "completed": "Session complete",
+    "completedSubtitle": "You answered {n} of {scored} scored questions correctly. Open-ended: {open}."
+  }
+}

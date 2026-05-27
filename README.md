@@ -58,7 +58,8 @@ Other useful scripts:
 
 Before making changes — including AI-assisted changes — read these in order:
 
-- [`ARCHITECTURE.md`](./ARCHITECTURE.md) — data model, session lifecycle, timer mechanics, function inventory, security model.
+- [`ROADMAP.md`](./ROADMAP.md) — **single source of truth** for current scope, phases and out-of-scope items. Start here.
+- [`ARCHITECTURE.md`](./ARCHITECTURE.md) — data model, session lifecycle, timer mechanics, function inventory, security model. **Note:** describes the original full scope (incl. exam mode), some sections are stale and being revised phase by phase.
 - [`CONVENTIONS.md`](./CONVENTIONS.md) — naming, file placement, TypeScript and Zod rules, the short list of hard rules.
 - [`DESIGN.md`](./DESIGN.md) — design principles, token reference, motion, accessibility, mode-specific UX rules.
 

@@ -1,0 +1,69 @@
+{
+  "dashboard": {
+    "title": "Witaj, {name}",
+    "subtitle": "Twoje statystyki i nauka.",
+    "statsAttempts": "Liczba prób",
+    "statsCorrect": "Poprawne odpowiedzi",
+    "statsAccuracy": "Skuteczność",
+    "continueCta": "Trenuj",
+    "settingsCta": "Ustawienia"
+  },
+  "settings": {
+    "title": "Ustawienia konta",
+    "subtitle": "Zmień swoje dane lub usuń konto.",
+    "displayName": "Imię (wyświetlane)",
+    "locale": "Język",
+    "localePl": "Polski",
+    "localeEn": "English",
+    "save": "Zapisz zmiany",
+    "saved": "Zapisano.",
+    "deleteSection": "Usuwanie konta",
+    "deleteDescription": "Usunięcie konta jest nieodwracalne. Wszystkie odpowiedzi i statystyki zostaną wymazane.",
+    "delete": "Usuń konto",
+    "deleteConfirmTitle": "Na pewno chcesz usunąć konto?",
+    "deleteConfirmType": "Wpisz USUŃ aby potwierdzić",
+    "deleteConfirmWord": "USUŃ",
+    "deleteConfirm": "Tak, usuń",
+    "deleteCancel": "Anuluj",
+    "deleting": "Usuwam…",
+    "deleteFailed": "Nie udało się usunąć konta. Wyloguj się i zaloguj ponownie, potem spróbuj jeszcze raz."
+  },
+  "practice": {
+    "title": "Tryb ćwiczeń",
+    "setupTitle": "Skonfiguruj sesję",
+    "filterLevel": "Poziom",
+    "filterType": "Typ pytań",
+    "filterAll": "Wszystkie",
+    "filterLimit": "Liczba pytań",
+    "filterLimitAll": "Wszystkie",
+    "start": "Rozpocznij",
+    "noResults": "Brak pytań pasujących do filtrów. Zmień warunki lub poczekaj na nowe pytania.",
+    "backToSetup": "Wróć do konfiguracji",
+    "history": {
+      "title": "Historia ćwiczeń",
+      "empty": "Brak zapisanych odpowiedzi. Zacznij sesję ćwiczeń.",
+      "columns": {
+        "question": "Pytanie",
+        "result": "Wynik",
+        "when": "Kiedy"
+      },
+      "loadMore": "Wczytaj więcej"
+    },
+    "loading": "Wczytywanie pytań…",
+    "empty": "Brak opublikowanych pytań. Wróć później.",
+    "progress": "Pytanie {current} z {total}",
+    "submit": "Sprawdź",
+    "showModel": "Pokaż modelową odpowiedź",
+    "next": "Następne",
+    "finish": "Zakończ",
+    "correct": "Poprawnie",
+    "incorrect": "Błędnie",
+    "explanation": "Wyjaśnienie",
+    "modelAnswer": "Modelowa odpowiedź",
+    "yourAnswerPlaceholder": "Wpisz swoją odpowiedź…",
+    "openEndedNote": "Pytania otwarte nie wpływają na statystyki.",
+    "diagramPlaceholder": "Diagram szachowy (wizualizacja w kolejnej fazie)",
+    "completed": "Sesja zakończona",
+    "completedSubtitle": "Rozwiązałeś {n} z {scored} pytań poprawnie. Pytań otwartych: {open}."
+  }
+}

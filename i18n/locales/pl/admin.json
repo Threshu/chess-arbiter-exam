@@ -1,0 +1,100 @@
+{
+  "nav": {
+    "dashboard": "Pulpit",
+    "questions": "Pytania"
+  },
+  "dashboard": {
+    "title": "Panel administratora",
+    "subtitle": "Zarządzanie bankiem pytań",
+    "questionsCta": "Pytania",
+    "questionsDescription": "Dodawaj, edytuj i publikuj pytania"
+  },
+  "questions": {
+    "listTitle": "Bank pytań",
+    "addNew": "Dodaj pytanie",
+    "empty": "Brak pytań. Dodaj pierwsze.",
+    "columns": {
+      "stem": "Treść",
+      "type": "Typ",
+      "level": "Poziom",
+      "status": "Status",
+      "actions": "Akcje"
+    },
+    "types": {
+      "single-choice": "Jedna poprawna",
+      "multi-choice": "Wiele poprawnych",
+      "open-ended": "Otwarte"
+    },
+    "status": {
+      "draft": "Szkic",
+      "published": "Opublikowane",
+      "archived": "Zarchiwizowane"
+    },
+    "actions": {
+      "publish": "Opublikuj",
+      "unpublish": "Cofnij publikację",
+      "delete": "Usuń",
+      "edit": "Edytuj"
+    },
+    "deleteDialog": {
+      "title": "Usunąć pytanie?",
+      "description": "„{stem}” — operacja jest nieodwracalna.",
+      "confirm": "Usuń"
+    },
+    "edit": {
+      "title": "Edycja pytania",
+      "notFound": "Pytanie nie istnieje.",
+      "backToList": "Wróć do listy"
+    },
+    "filters": {
+      "all": "Wszystkie",
+      "type": "Typ",
+      "level": "Poziom",
+      "status": "Status",
+      "search": "Szukaj w treści…"
+    },
+    "form": {
+      "title": "Nowe pytanie",
+      "typeSelect": "Typ pytania",
+      "stemPl": "Treść pytania (PL)",
+      "stemEn": "Treść pytania (EN)",
+      "explanationPl": "Wyjaśnienie (PL, opcjonalne)",
+      "explanationEn": "Wyjaśnienie (EN, opcjonalne)",
+      "modelAnswerPl": "Modelowa odpowiedź (PL)",
+      "modelAnswerEn": "Modelowa odpowiedź (EN)",
+      "options": "Odpowiedzi",
+      "optionPl": "Polski",
+      "optionEn": "English",
+      "correctSingle": "Poprawna",
+      "correctMulti": "Zaznacz poprawne",
+      "addOption": "Dodaj odpowiedź",
+      "removeOption": "Usuń",
+      "optionsLimit": "Min. 2, max. 8 odpowiedzi.",
+      "level": "Poziom",
+      "diagram": "Diagram (opcjonalny)",
+      "diagramKind": {
+        "none": "Brak",
+        "fen": "FEN (pozycja)",
+        "pgn": "PGN (partia)"
+      },
+      "fen": "Notacja FEN",
+      "pgn": "Notacja PGN",
+      "fenHint": "np. rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "pgnHint": "Notacja PGN partii",
+      "diagramNote": "Wizualizacja szachownicy w kolejnej fazie. Na razie zapisujemy samą notację.",
+      "saveDraft": "Zapisz szkic",
+      "publish": "Zapisz i opublikuj",
+      "errors": {
+        "missingStemPl": "Wpisz treść po polsku",
+        "missingStemEn": "Wpisz treść po angielsku",
+        "missingModelAnswerPl": "Wpisz modelową odpowiedź (PL)",
+        "missingModelAnswerEn": "Wpisz modelową odpowiedź (EN)",
+        "noCorrectSingle": "Zaznacz jedną poprawną odpowiedź",
+        "noCorrectMulti": "Zaznacz co najmniej jedną poprawną odpowiedź",
+        "incompleteOption": "Wypełnij wszystkie odpowiedzi (PL i EN) lub usuń niepotrzebne",
+        "missingFen": "Wpisz notację FEN",
+        "missingPgn": "Wpisz notację PGN"
+      }
+    }
+  }
+}

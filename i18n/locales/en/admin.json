@@ -1,0 +1,100 @@
+{
+  "nav": {
+    "dashboard": "Dashboard",
+    "questions": "Questions"
+  },
+  "dashboard": {
+    "title": "Admin dashboard",
+    "subtitle": "Manage the question bank",
+    "questionsCta": "Questions",
+    "questionsDescription": "Add, edit and publish questions"
+  },
+  "questions": {
+    "listTitle": "Question bank",
+    "addNew": "Add question",
+    "empty": "No questions yet. Add the first one.",
+    "columns": {
+      "stem": "Stem",
+      "type": "Type",
+      "level": "Level",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "types": {
+      "single-choice": "Single choice",
+      "multi-choice": "Multi choice",
+      "open-ended": "Open-ended"
+    },
+    "status": {
+      "draft": "Draft",
+      "published": "Published",
+      "archived": "Archived"
+    },
+    "actions": {
+      "publish": "Publish",
+      "unpublish": "Unpublish",
+      "delete": "Delete",
+      "edit": "Edit"
+    },
+    "deleteDialog": {
+      "title": "Delete question?",
+      "description": "\"{stem}\" — this action cannot be undone.",
+      "confirm": "Delete"
+    },
+    "edit": {
+      "title": "Edit question",
+      "notFound": "Question does not exist.",
+      "backToList": "Back to list"
+    },
+    "filters": {
+      "all": "All",
+      "type": "Type",
+      "level": "Level",
+      "status": "Status",
+      "search": "Search stem…"
+    },
+    "form": {
+      "title": "New question",
+      "typeSelect": "Question type",
+      "stemPl": "Question stem (PL)",
+      "stemEn": "Question stem (EN)",
+      "explanationPl": "Explanation (PL, optional)",
+      "explanationEn": "Explanation (EN, optional)",
+      "modelAnswerPl": "Model answer (PL)",
+      "modelAnswerEn": "Model answer (EN)",
+      "options": "Options",
+      "optionPl": "Polski",
+      "optionEn": "English",
+      "correctSingle": "Correct",
+      "correctMulti": "Mark correct",
+      "addOption": "Add option",
+      "removeOption": "Remove",
+      "optionsLimit": "Min. 2, max. 8 options.",
+      "level": "Level",
+      "diagram": "Diagram (optional)",
+      "diagramKind": {
+        "none": "None",
+        "fen": "FEN (position)",
+        "pgn": "PGN (game)"
+      },
+      "fen": "FEN notation",
+      "pgn": "PGN notation",
+      "fenHint": "e.g. rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
+      "pgnHint": "Game in PGN notation",
+      "diagramNote": "Chess board rendering lands in a later phase. For now we only store the notation.",
+      "saveDraft": "Save as draft",
+      "publish": "Save and publish",
+      "errors": {
+        "missingStemPl": "Polish stem required",
+        "missingStemEn": "English stem required",
+        "missingModelAnswerPl": "Polish model answer required",
+        "missingModelAnswerEn": "English model answer required",
+        "noCorrectSingle": "Mark exactly one correct answer",
+        "noCorrectMulti": "Mark at least one correct answer",
+        "incompleteOption": "Fill in both PL and EN for each option, or remove unused",
+        "missingFen": "Provide FEN notation",
+        "missingPgn": "Provide PGN notation"
+      }
+    }
+  }
+}

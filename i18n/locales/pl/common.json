@@ -1,14 +1,19 @@
 {
   "app": {
-    "name": "Chess Arbiter"
+    "name": "Kolegium Sędziów PZSzach .edu"
   },
   "nav": {
     "home": "Strona główna",
-    "about": "O projekcie",
     "login": "Zaloguj się",
     "logout": "Wyloguj się",
     "app": "Aplikacja",
-    "admin": "Panel administratora"
+    "admin": "Panel administratora",
+    "tos": "Warunki",
+    "privacy": "Prywatność",
+    "cookies": "Cookies"
+  },
+  "footer": {
+    "rights": "Wszelkie prawa zastrzeżone."
   },
   "languageToggle": {
     "label": "Język",

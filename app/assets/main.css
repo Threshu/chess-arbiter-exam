@@ -1,8 +1,136 @@
 @import 'tailwindcss';
 @import './tokens.css';
+@import 'chessground/assets/chessground.base.css';
+@import 'chessground/assets/chessground.brown.css';
+@import 'chessground/assets/chessground.cburnett.css';
 
 html {
   font-family: var(--font-sans);
   background-color: var(--color-bg);
   color: var(--color-fg);
+}
+
+/* Route / layout transitions */
+.page-enter-active,
+.page-leave-active {
+  transition:
+    opacity 200ms ease,
+    transform 200ms ease;
+}
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(6px);
+}
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(-6px);
+}
+
+.layout-enter-active,
+.layout-leave-active {
+  transition: opacity 200ms ease;
+}
+.layout-enter-from,
+.layout-leave-to {
+  opacity: 0;
+}
+
+/* Generic fade for in-content swaps (use <Transition name="fade" mode="out-in">) */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 180ms ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Slide-fade for sequential swaps (e.g. next practice question) */
+.slide-fade-enter-active {
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+.slide-fade-leave-active {
+  transition:
+    opacity 160ms ease,
+    transform 160ms ease;
+}
+.slide-fade-enter-from {
+  opacity: 0;
+  transform: translateX(12px);
+}
+.slide-fade-leave-to {
+  opacity: 0;
+  transform: translateX(-12px);
+}
+
+/* Dialog (reka-ui) — overlay fade + content zoom+fade keyed off data-state */
+@keyframes ui-dialog-overlay-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes ui-dialog-overlay-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes ui-dialog-content-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+@keyframes ui-dialog-content-out {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.96);
+  }
+}
+.ui-dialog-overlay[data-state='open'] {
+  animation: ui-dialog-overlay-in 180ms ease-out;
+}
+.ui-dialog-overlay[data-state='closed'] {
+  animation: ui-dialog-overlay-out 140ms ease-in;
+}
+.ui-dialog-content[data-state='open'] {
+  animation: ui-dialog-content-in 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ui-dialog-content[data-state='closed'] {
+  animation: ui-dialog-content-out 140ms ease-in;
+}
+
+/* Respect users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .page-enter-active,
+  .page-leave-active,
+  .layout-enter-active,
+  .layout-leave-active,
+  .fade-enter-active,
+  .fade-leave-active,
+  .slide-fade-enter-active,
+  .slide-fade-leave-active {
+    transition: none !important;
+  }
+  .page-enter-from,
+  .page-leave-to,
+  .slide-fade-enter-from,
+  .slide-fade-leave-to {
+    transform: none !important;
+  }
 }

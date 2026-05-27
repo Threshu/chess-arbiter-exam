@@ -1,4 +1,4 @@
-export type QuestionType = 'text' | 'image' | 'fen' | 'pgn'
+export type QuestionTypeId = 'single-choice' | 'multi-choice' | 'open-ended'
 
 export type Level = 'NA' | 'FA' | 'IA'
 
@@ -20,18 +20,38 @@ export interface QuestionOption {
   isCorrect: boolean
 }
 
-export interface Question {
-  type: QuestionType
+export type Diagram = { kind: 'fen'; fen: string } | { kind: 'pgn'; pgn: string }
+
+interface QuestionBase {
   content: Bilingual<QuestionContentPart>
-  mediaUrl?: string
-  fen?: string
-  pgn?: string
-  options: QuestionOption[]
-  topic: string
+  diagram?: Diagram
   level: Level
   status: QuestionStatus
   version: number
   createdBy: string
   createdAt: unknown
   updatedAt: unknown
+}
+
+export interface SingleChoiceQuestion extends QuestionBase {
+  type: 'single-choice'
+  options: QuestionOption[]
+}
+
+export interface MultiChoiceQuestion extends QuestionBase {
+  type: 'multi-choice'
+  options: QuestionOption[]
+}
+
+export interface OpenEndedQuestion extends QuestionBase {
+  type: 'open-ended'
+  modelAnswer: Bilingual<string>
+}
+
+export type Question = SingleChoiceQuestion | MultiChoiceQuestion | OpenEndedQuestion
+
+export type ClosedQuestion = SingleChoiceQuestion | MultiChoiceQuestion
+
+export function isClosedQuestion(q: Question): q is ClosedQuestion {
+  return q.type === 'single-choice' || q.type === 'multi-choice'
 }

@@ -30,3 +30,4 @@ Thumbs.db
 
 # claude code local state
 .claude/settings.local.json
+.secrets/

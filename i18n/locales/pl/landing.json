@@ -1,7 +1,7 @@
 {
   "hero": {
-    "title": "Przygotuj się do egzaminu arbitrażowego",
-    "subtitle": "Dwujęzyczna platforma do nauki i certyfikacji sędziów szachowych — bank pytań, tryb ćwiczeń i egzaminy z licznikiem czasu po stronie serwera.",
+    "title": "Przygotuj się do egzaminu na sędziego szachowego",
+    "subtitle": "Dwujęzyczna platforma dla sędziów szachowych — zarówno tych przygotowujących się do egzaminu, jak i tych chcących odświeżyć wiedzę. Bank pytań z różnymi formatami (jednokrotnego i wielokrotnego wyboru, otwarte) oraz interaktywnymi diagramami szachowymi w trybie ćwiczeń z natychmiastowym feedbackiem.",
     "cta": "Rozpocznij"
   }
 }

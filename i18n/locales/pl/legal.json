@@ -1,0 +1,124 @@
+{
+  "lastUpdated": "Ostatnia aktualizacja: {date}",
+  "placeholder": "Ten dokument to szablon. Skonsultuj treść z prawnikiem przed publicznym uruchomieniem.",
+  "tos": {
+    "title": "Warunki korzystania",
+    "sections": {
+      "acceptance": {
+        "title": "Akceptacja warunków",
+        "body": "Korzystając z aplikacji Kolegium Sędziów PZSzach .edu, akceptujesz niniejsze warunki. Jeśli się nie zgadzasz, nie korzystaj z aplikacji."
+      },
+      "service": {
+        "title": "Opis usługi",
+        "body": "Kolegium Sędziów PZSzach .edu to bezpłatna platforma do nauki dla osób przygotowujących się do egzaminów arbitrów szachowych FIDE (NA, FA, IA). Udostępniamy bank pytań oraz tryb ćwiczeń."
+      },
+      "account": {
+        "title": "Konto użytkownika",
+        "body": "Aby korzystać z aplikacji musisz utworzyć konto za pomocą Google Sign-In lub adresu e-mail i hasła. Jesteś odpowiedzialny za poufność danych logowania. Musisz mieć ukończone 16 lat (lub uzyskać zgodę opiekuna)."
+      },
+      "conduct": {
+        "title": "Dozwolone i niedozwolone zachowanie",
+        "body": "Niedozwolone jest: kopiowanie treści pytań bez zgody, próby uzyskania nieuprawnionego dostępu do danych innych użytkowników, używanie zautomatyzowanych skryptów (bot), zachowania obraźliwe wobec innych użytkowników."
+      },
+      "ip": {
+        "title": "Własność intelektualna",
+        "body": "Wszystkie pytania, treści edukacyjne, kod źródłowy oraz design są chronione prawem autorskim. Mogą być używane wyłącznie do celów nauki własnej."
+      },
+      "liability": {
+        "title": "Ograniczenie odpowiedzialności",
+        "body": "Aplikacja udostępniana jest w stanie 'as is'. Nie gwarantujemy prawidłowości treści pytań ani że przygotowanie wystarczy do zdania prawdziwego egzaminu FIDE. Korzystasz na własne ryzyko."
+      },
+      "termination": {
+        "title": "Zakończenie",
+        "body": "Możesz w każdej chwili usunąć swoje konto z poziomu ustawień. Możemy zawiesić lub usunąć konto w przypadku naruszenia warunków."
+      },
+      "changes": {
+        "title": "Zmiany warunków",
+        "body": "Możemy zmienić warunki w przyszłości. O istotnych zmianach powiadomimy e-mailem."
+      },
+      "law": {
+        "title": "Prawo właściwe",
+        "body": "Niniejsze warunki podlegają prawu polskiemu. Sądem właściwym jest sąd właściwy dla siedziby właściciela aplikacji."
+      },
+      "contact": {
+        "title": "Kontakt",
+        "body": "Pytania dotyczące warunków: [TODO: wpisz adres kontaktowy]"
+      }
+    }
+  },
+  "privacy": {
+    "title": "Polityka prywatności",
+    "sections": {
+      "intro": {
+        "title": "Wprowadzenie",
+        "body": "Dbamy o Twoją prywatność. Ta polityka opisuje jakie dane zbieramy i jak ich używamy. Dane przetwarzane są zgodnie z RODO (UE 2016/679)."
+      },
+      "data": {
+        "title": "Jakie dane zbieramy",
+        "body": "Adres e-mail (do logowania i komunikacji). Imię wyświetlane (jeśli podasz). Historia Twoich odpowiedzi w trybie ćwiczeń (które pytania, czy poprawnie, kiedy). Preferencje (język interfejsu)."
+      },
+      "purpose": {
+        "title": "Cel przetwarzania",
+        "body": "Świadczenie usługi (umożliwienie logowania, zapis postępu nauki). Komunikacja techniczna (weryfikacja e-maila, reset hasła). Ulepszanie aplikacji (analiza zagregowana, bez identyfikacji osób)."
+      },
+      "basis": {
+        "title": "Podstawa prawna",
+        "body": "Art. 6 ust. 1 lit. b RODO — wykonanie umowy (świadczenie usługi). Art. 6 ust. 1 lit. f RODO — uzasadniony interes (poprawa jakości usługi)."
+      },
+      "sharing": {
+        "title": "Udostępnianie",
+        "body": "Nie sprzedajemy ani nie wynajmujemy Twoich danych. Dane przechowujemy w Google Firebase (region europe-west3, Frankfurt). Google jest podprocesorem zgodnie z umową DPA."
+      },
+      "retention": {
+        "title": "Czas przechowywania",
+        "body": "Dane przechowujemy tak długo jak istnieje Twoje konto. Po usunięciu konta dane są kasowane natychmiast (poza ewentualnymi logami systemowymi, max 30 dni)."
+      },
+      "rights": {
+        "title": "Twoje prawa (RODO)",
+        "body": "Masz prawo: dostępu do swoich danych, sprostowania, usunięcia (w ustawieniach konta), ograniczenia przetwarzania, przenoszenia (skontaktuj się aby uzyskać kopię swoich danych), sprzeciwu, wniesienia skargi do organu nadzorczego (PUODO)."
+      },
+      "cookies": {
+        "title": "Pliki cookie",
+        "body": "Używamy wyłącznie niezbędnych cookies (sesja logowania, preferencja języka). Nie używamy ciasteczek śledzących ani analitycznych. Szczegóły w {cookiesLink}."
+      },
+      "security": {
+        "title": "Bezpieczeństwo",
+        "body": "Dane przesyłane są szyfrowane HTTPS. Przechowywanie chronione regułami dostępu Firebase Firestore. Stosujemy autoryzację email + Google OAuth z weryfikacją tokenów."
+      },
+      "children": {
+        "title": "Dzieci",
+        "body": "Aplikacja przeznaczona dla osób powyżej 16 lat. Nie zbieramy świadomie danych osób poniżej tego wieku."
+      },
+      "changes": {
+        "title": "Zmiany polityki",
+        "body": "Możemy aktualizować politykę. Powiadomimy o istotnych zmianach e-mailem."
+      },
+      "contact": {
+        "title": "Kontakt",
+        "body": "Pytania o prywatność lub realizację praw RODO: [TODO: wpisz adres kontaktowy]"
+      }
+    },
+    "cookiesLinkText": "polityce cookie"
+  },
+  "cookies": {
+    "title": "Polityka cookie",
+    "sections": {
+      "intro": {
+        "title": "Czym są pliki cookie",
+        "body": "Pliki cookie to małe pliki tekstowe przechowywane w przeglądarce. Umożliwiają nam zapamiętanie Twojej sesji i preferencji."
+      },
+      "essential": {
+        "title": "Niezbędne (essential)",
+        "body": "Sesja logowania Firebase Auth — niezbędne aby pozostać zalogowanym. Preferencja języka (i18n_redirected) — żeby pamiętać Twój wybór języka. Te cookies są wymagane do działania aplikacji i nie wymagają zgody (RODO art. 6 ust. 1 lit. b)."
+      },
+      "analytics": {
+        "title": "Analityczne",
+        "body": "Aktualnie nie używamy żadnych cookies analitycznych ani marketingowych. Gdyby się to zmieniło, poprosimy Cię o zgodę."
+      },
+      "manage": {
+        "title": "Jak zarządzać",
+        "body": "Możesz wyłączyć cookies w ustawieniach przeglądarki, ale wówczas aplikacja przestanie działać poprawnie (brak możliwości logowania)."
+      }
+    }
+  }
+}

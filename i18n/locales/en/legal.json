@@ -1,0 +1,124 @@
+{
+  "lastUpdated": "Last updated: {date}",
+  "placeholder": "This document is a template. Consult a lawyer before public launch.",
+  "tos": {
+    "title": "Terms of Service",
+    "sections": {
+      "acceptance": {
+        "title": "Acceptance of Terms",
+        "body": "By using the Kolegium Sędziów PZSzach .edu app you accept these terms. If you disagree, do not use the app."
+      },
+      "service": {
+        "title": "Service description",
+        "body": "Kolegium Sędziów PZSzach .edu is a free learning platform for those preparing for FIDE arbiter exams (NA, FA, IA). We provide a question bank and a practice mode."
+      },
+      "account": {
+        "title": "User account",
+        "body": "To use the app you must create an account using Google Sign-In or email and password. You are responsible for keeping your credentials confidential. You must be at least 16 years old (or have parental consent)."
+      },
+      "conduct": {
+        "title": "Allowed and prohibited conduct",
+        "body": "You may not: copy question content without permission, attempt to access other users' data, use automated scripts (bots), or behave abusively towards other users."
+      },
+      "ip": {
+        "title": "Intellectual property",
+        "body": "All questions, educational content, source code and design are protected by copyright. They may be used only for personal learning."
+      },
+      "liability": {
+        "title": "Limitation of liability",
+        "body": "The app is provided 'as is'. We do not guarantee correctness of question content nor that practicing here is sufficient to pass a real FIDE exam. You use the app at your own risk."
+      },
+      "termination": {
+        "title": "Termination",
+        "body": "You can delete your account at any time from the settings page. We may suspend or remove an account in case of terms violations."
+      },
+      "changes": {
+        "title": "Changes to terms",
+        "body": "We may update these terms in the future. We will notify you by email of material changes."
+      },
+      "law": {
+        "title": "Governing law",
+        "body": "These terms are governed by Polish law. Disputes are subject to the jurisdiction of the courts competent for the app owner."
+      },
+      "contact": {
+        "title": "Contact",
+        "body": "Questions about terms: [TODO: enter contact address]"
+      }
+    }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "sections": {
+      "intro": {
+        "title": "Introduction",
+        "body": "We care about your privacy. This policy describes what data we collect and how we use it. Data is processed in accordance with GDPR (EU 2016/679)."
+      },
+      "data": {
+        "title": "What data we collect",
+        "body": "Email address (for login and communication). Display name (if provided). History of your practice answers (which questions, correct or not, when). Preferences (interface language)."
+      },
+      "purpose": {
+        "title": "Purpose of processing",
+        "body": "Providing the service (enabling login, saving learning progress). Technical communication (email verification, password reset). Improving the app (aggregated analysis, no personal identification)."
+      },
+      "basis": {
+        "title": "Legal basis",
+        "body": "GDPR Art. 6(1)(b) — contract performance (service provision). GDPR Art. 6(1)(f) — legitimate interest (service quality improvement)."
+      },
+      "sharing": {
+        "title": "Sharing",
+        "body": "We do not sell or rent your data. Data is stored in Google Firebase (europe-west3 region, Frankfurt). Google is a sub-processor under a DPA."
+      },
+      "retention": {
+        "title": "Retention period",
+        "body": "We keep data as long as your account exists. After you delete your account, data is wiped immediately (except possible system logs, max 30 days)."
+      },
+      "rights": {
+        "title": "Your rights (GDPR)",
+        "body": "You have the right to: access your data, rectify it, delete it (in account settings), restrict processing, port it (contact us to receive a copy of your data), object, and lodge a complaint with the supervisory authority."
+      },
+      "cookies": {
+        "title": "Cookies",
+        "body": "We use only essential cookies (login session, language preference). We do not use tracking or analytical cookies. Details in {cookiesLink}."
+      },
+      "security": {
+        "title": "Security",
+        "body": "Data is transmitted over HTTPS. Storage is protected by Firebase Firestore access rules. We use email authentication and Google OAuth with token verification."
+      },
+      "children": {
+        "title": "Children",
+        "body": "The app is intended for people aged 16 and older. We do not knowingly collect data from people under this age."
+      },
+      "changes": {
+        "title": "Changes to policy",
+        "body": "We may update this policy. We will notify you by email of material changes."
+      },
+      "contact": {
+        "title": "Contact",
+        "body": "Privacy questions or GDPR rights requests: [TODO: enter contact address]"
+      }
+    },
+    "cookiesLinkText": "cookies policy"
+  },
+  "cookies": {
+    "title": "Cookies Policy",
+    "sections": {
+      "intro": {
+        "title": "What are cookies",
+        "body": "Cookies are small text files stored in your browser. They let us remember your session and preferences."
+      },
+      "essential": {
+        "title": "Essential",
+        "body": "Firebase Auth session — required to stay signed in. Language preference (i18n_redirected) — to remember your language choice. These cookies are necessary for the app to function and do not require consent (GDPR Art. 6(1)(b))."
+      },
+      "analytics": {
+        "title": "Analytics",
+        "body": "We currently do not use any analytics or marketing cookies. If this changes, we will ask for your consent."
+      },
+      "manage": {
+        "title": "How to manage",
+        "body": "You can disable cookies in your browser settings, but then the app will stop working correctly (no ability to sign in)."
+      }
+    }
+  }
+}
