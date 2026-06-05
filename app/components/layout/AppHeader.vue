@@ -47,9 +47,6 @@ async function onSignOut() {
 
         <template v-if="user">
           <NuxtLink :to="localePath('/app')" class="text-fg text-sm">{{ t('nav.app') }}</NuxtLink>
-          <NuxtLink :to="localePath('/app/assistant')" class="text-fg text-sm">
-            {{ t('nav.assistant') }}
-          </NuxtLink>
           <NuxtLink v-if="isAdmin" :to="localePath('/admin')" class="text-fg text-sm">
             {{ t('nav.admin') }}
           </NuxtLink>

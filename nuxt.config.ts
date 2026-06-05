@@ -92,6 +92,7 @@ export default defineNuxtConfig({
       firebaseAppId: '',
       useEmulators: false,
       useFunctionsEmulator: false,
+      geminiApiKey: '',
     },
   },
   typescript: { strict: true, typeCheck: false },

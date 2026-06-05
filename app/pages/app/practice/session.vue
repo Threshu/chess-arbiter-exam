@@ -48,7 +48,6 @@ const correctCount = ref(0)
 const openCount = ref(0)
 
 const current = computed<Loaded | null>(() => questions.value[currentIndex.value] ?? null)
-const currentLocale = computed<'pl' | 'en'>(() => (locale.value === 'en' ? 'en' : 'pl'))
 const total = computed(() => questions.value.length)
 const finished = computed(() => total.value > 0 && currentIndex.value >= total.value)
 
@@ -289,7 +288,7 @@ onMounted(async () => {
             </div>
           </template>
         </UiCard>
-        <PracticeAssistant v-if="submitted" :question="current" :locale="currentLocale" />
+        <!-- <PracticeAssistant v-if="submitted" :question="current" :locale="currentLocale" /> -->
       </div>
     </Transition>
   </section>
