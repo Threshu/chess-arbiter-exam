@@ -91,6 +91,7 @@ export default defineNuxtConfig({
       firebaseMessagingSenderId: '',
       firebaseAppId: '',
       useEmulators: false,
+      useFunctionsEmulator: false,
     },
   },
   typescript: { strict: true, typeCheck: false },

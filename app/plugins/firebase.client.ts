@@ -34,6 +34,9 @@ export default defineNuxtPlugin(() => {
     connectFunctionsEmulator(functions, '127.0.0.1', 5001)
     connectStorageEmulator(storage, '127.0.0.1', 9199)
     globalThis.__firebaseEmulatorsConnected = true
+  } else if (config.public.useFunctionsEmulator && !globalThis.__firebaseEmulatorsConnected) {
+    connectFunctionsEmulator(functions, '127.0.0.1', 5001)
+    globalThis.__firebaseEmulatorsConnected = true
   }
 
   return {
