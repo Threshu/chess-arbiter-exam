@@ -13,7 +13,7 @@
     "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
-    "@google-cloud/vertexai": "^1.0.0",
+    "@google/generative-ai": "^0.24.0",
     "firebase-admin": "^13.9.0",
     "firebase-functions": "^7.2.5",
     "zod": "^4.4.3"

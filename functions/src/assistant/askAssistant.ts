@@ -1,16 +1,9 @@
 import { onCall, HttpsError } from 'firebase-functions/v2/https'
-import { VertexAI, type Content } from '@google-cloud/vertexai'
+import { GoogleGenerativeAI } from '@google/generative-ai'
 import { z } from 'zod'
 import { FIRESTORE_REGION } from '../../../shared/constants.js'
 import { assertAuthenticated, validate } from '../lib/auth.js'
 import { db } from '../lib/admin.js'
-
-const vertexAI = new VertexAI({
-  project: process.env.GCLOUD_PROJECT ?? 'chess-arbiter-exam',
-  location: FIRESTORE_REGION,
-})
-
-const generativeModel = vertexAI.getGenerativeModel({ model: 'gemini-1.5-flash-002' })
 
 const messageSchema = z.object({
   role: z.enum(['user', 'model']),
@@ -26,7 +19,7 @@ const inputSchema = z.object({
       correctAnswer: z.string().max(1000).optional(),
       type: z.string(),
     })
-    .optional(),
+    .nullish(),
   locale: z.enum(['pl', 'en']),
 })
 
@@ -48,6 +41,7 @@ function buildSystemPrompt(
   locale: 'pl' | 'en',
   questionCtx:
     | { stem: string; explanation?: string; correctAnswer?: string; type: string }
+    | null
     | undefined,
   knowledge: string,
 ): string {
@@ -90,21 +84,35 @@ export const askAssistant = onCall({ region: FIRESTORE_REGION }, async (request)
   assertAuthenticated(request)
   const { messages, questionContext, locale } = validate(inputSchema, request.data)
 
+  const apiKey = process.env.GEMINI_API_KEY
+  if (!apiKey) throw new HttpsError('internal', 'GEMINI_API_KEY not configured')
+
   const knowledge = questionContext ? '' : await fetchKnowledge(locale)
   const systemPrompt = buildSystemPrompt(locale, questionContext, knowledge)
 
-  const contents: Content[] = messages.map((m) => ({
+  const genAI = new GoogleGenerativeAI(apiKey)
+  const model = genAI.getGenerativeModel({
+    model: 'gemini-1.5-flash',
+    systemInstruction: systemPrompt,
+  })
+
+  const contents = messages.map((m) => ({
     role: m.role,
     parts: [{ text: m.content }],
   }))
 
-  const result = await generativeModel.generateContent({
-    systemInstruction: systemPrompt,
-    contents,
-    generationConfig: { maxOutputTokens: 1024, temperature: 0.4 },
-  })
+  let result
+  try {
+    result = await model.generateContent({
+      contents,
+      generationConfig: { maxOutputTokens: 1024, temperature: 0.4 },
+    })
+  } catch (err) {
+    console.error('[askAssistant] Gemini error:', err)
+    throw new HttpsError('internal', 'Gemini request failed')
+  }
 
-  const reply = result.response.candidates?.[0]?.content?.parts?.[0]?.text?.trim() ?? ''
+  const reply = result.response.text?.()?.trim() ?? ''
   if (!reply) throw new HttpsError('internal', 'Empty response from model')
 
   return { reply }
