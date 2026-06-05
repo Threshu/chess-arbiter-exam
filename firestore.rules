@@ -49,5 +49,9 @@ service cloud.firestore {
       allow read: if isSignedIn();
       allow write: if isAdmin();
     }
+
+    match /knowledgeBase/{id} {
+      allow read, write: if isAdmin();
+    }
   }
 }

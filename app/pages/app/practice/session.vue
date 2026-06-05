@@ -48,6 +48,7 @@ const correctCount = ref(0)
 const openCount = ref(0)
 
 const current = computed<Loaded | null>(() => questions.value[currentIndex.value] ?? null)
+const currentLocale = computed<'pl' | 'en'>(() => (locale.value === 'en' ? 'en' : 'pl'))
 const total = computed(() => questions.value.length)
 const finished = computed(() => total.value > 0 && currentIndex.value >= total.value)
 
@@ -178,115 +179,118 @@ onMounted(async () => {
         </p>
       </UiCard>
 
-      <UiCard v-else-if="current" :key="`q-${currentIndex}`">
-        <template #header>
-          <p class="text-muted text-sm">
-            {{ t('practice.progress', { current: currentIndex + 1, total }) }}
-          </p>
-        </template>
-
-        <div class="flex flex-col gap-6">
-          <p class="text-fg text-lg">
-            {{ localized(current.content, locale as 'pl' | 'en').stem }}
-          </p>
-
-          <div v-if="current.diagram" class="flex justify-center">
-            <ChessBoard v-if="current.diagram.kind === 'fen'" :fen="current.diagram.fen" />
-            <ChessReplay v-else-if="current.diagram.kind === 'pgn'" :pgn="current.diagram.pgn" />
-          </div>
-
-          <fieldset v-if="closedCurrent" class="flex flex-col gap-2">
-            <label
-              v-for="opt in closedCurrent.options"
-              :key="opt.id"
-              :for="`opt-${opt.id}`"
-              :class="[
-                'border-border bg-bg flex cursor-pointer items-start gap-3 rounded-md border p-3',
-                submitted && opt.isCorrect ? 'border-success bg-success/10' : '',
-                submitted && !opt.isCorrect && selectedIds.has(opt.id)
-                  ? 'border-danger bg-danger/10'
-                  : '',
-                !submitted && selectedIds.has(opt.id) ? 'border-primary' : '',
-              ]"
-            >
-              <input
-                :id="`opt-${opt.id}`"
-                :type="closedCurrent.type === 'single-choice' ? 'radio' : 'checkbox'"
-                :checked="selectedIds.has(opt.id)"
-                :disabled="submitted"
-                class="mt-1"
-                @change="toggleOption(opt.id)"
-              >
-              <span class="text-fg flex-1">{{
-                localized(opt.content, locale as 'pl' | 'en')
-              }}</span>
-            </label>
-          </fieldset>
-
-          <template v-else-if="current.type === 'open-ended'">
-            <label for="session-answer" class="flex flex-col gap-1.5">
-              <span class="text-muted text-xs">{{ t('practice.openEndedNote') }}</span>
-              <textarea
-                id="session-answer"
-                v-model="userText"
-                :placeholder="t('practice.yourAnswerPlaceholder')"
-                rows="4"
-                :disabled="submitted"
-                class="bg-bg text-fg border-border focus-visible:ring-primary rounded-md border px-3 py-2 font-sans text-base focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:opacity-60"
-              />
-            </label>
-
-            <div v-if="submitted" class="border-border bg-bg rounded-md border p-3">
-              <p class="text-fg mb-2 text-sm font-medium">{{ t('practice.modelAnswer') }}</p>
-              <p class="text-fg">{{ localized(current.modelAnswer, locale as 'pl' | 'en') }}</p>
-            </div>
+      <div v-else-if="current" :key="`q-${currentIndex}`">
+        <UiCard>
+          <template #header>
+            <p class="text-muted text-sm">
+              {{ t('practice.progress', { current: currentIndex + 1, total }) }}
+            </p>
           </template>
 
-          <div v-if="submitted && closedCurrent" class="border-border rounded-md border p-3">
-            <p :class="['mb-2 font-medium', isCorrect ? 'text-success' : 'text-danger']">
-              {{ isCorrect ? t('practice.correct') : t('practice.incorrect') }}
+          <div class="flex flex-col gap-6">
+            <p class="text-fg text-lg">
+              {{ localized(current.content, locale as 'pl' | 'en').stem }}
             </p>
-            <p
-              v-if="localized(current.content, locale as 'pl' | 'en').explanation"
-              class="text-muted text-sm"
+
+            <div v-if="current.diagram" class="flex justify-center">
+              <ChessBoard v-if="current.diagram.kind === 'fen'" :fen="current.diagram.fen" />
+              <ChessReplay v-else-if="current.diagram.kind === 'pgn'" :pgn="current.diagram.pgn" />
+            </div>
+
+            <fieldset v-if="closedCurrent" class="flex flex-col gap-2">
+              <label
+                v-for="opt in closedCurrent.options"
+                :key="opt.id"
+                :for="`opt-${opt.id}`"
+                :class="[
+                  'border-border bg-bg flex cursor-pointer items-start gap-3 rounded-md border p-3',
+                  submitted && opt.isCorrect ? 'border-success bg-success/10' : '',
+                  submitted && !opt.isCorrect && selectedIds.has(opt.id)
+                    ? 'border-danger bg-danger/10'
+                    : '',
+                  !submitted && selectedIds.has(opt.id) ? 'border-primary' : '',
+                ]"
+              >
+                <input
+                  :id="`opt-${opt.id}`"
+                  :type="closedCurrent.type === 'single-choice' ? 'radio' : 'checkbox'"
+                  :checked="selectedIds.has(opt.id)"
+                  :disabled="submitted"
+                  class="mt-1"
+                  @change="toggleOption(opt.id)"
+                >
+                <span class="text-fg flex-1">{{
+                  localized(opt.content, locale as 'pl' | 'en')
+                }}</span>
+              </label>
+            </fieldset>
+
+            <template v-else-if="current.type === 'open-ended'">
+              <label for="session-answer" class="flex flex-col gap-1.5">
+                <span class="text-muted text-xs">{{ t('practice.openEndedNote') }}</span>
+                <textarea
+                  id="session-answer"
+                  v-model="userText"
+                  :placeholder="t('practice.yourAnswerPlaceholder')"
+                  rows="4"
+                  :disabled="submitted"
+                  class="bg-bg text-fg border-border focus-visible:ring-primary rounded-md border px-3 py-2 font-sans text-base focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none disabled:opacity-60"
+                />
+              </label>
+
+              <div v-if="submitted" class="border-border bg-bg rounded-md border p-3">
+                <p class="text-fg mb-2 text-sm font-medium">{{ t('practice.modelAnswer') }}</p>
+                <p class="text-fg">{{ localized(current.modelAnswer, locale as 'pl' | 'en') }}</p>
+              </div>
+            </template>
+
+            <div v-if="submitted && closedCurrent" class="border-border rounded-md border p-3">
+              <p :class="['mb-2 font-medium', isCorrect ? 'text-success' : 'text-danger']">
+                {{ isCorrect ? t('practice.correct') : t('practice.incorrect') }}
+              </p>
+              <p
+                v-if="localized(current.content, locale as 'pl' | 'en').explanation"
+                class="text-muted text-sm"
+              >
+                <strong class="text-fg">{{ t('practice.explanation') }}:</strong>
+                {{ localized(current.content, locale as 'pl' | 'en').explanation }}
+              </p>
+            </div>
+
+            <div
+              v-else-if="
+                submitted &&
+                current.type === 'open-ended' &&
+                localized(current.content, locale as 'pl' | 'en').explanation
+              "
+              class="border-border rounded-md border p-3"
             >
-              <strong class="text-fg">{{ t('practice.explanation') }}:</strong>
-              {{ localized(current.content, locale as 'pl' | 'en').explanation }}
-            </p>
+              <p class="text-muted text-sm">
+                <strong class="text-fg">{{ t('practice.explanation') }}:</strong>
+                {{ localized(current.content, locale as 'pl' | 'en').explanation }}
+              </p>
+            </div>
           </div>
 
-          <div
-            v-else-if="
-              submitted &&
-              current.type === 'open-ended' &&
-              localized(current.content, locale as 'pl' | 'en').explanation
-            "
-            class="border-border rounded-md border p-3"
-          >
-            <p class="text-muted text-sm">
-              <strong class="text-fg">{{ t('practice.explanation') }}:</strong>
-              {{ localized(current.content, locale as 'pl' | 'en').explanation }}
-            </p>
-          </div>
-        </div>
-
-        <template #footer>
-          <div class="flex justify-end">
-            <UiButton
-              v-if="!submitted"
-              variant="primary"
-              :disabled="!canSubmit()"
-              :loading="saving"
-              @click="submit"
-            >
-              {{ current.type === 'open-ended' ? t('practice.showModel') : t('practice.submit') }}
-            </UiButton>
-            <UiButton v-else variant="primary" @click="next">
-              {{ currentIndex + 1 < total ? t('practice.next') : t('practice.finish') }}
-            </UiButton>
-          </div>
-        </template>
-      </UiCard>
+          <template #footer>
+            <div class="flex justify-end">
+              <UiButton
+                v-if="!submitted"
+                variant="primary"
+                :disabled="!canSubmit()"
+                :loading="saving"
+                @click="submit"
+              >
+                {{ current.type === 'open-ended' ? t('practice.showModel') : t('practice.submit') }}
+              </UiButton>
+              <UiButton v-else variant="primary" @click="next">
+                {{ currentIndex + 1 < total ? t('practice.next') : t('practice.finish') }}
+              </UiButton>
+            </div>
+          </template>
+        </UiCard>
+        <PracticeAssistant v-if="submitted" :question="current" :locale="currentLocale" />
+      </div>
     </Transition>
   </section>
 </template>

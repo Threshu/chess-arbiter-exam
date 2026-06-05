@@ -6,6 +6,7 @@
     "statsCorrect": "Poprawne odpowiedzi",
     "statsAccuracy": "Skuteczność",
     "continueCta": "Trenuj",
+    "assistantCta": "Asystent AI",
     "settingsCta": "Ustawienia"
   },
   "settings": {
@@ -27,6 +28,14 @@
     "deleteCancel": "Anuluj",
     "deleting": "Usuwam…",
     "deleteFailed": "Nie udało się usunąć konta. Wyloguj się i zaloguj ponownie, potem spróbuj jeszcze raz."
+  },
+  "assistant": {
+    "pageTitle": "Asystent sędziowski",
+    "pageSubtitle": "Zadaj pytanie dotyczące przepisów FIDE lub procedur sędziowania.",
+    "openPanel": "Zapytaj asystenta",
+    "inputPlaceholder": "Zadaj pytanie…",
+    "emptyState": "Zadaj pytanie o przepisy FIDE, procedury sędziowskie lub o to konkretne zadanie.",
+    "disclaimer": "Asystent AI może się mylić. Zawsze weryfikuj odpowiedzi z oficjalnymi przepisami FIDE."
   },
   "practice": {
     "title": "Tryb ćwiczeń",

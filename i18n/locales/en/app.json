@@ -6,6 +6,7 @@
     "statsCorrect": "Correct",
     "statsAccuracy": "Accuracy",
     "continueCta": "Practice",
+    "assistantCta": "AI Assistant",
     "settingsCta": "Settings"
   },
   "settings": {
@@ -27,6 +28,14 @@
     "deleteCancel": "Cancel",
     "deleting": "Deleting…",
     "deleteFailed": "Could not delete account. Sign out and back in, then try again."
+  },
+  "assistant": {
+    "pageTitle": "Arbiter Assistant",
+    "pageSubtitle": "Ask about FIDE Laws of Chess or arbitration procedures.",
+    "openPanel": "Ask the assistant",
+    "inputPlaceholder": "Ask a question…",
+    "emptyState": "Ask about FIDE Laws of Chess, arbitration procedures, or this specific question.",
+    "disclaimer": "The AI assistant may make mistakes. Always verify answers against official FIDE rules."
   },
   "practice": {
     "title": "Practice mode",

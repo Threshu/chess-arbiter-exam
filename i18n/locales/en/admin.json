@@ -1,13 +1,45 @@
 {
   "nav": {
     "dashboard": "Dashboard",
-    "questions": "Questions"
+    "questions": "Questions",
+    "knowledge": "Knowledge base"
   },
   "dashboard": {
     "title": "Admin dashboard",
     "subtitle": "Manage the question bank",
     "questionsCta": "Questions",
     "questionsDescription": "Add, edit and publish questions"
+  },
+  "knowledge": {
+    "listTitle": "Knowledge base",
+    "addNew": "Add material",
+    "empty": "No materials yet. Add the first one.",
+    "delete": "Delete",
+    "deleteDialog": {
+      "title": "Delete material?",
+      "description": "\"{title}\" — this action cannot be undone.",
+      "confirm": "Delete"
+    },
+    "form": {
+      "title": "New material",
+      "backToList": "Back to list",
+      "titlePl": "Title (PL)",
+      "titleEn": "Title (EN)",
+      "contentPl": "Content (PL)",
+      "contentEn": "Content (EN)",
+      "source": "Source",
+      "sourcePlaceholder": "e.g. FIDE Laws 2023, art. 7.4",
+      "tags": "Tags",
+      "tagsPlaceholder": "e.g. rules, penalty, time",
+      "tagsHint": "Separate tags with commas.",
+      "save": "Add to knowledge base",
+      "errors": {
+        "missingTitlePl": "Polish title required",
+        "missingTitleEn": "English title required",
+        "missingContentPl": "Polish content required",
+        "missingContentEn": "English content required"
+      }
+    }
   },
   "questions": {
     "listTitle": "Question bank",

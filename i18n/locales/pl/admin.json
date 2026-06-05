@@ -1,13 +1,45 @@
 {
   "nav": {
     "dashboard": "Pulpit",
-    "questions": "Pytania"
+    "questions": "Pytania",
+    "knowledge": "Baza wiedzy"
   },
   "dashboard": {
     "title": "Panel administratora",
     "subtitle": "Zarządzanie bankiem pytań",
     "questionsCta": "Pytania",
     "questionsDescription": "Dodawaj, edytuj i publikuj pytania"
+  },
+  "knowledge": {
+    "listTitle": "Baza wiedzy",
+    "addNew": "Dodaj materiał",
+    "empty": "Brak materiałów. Dodaj pierwszy.",
+    "delete": "Usuń",
+    "deleteDialog": {
+      "title": "Usunąć materiał?",
+      "description": "{title} — operacja jest nieodwracalna.",
+      "confirm": "Usuń"
+    },
+    "form": {
+      "title": "Nowy materiał",
+      "backToList": "Wróć do listy",
+      "titlePl": "Tytuł (PL)",
+      "titleEn": "Tytuł (EN)",
+      "contentPl": "Treść (PL)",
+      "contentEn": "Treść (EN)",
+      "source": "Źródło",
+      "sourcePlaceholder": "np. Przepisy FIDE 2023, art. 7.4",
+      "tags": "Tagi",
+      "tagsPlaceholder": "np. regulamin, kara, czas",
+      "tagsHint": "Oddziel tagi przecinkami.",
+      "save": "Dodaj do bazy",
+      "errors": {
+        "missingTitlePl": "Wpisz tytuł po polsku",
+        "missingTitleEn": "Wpisz tytuł po angielsku",
+        "missingContentPl": "Wpisz treść po polsku",
+        "missingContentEn": "Wpisz treść po angielsku"
+      }
+    }
   },
   "questions": {
     "listTitle": "Bank pytań",
