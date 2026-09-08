@@ -27,6 +27,7 @@ interface QuestionBase {
   diagram?: Diagram
   level: Level
   status: QuestionStatus
+  tags?: string[]
   version: number
   createdBy: string
   createdAt: unknown

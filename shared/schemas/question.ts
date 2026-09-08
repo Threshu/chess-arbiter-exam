@@ -34,6 +34,7 @@ const baseShape = {
   diagram: diagramSchema.optional(),
   level: levelSchema,
   status: questionStatusSchema,
+  tags: z.array(z.string()).optional(),
   version: z.number().int().nonnegative(),
   createdBy: z.string().min(1),
   createdAt: z.unknown(),

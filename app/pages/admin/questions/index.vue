@@ -28,6 +28,19 @@ const typeFilter = ref<QuestionTypeId | 'all'>('all')
 const levelFilter = ref<Level | 'all'>('all')
 const statusFilter = ref<QuestionStatus | 'all'>('all')
 const search = ref('')
+const tagFilter = ref<string[]>([])
+
+const allTags = computed(() => {
+  const set = new Set<string>()
+  for (const r of rows.value) for (const tag of r.tags ?? []) set.add(tag)
+  return Array.from(set).sort()
+})
+
+function toggleTagFilter(tag: string) {
+  const i = tagFilter.value.indexOf(tag)
+  if (i === -1) tagFilter.value = [...tagFilter.value, tag]
+  else tagFilter.value = tagFilter.value.filter((t) => t !== tag)
+}
 
 const filtered = computed(() => {
   const term = search.value.trim().toLowerCase()
@@ -35,6 +48,9 @@ const filtered = computed(() => {
     if (typeFilter.value !== 'all' && r.type !== typeFilter.value) return false
     if (levelFilter.value !== 'all' && r.level !== levelFilter.value) return false
     if (statusFilter.value !== 'all' && r.status !== statusFilter.value) return false
+    if (tagFilter.value.length && !tagFilter.value.some((tag) => r.tags?.includes(tag))) {
+      return false
+    }
     if (term) {
       const stems = `${r.content.pl.stem} ${r.content.en.stem}`.toLowerCase()
       if (!stems.includes(term)) return false
@@ -159,6 +175,23 @@ const statusVariant: Record<QuestionStatus, 'success' | 'warning' | 'neutral'> =
       >
     </div>
 
+    <div v-if="allTags.length" class="mb-4 flex flex-wrap gap-1.5">
+      <button
+        v-for="tag in allTags"
+        :key="tag"
+        type="button"
+        :class="[
+          'rounded-full border px-2.5 py-1 text-xs font-medium transition-colors',
+          tagFilter.includes(tag)
+            ? 'border-primary bg-primary text-primary-fg'
+            : 'border-border bg-bg text-muted hover:text-fg',
+        ]"
+        @click="toggleTagFilter(tag)"
+      >
+        {{ tag }}
+      </button>
+    </div>
+
     <UiCard v-if="loading">
       <p class="text-muted">…</p>
     </UiCard>
@@ -205,6 +238,11 @@ const statusVariant: Record<QuestionStatus, 'success' | 'warning' | 'neutral'> =
               <p class="text-fg line-clamp-3 text-sm">
                 {{ localized(row.content, locale as 'pl' | 'en').stem }}
               </p>
+              <div v-if="row.tags?.length" class="mt-1 flex flex-wrap gap-1">
+                <UiBadge v-for="tag in row.tags" :key="tag" size="sm" variant="neutral">
+                  {{ tag }}
+                </UiBadge>
+              </div>
             </td>
             <td class="py-3 pr-4">
               <span class="text-muted text-xs">{{ t(`questions.types.${row.type}`) }}</span>

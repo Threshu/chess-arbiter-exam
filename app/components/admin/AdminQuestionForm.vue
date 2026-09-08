@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { collection, getDocs, type Firestore } from 'firebase/firestore'
 import type { Diagram, Level, Question, QuestionTypeId } from '~~/shared/types/question'
 
 interface Props {
@@ -11,6 +12,7 @@ const props = withDefaults(defineProps<Props>(), { initialValue: undefined, savi
 const emit = defineEmits<{ save: [payload: Record<string, unknown>, publish: boolean] }>()
 
 const { t } = useI18n()
+const { $firestore } = useNuxtApp()
 
 const type = ref<QuestionTypeId>(props.initialValue?.type ?? 'single-choice')
 const stemPl = ref(props.initialValue?.content.pl.stem ?? '')
@@ -18,6 +20,17 @@ const stemEn = ref(props.initialValue?.content.en.stem ?? '')
 const explanationPl = ref(props.initialValue?.content.pl.explanation ?? '')
 const explanationEn = ref(props.initialValue?.content.en.explanation ?? '')
 const level = ref<Level>(props.initialValue?.level ?? 'NA')
+const tags = ref<string[]>(props.initialValue?.tags ?? [])
+const tagSuggestions = ref<string[]>([])
+
+onMounted(async () => {
+  const snap = await getDocs(collection($firestore as Firestore, 'questions'))
+  const all = new Set<string>()
+  snap.forEach((d) => {
+    for (const tag of (d.data().tags as string[] | undefined) ?? []) all.add(tag)
+  })
+  tagSuggestions.value = Array.from(all).sort()
+})
 
 const diagramKind = ref<'none' | 'fen' | 'pgn'>(props.initialValue?.diagram?.kind ?? 'none')
 const fen = ref(props.initialValue?.diagram?.kind === 'fen' ? props.initialValue.diagram.fen : '')
@@ -146,6 +159,7 @@ function submit(publish: boolean) {
     },
     level: level.value,
     status: publish ? 'published' : 'draft',
+    tags: tags.value,
     version: (props.initialValue?.version ?? 0) + 1,
   }
 
@@ -345,6 +359,15 @@ function submit(publish: boolean) {
           <option value="IA">IA</option>
         </select>
       </label>
+
+      <div class="flex flex-col gap-1.5">
+        <span class="text-fg text-sm font-medium">{{ t('questions.form.tags') }}</span>
+        <AdminTagInput
+          v-model="tags"
+          :suggestions="tagSuggestions"
+          :aria-label="t('questions.form.tags')"
+        />
+      </div>
 
       <ul v-if="errors.length" class="border-danger bg-danger/10 rounded-md border p-3">
         <li v-for="e in errors" :key="e" class="text-danger text-sm">{{ e }}</li>
