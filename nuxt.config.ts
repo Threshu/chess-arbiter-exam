@@ -1,9 +1,13 @@
+import { fileURLToPath } from 'node:url'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-01-01',
   future: { compatibilityVersion: 4 },
   srcDir: 'app/',
+  alias: {
+    '~~/shared': fileURLToPath(new URL('./shared', import.meta.url)),
+  },
   app: {
     head: {
       link: [
