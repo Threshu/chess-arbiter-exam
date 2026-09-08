@@ -11,6 +11,7 @@ export default withNuxt(
   },
   {
     ignores: [
+      '.claude/**',
       '.nuxt/**',
       '.output/**',
       'dist/**',

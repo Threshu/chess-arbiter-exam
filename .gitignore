@@ -32,4 +32,11 @@ Thumbs.db
 
 # claude code local state
 .claude/settings.local.json
+.claude/worktrees/
 .secrets/
+
+# editor
+.vscode/
+
+# source material for question imports (kept out of the repo)
+*.pdf
