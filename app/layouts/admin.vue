@@ -2,11 +2,16 @@
 const { t } = useI18n()
 const localePath = useLocalePath()
 
-type NavItem = { key: 'dashboard' | 'questions'; to: string; label: string }
+type NavItem = { key: 'dashboard' | 'questions' | 'examGenerator'; to: string; label: string }
 
 const nav = computed<NavItem[]>(() => [
   { key: 'dashboard', to: localePath('/admin'), label: t('nav.dashboard') },
   { key: 'questions', to: localePath('/admin/questions'), label: t('nav.questions') },
+  {
+    key: 'examGenerator',
+    to: localePath('/admin/exam-generator'),
+    label: t('nav.examGenerator'),
+  },
 ])
 </script>
 
@@ -53,6 +58,17 @@ const nav = computed<NavItem[]>(() => [
               >
                 <path
                   d="M3 5h2v2H3V5zm0 6h2v2H3v-2zm0 6h2v2H3v-2zm4-12h14v2H7V5zm0 6h14v2H7v-2zm0 6h14v2H7v-2z"
+                />
+              </svg>
+              <svg
+                v-else-if="item.key === 'examGenerator'"
+                viewBox="0 0 24 24"
+                class="h-6 w-6"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path
+                  d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zm8 1.5V9h4.5L14 4.5zM8 13h8v1.5H8V13zm0 3.5h8V18H8v-1.5zM8 9.5h4V11H8V9.5z"
                 />
               </svg>
             </span>

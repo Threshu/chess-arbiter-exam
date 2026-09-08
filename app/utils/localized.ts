@@ -1,6 +1,8 @@
 import type { Bilingual } from '~~/shared/types/question'
 import type { Locale } from '~~/shared/types/user'
 
+export function localized<T>(value: Bilingual<T>, locale: Locale): T
+export function localized<T>(value: Bilingual<T> | undefined | null, locale: Locale): T | ''
 export function localized<T>(value: Bilingual<T> | undefined | null, locale: Locale): T | '' {
   if (!value) return '' as T | ''
   const primary = value[locale]

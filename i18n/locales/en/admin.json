@@ -2,7 +2,8 @@
   "nav": {
     "dashboard": "Dashboard",
     "questions": "Questions",
-    "knowledge": "Knowledge base"
+    "knowledge": "Knowledge base",
+    "examGenerator": "Exam generator"
   },
   "dashboard": {
     "title": "Admin dashboard",
@@ -130,6 +131,45 @@
         "missingFen": "Provide FEN notation",
         "missingPgn": "Provide PGN notation"
       }
+    }
+  },
+  "examGenerator": {
+    "title": "Exam generator",
+    "examTitle": "Exam title",
+    "language": "Document language",
+    "includeAnswerKey": "Include answer key",
+    "headerText": "Header text",
+    "footerText": "Footer text",
+    "generate": "Generate DOCX",
+    "settings": {
+      "open": "Document settings",
+      "title": "Document settings"
+    },
+    "picker": {
+      "title": "Question bank",
+      "preview": "Preview"
+    },
+    "selected": {
+      "title": "Selected questions ({n})",
+      "empty": "No questions selected yet.",
+      "overridden": "Modified locally",
+      "remove": "Remove from list",
+      "reorderHint": "Drag to reorder, or use the up/down arrow keys"
+    },
+    "saveChoice": {
+      "title": "Save changes?",
+      "description": "Choose whether the changes should overwrite the original question in the database, or be used only in this document.",
+      "persist": "Save in database",
+      "local": "Use only in this document"
+    },
+    "editor": {
+      "bold": "Bold",
+      "italic": "Italic",
+      "bulletList": "Bullet list",
+      "orderedList": "Numbered list"
+    },
+    "preview": {
+      "modelAnswer": "Model answer"
     }
   }
 }

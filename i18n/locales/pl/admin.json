@@ -2,7 +2,8 @@
   "nav": {
     "dashboard": "Pulpit",
     "questions": "Pytania",
-    "knowledge": "Baza wiedzy"
+    "knowledge": "Baza wiedzy",
+    "examGenerator": "Generator egzaminu"
   },
   "dashboard": {
     "title": "Panel administratora",
@@ -130,6 +131,45 @@
         "missingFen": "Wpisz notację FEN",
         "missingPgn": "Wpisz notację PGN"
       }
+    }
+  },
+  "examGenerator": {
+    "title": "Generator egzaminu",
+    "examTitle": "Tytuł egzaminu",
+    "language": "Język dokumentu",
+    "includeAnswerKey": "Dołącz klucz odpowiedzi",
+    "headerText": "Tekst nagłówka",
+    "footerText": "Tekst stopki",
+    "generate": "Generuj DOCX",
+    "settings": {
+      "open": "Ustawienia dokumentu",
+      "title": "Ustawienia dokumentu"
+    },
+    "picker": {
+      "title": "Bank pytań",
+      "preview": "Podgląd"
+    },
+    "selected": {
+      "title": "Wybrane pytania ({n})",
+      "empty": "Nie wybrano jeszcze żadnych pytań.",
+      "overridden": "Zmodyfikowane lokalnie",
+      "remove": "Usuń z listy",
+      "reorderHint": "Przeciągnij, aby zmienić kolejność, lub użyj strzałek w górę/w dół"
+    },
+    "saveChoice": {
+      "title": "Zapisać zmiany?",
+      "description": "Wybierz, czy zmiany mają nadpisać oryginalne pytanie w bazie, czy zostać użyte tylko w tym dokumencie.",
+      "persist": "Zapisz w bazie",
+      "local": "Użyj tylko w tym dokumencie"
+    },
+    "editor": {
+      "bold": "Pogrubienie",
+      "italic": "Kursywa",
+      "bulletList": "Lista punktowana",
+      "orderedList": "Lista numerowana"
+    },
+    "preview": {
+      "modelAnswer": "Modelowa odpowiedź"
     }
   }
 }
