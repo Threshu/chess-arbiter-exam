@@ -29,12 +29,30 @@ export const diagramSchema = z.discriminatedUnion('kind', [
 export const levelSchema = z.enum(['NA', 'FA', 'IA'])
 export const questionStatusSchema = z.enum(['draft', 'published', 'archived'])
 
+/**
+ * Wystapienie pytania w konkretnym egzaminie, pod konkretnym numerem.
+ * Jedno pytanie moze wystepowac w kilku egzaminach - te same zadania wracaja
+ * w kolejnych latach - dlatego `sources` jest tablica. Dzieki temu kazdy egzamin
+ * da sie odtworzyc w oryginalnej kolejnosci, bez dziur w numeracji.
+ */
+export const questionSourceSchema = z.object({
+  exam: z.string().min(1),
+  year: z.number().int().min(1900).max(2100),
+  no: z.number().int().positive(),
+})
+
 const baseShape = {
   content: questionContentSchema,
   diagram: diagramSchema.optional(),
   level: levelSchema,
   status: questionStatusSchema,
   tags: z.array(z.string()).optional(),
+  sources: z.array(questionSourceSchema).optional(),
+  /**
+   * Odpowiedz jest zgodna z przepisami z roku egzaminu, ale nie z obecnymi.
+   * Takie pytania naleza do archiwum i nie moga trafiac do losowania w praktyce.
+   */
+  outdatedRules: z.boolean().optional(),
   version: z.number().int().nonnegative(),
   createdBy: z.string().min(1),
   createdAt: z.unknown(),

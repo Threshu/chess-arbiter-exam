@@ -1,0 +1,85 @@
+1. blyskawiczne | szybkie | klasyczne (standardowe)
+8+2 blyskawiczne
+
+2.
+-mat
+-martwa pozycja
+-poddanie
+-zgoda na remis
+-75 posuniec
+-5 powtorzenie pozycji
+
+3. 
+-8.1.1 W trakcie partii każdy/a zawodnik/zawodniczka jest zobowiązany/a 
+do zapisywania własnych posunięć oraz posunięć przeciwnika/przeciwniczki 
+w prawidłowy sposób, ruch po ruchu, tak wyraźnie i czytelnie, jak to możliwe.
+
+-8.4
+Jeżeli zawodnik/zawodniczka, na swoim zegarze, ma mniej niż pięć minut do kontroli czasu 
+w dowolnym stadium partii i w tej kontroli nie otrzymuje dodatkowego czasu, 
+przynajmniej 30 sekund na każde posunięcie, to w tym okresie nie jest zobowiązany do 
+spełnienia wymogów art. 8.1.1. 
+
+4.
+30 min | 5 partii
+
+5. bezposredni pojedynek, liczba zwyciestw, sonnerborn-berger, system koya
+Buchholz Cut-1
+Pomija się przeciwnika, który zdobył najmniejszą liczbę punktów.
+
+buch - Suma punktów zdobytych przez wszystkich przeciwników danego zawodnika
+berger
+Liczy się punkty przeciwników, ale z uwzględnieniem wyniku partii zawodnika:
+Punkty przeciwników, z którymi zawodnik wygrał, są liczone w całości.
+Punkty przeciwników, z którymi zawodnik zremisował, są liczone w połowie.
+Przegrane nie wpływają na wynik.
+
+6.
+-7.5.2
+Jeżeli zawodnik/zawodniczka postawił/a piona na polu promocji, 
+przełączył/a zegar, ale nie zamienił/a piona na promowaną figurę, to posunięcie jest nieprawidłowe. 
+Piona należy zamienić na hetmana tego samego koloru. 
+
+-7.5.3 Jeżeli zawodnik/zawodniczka naciśnie zegar bez wykonania posunięcia, to jego postępowanie 
+jest karane analogicznie, jakby wykonał nieprawidłowe posunięcie. 
+
+-7.5.4 Jeśli zawodnik/zawodniczka użyje obu rąk w celu wykonania jakiegokolwiek posunięcia 
+(np. roszady, zbicia bierki lub promocji) i naciśnie zegar, to jego postępowanie jest 
+karane analogicznie, jakby wykonał/a nieprawidłowe posunięcie. 
+
+szybkie +1
+blyskawiczne +1
+klasyk +2
+
+nieprawidlowe zachowanie|nieprawidlowy ruch
+
+7.
+klasyk
+- 7.2.1 Jeżeli w trakcie partii zostanie stwierdzone, że początkowa (wyjściowa)
+pozycja bierek była niewłaściwa, to partia zostaje unieważniona i należy ją rozegrać od nowa
+
+szybkie/blitz
+A.5.1.2 Żadne reklamacje dotyczące nieprawidłowego ustawienia bierek na szachownicy 
+czy samego ułożenia szachownicy nie mogą być uwzględnione.
+W przypadku nieprawidłowego ustawienia Króla roszada jest niedozwolona.
+W przypadku nieprawidłowego ustawienia Wieży, roszada z tą Wieżą nie jest dozwolona. 
+
+8
+-Jeżeli rozpoczęto partię odmiennymi kolorami, niż należało, i obydwoje zawodników wykonało mniej,
+ niż 10 posunięć, to należy partię rozpocząć od nowa z właściwymi kolorami bierek. 
+ Po wykonaniu 10 lub większej liczby posunięć partię należy kontynuować
+ 
+-rozkojarzyć i skojarzyc dana pare ponownie zgodnie z tym jak zostala rozegrana partia
+ 
+ 
+9. 0-1
+
+10. ostrzeżenie, nakazać cofnięcie ruchu pionkiem i wykonanie prawidłowego ruchu dotkniętą bierką
+
+11. orzeka remis (zgoda na remis konczy partie); 
+
+12. odrzuca reklamacje (dopytać dlaczego) bo biały wykonał posunięcie.
+
+13. nieprawidłowe zachowanie | ostrzeżenie | gramy dalej
+
+14. szachy szybkie - posunięcie zostało zaakceptowane, więc gramy dalej

@@ -22,12 +22,20 @@ export interface QuestionOption {
 
 export type Diagram = { kind: 'fen'; fen: string } | { kind: 'pgn'; pgn: string }
 
+export interface QuestionSource {
+  exam: string
+  year: number
+  no: number
+}
+
 interface QuestionBase {
   content: Bilingual<QuestionContentPart>
   diagram?: Diagram
   level: Level
   status: QuestionStatus
   tags?: string[]
+  sources?: QuestionSource[]
+  outdatedRules?: boolean
   version: number
   createdBy: string
   createdAt: unknown
