@@ -142,6 +142,8 @@ onMounted(async () => {
     )
     .filter((q) => !levelFilter.value || q.level === levelFilter.value)
     .filter((q) => !typeFilter.value || q.type === typeFilter.value)
+    // Pytania z odpowiedzia wg uchylonych przepisow naleza do archiwum, nie do nauki.
+    .filter((q) => !q.outdatedRules)
   const seed = Math.floor(Math.random() * 1_000_000)
   const shuffled = shuffle(all, seed)
   questions.value = limitFilter.value ? shuffled.slice(0, limitFilter.value) : shuffled
