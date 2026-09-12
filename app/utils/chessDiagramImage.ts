@@ -1,7 +1,9 @@
 import { Chess } from 'chess.js'
 // Reuse the same "cburnett" piece set already bundled with `chessground` (used for the
 // on-screen board) so exported diagrams look identical instead of relying on system fonts.
-import cburnettCss from 'chessground/assets/chessground.cburnett.css?raw'
+// Loaded from a vendored copy rather than straight from the package - see the file header
+// for why importing the package's .css with `?raw` breaks the production build.
+import cburnettCss from '~/assets/vendor/chessground-cburnett.css.txt?raw'
 
 const PIECE_NAME_TO_LETTER: Record<string, string> = {
   pawn: 'p',
@@ -34,7 +36,15 @@ async function getPieceImage(key: string): Promise<HTMLImageElement | null> {
   if (!img) {
     img = new Image()
     img.src = dataUri
-    await img.decode()
+    try {
+      // Not every environment can decode the piece SVGs - jsdom, for instance, does not even
+      // implement `decode()`. Losing a piece is bad, but losing the whole export over one image
+      // is worse, so warn and let the board render without it.
+      await img.decode()
+    } catch (error) {
+      console.warn(`[chessDiagramImage] could not decode piece "${key}"`, error)
+      return null
+    }
     pieceImageCache.set(key, img)
   }
   return img
