@@ -1,3 +1,5 @@
+import type { Topic } from '../constants.js'
+
 export type QuestionTypeId = 'single-choice' | 'multi-choice' | 'open-ended'
 
 export type Level = 'NA' | 'FA' | 'IA'
@@ -33,6 +35,7 @@ interface QuestionBase {
   diagram?: Diagram
   level: Level
   status: QuestionStatus
+  topic?: Topic
   tags?: string[]
   sources?: QuestionSource[]
   outdatedRules?: boolean

@@ -84,7 +84,8 @@
       "type": "Typ",
       "level": "Poziom",
       "status": "Status",
-      "search": "Szukaj w treści…"
+      "search": "Szukaj w treści…",
+      "topic": "Temat"
     },
     "form": {
       "title": "Nowe pytanie",
@@ -129,8 +130,11 @@
         "noCorrectMulti": "Zaznacz co najmniej jedną poprawną odpowiedź",
         "incompleteOption": "Wypełnij wszystkie odpowiedzi (PL i EN) lub usuń niepotrzebne",
         "missingFen": "Wpisz notację FEN",
-        "missingPgn": "Wpisz notację PGN"
-      }
+        "missingPgn": "Wpisz notację PGN",
+        "missingTopic": "Wybierz temat pytania"
+      },
+      "topic": "Temat",
+      "topicPlaceholder": "— wybierz temat —"
     }
   },
   "examGenerator": {

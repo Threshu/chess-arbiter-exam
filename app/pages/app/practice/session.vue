@@ -12,6 +12,7 @@ import {
   type Firestore,
 } from 'firebase/firestore'
 import type { ClosedQuestion, Level, Question, QuestionTypeId } from '~~/shared/types/question'
+import type { Topic } from '~~/shared/constants'
 import { isClosedQuestion } from '~~/shared/types/question'
 
 definePageMeta({ layout: 'default' })
@@ -25,6 +26,7 @@ const firestore = $firestore as Firestore
 
 const levelFilter = computed(() => route.query.level as Level | undefined)
 const typeFilter = computed(() => route.query.type as QuestionTypeId | undefined)
+const topicFilter = computed(() => route.query.topic as Topic | undefined)
 const limitFilter = computed(() => {
   const raw = route.query.limit as string | undefined
   if (!raw) return undefined
@@ -142,6 +144,7 @@ onMounted(async () => {
     )
     .filter((q) => !levelFilter.value || q.level === levelFilter.value)
     .filter((q) => !typeFilter.value || q.type === typeFilter.value)
+    .filter((q) => !topicFilter.value || q.topic === topicFilter.value)
     // Pytania z odpowiedzia wg uchylonych przepisow naleza do archiwum, nie do nauki.
     .filter((q) => !q.outdatedRules)
   const seed = Math.floor(Math.random() * 1_000_000)

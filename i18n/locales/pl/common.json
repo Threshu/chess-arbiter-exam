@@ -34,5 +34,37 @@
     "network": "Brak połączenia z serwerem.",
     "unauthorized": "Brak uprawnień do tej operacji.",
     "notFound": "Nie znaleziono żądanego zasobu."
+  },
+  "topics": {
+    "art-01-istota-i-cel": "Art. 1 — Istota i cel partii szachowej",
+    "art-02-poczatkowa-pozycja": "Art. 2 — Początkowa pozycja bierek na szachownicy",
+    "art-03-posuniecia-bierek": "Art. 3 — Posunięcia bierek",
+    "art-04-wykonywanie-posuniec": "Art. 4 — Wykonywanie posunięć",
+    "art-05-zakonczenie-partii": "Art. 5 — Zakończenie partii",
+    "art-06-zegar-szachowy": "Art. 6 — Zegar szachowy",
+    "art-07-nieprawidlowosci": "Art. 7 — Nieprawidłowości",
+    "art-08-zapis-przebiegu-partii": "Art. 8 — Zapis przebiegu partii",
+    "art-09-partia-remisowa": "Art. 9 — Partia remisowa",
+    "art-10-punktacja": "Art. 10 — Punktacja",
+    "art-11-zachowanie-zawodnikow": "Art. 11 — Zachowanie zawodników",
+    "art-12-rola-sedziego": "Art. 12 — Rola sędziego",
+    "aneks-a-szachy-szybkie": "Aneks A — Szachy szybkie",
+    "aneks-b-gra-blyskawiczna": "Aneks B — Gra błyskawiczna (blitz)",
+    "aneks-c-notacja-algebraiczna": "Aneks C — Notacja algebraiczna",
+    "aneks-d-zawodnicy-niewidomi": "Aneks D — Zawodnicy niewidomi lub niedowidzący",
+    "wytyczne-i-partie-odlozone": "Wytyczne I — Partie odłożone",
+    "wytyczne-ii-chess960": "Wytyczne II — Szachy 960 (Chess960)",
+    "wytyczne-iii-szybki-finisz": "Wytyczne III — Partie bez dodatku, szybki finisz",
+    "kojarzenie-i-systemy": "Kojarzenie i systemy turniejowe",
+    "punktacje-pomocnicze": "Punktacje pomocnicze",
+    "ranking-i-normy": "Ranking i normy klasyfikacyjne",
+    "organizacja-turnieju": "Organizacja turnieju"
+  },
+  "topicAll": "Wszystkie tematy",
+  "topicGroups": {
+    "podstawowe-przepisy": "Podstawowe przepisy gry",
+    "zasady-turniejowe": "Zasady rozgrywania turniejów",
+    "aneksy-i-wytyczne": "Aneksy i wytyczne",
+    "poza-przepisami-gry": "Poza Przepisami gry"
   }
 }

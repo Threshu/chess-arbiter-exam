@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { collection, getDocs, type Firestore } from 'firebase/firestore'
 import type { Diagram, Level, Question, QuestionTypeId } from '~~/shared/types/question'
+import type { Topic } from '~~/shared/constants'
+import { TOPIC_GROUPS } from '~~/shared/constants'
 
 interface Props {
   initialValue?: Question
@@ -20,6 +22,7 @@ const stemEn = ref(props.initialValue?.content.en.stem ?? '')
 const explanationPl = ref(props.initialValue?.content.pl.explanation ?? '')
 const explanationEn = ref(props.initialValue?.content.en.explanation ?? '')
 const level = ref<Level>(props.initialValue?.level ?? 'NA')
+const topic = ref<Topic | ''>(props.initialValue?.topic ?? '')
 const tags = ref<string[]>(props.initialValue?.tags ?? [])
 const tagSuggestions = ref<string[]>([])
 
@@ -118,6 +121,8 @@ function validate(): boolean {
     if (!modelAnswerEn.value.trim()) {
       errors.value.push(t('questions.form.errors.missingModelAnswerEn'))
     }
+    if (!topic.value) errors.value.push(t('questions.form.errors.missingTopic'))
+
     return errors.value.length === 0
   }
 
@@ -140,6 +145,8 @@ function validate(): boolean {
     }
   }
 
+  if (!topic.value) errors.value.push(t('questions.form.errors.missingTopic'))
+
   return errors.value.length === 0
 }
 
@@ -158,6 +165,7 @@ function submit(publish: boolean) {
       },
     },
     level: level.value,
+    topic: topic.value,
     status: publish ? 'published' : 'draft',
     tags: tags.value,
     version: (props.initialValue?.version ?? 0) + 1,
@@ -357,6 +365,20 @@ function submit(publish: boolean) {
           <option value="NA">NA</option>
           <option value="FA">FA</option>
           <option value="IA">IA</option>
+        </select>
+      </label>
+
+      <label for="qf-topic" class="flex flex-col gap-1.5">
+        <span class="text-fg text-sm font-medium">{{ t('questions.form.topic') }}</span>
+        <select
+          id="qf-topic"
+          v-model="topic"
+          class="bg-bg text-fg border-border h-10 rounded-md border px-3 text-base"
+        >
+          <option value="">{{ t('questions.form.topicPlaceholder') }}</option>
+          <optgroup v-for="g in TOPIC_GROUPS" :key="g.key" :label="t(`topicGroups.${g.key}`)">
+            <option v-for="tp in g.topics" :key="tp" :value="tp">{{ t(`topics.${tp}`) }}</option>
+          </optgroup>
         </select>
       </label>
 

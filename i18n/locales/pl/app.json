@@ -73,6 +73,7 @@
     "openEndedNote": "Pytania otwarte nie wpływają na statystyki.",
     "diagramPlaceholder": "Diagram szachowy (wizualizacja w kolejnej fazie)",
     "completed": "Sesja zakończona",
-    "completedSubtitle": "Rozwiązałeś {n} z {scored} pytań poprawnie. Pytań otwartych: {open}."
+    "completedSubtitle": "Rozwiązałeś {n} z {scored} pytań poprawnie. Pytań otwartych: {open}.",
+    "filterTopic": "Temat"
   }
 }

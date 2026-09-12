@@ -84,7 +84,8 @@
       "type": "Type",
       "level": "Level",
       "status": "Status",
-      "search": "Search stem…"
+      "search": "Search stem…",
+      "topic": "Topic"
     },
     "form": {
       "title": "New question",
@@ -129,8 +130,11 @@
         "noCorrectMulti": "Mark at least one correct answer",
         "incompleteOption": "Fill in both PL and EN for each option, or remove unused",
         "missingFen": "Provide FEN notation",
-        "missingPgn": "Provide PGN notation"
-      }
+        "missingPgn": "Provide PGN notation",
+        "missingTopic": "Choose the topic of the question"
+      },
+      "topic": "Topic",
+      "topicPlaceholder": "— choose a topic —"
     }
   },
   "examGenerator": {

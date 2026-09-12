@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { TOPICS } from '../constants.js'
 
 export const bilingualStringSchema = z.object({
   pl: z.string(),
@@ -27,6 +28,7 @@ export const diagramSchema = z.discriminatedUnion('kind', [
 ])
 
 export const levelSchema = z.enum(['NA', 'FA', 'IA'])
+export const topicSchema = z.enum(TOPICS)
 export const questionStatusSchema = z.enum(['draft', 'published', 'archived'])
 
 /**
@@ -46,6 +48,8 @@ const baseShape = {
   diagram: diagramSchema.optional(),
   level: levelSchema,
   status: questionStatusSchema,
+  /** Temat glowny — jeden na pytanie. Opcjonalny w schemacie, wymagany w formularzu admina. */
+  topic: topicSchema.optional(),
   tags: z.array(z.string()).optional(),
   sources: z.array(questionSourceSchema).optional(),
   /**

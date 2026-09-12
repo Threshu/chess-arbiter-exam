@@ -34,5 +34,37 @@
     "network": "Cannot reach the server.",
     "unauthorized": "You are not authorized to perform this action.",
     "notFound": "The requested resource was not found."
+  },
+  "topics": {
+    "art-01-istota-i-cel": "Art. 1 — The nature and objectives of the game of chess",
+    "art-02-poczatkowa-pozycja": "Art. 2 — The initial position of the pieces on the chessboard",
+    "art-03-posuniecia-bierek": "Art. 3 — The moves of the pieces",
+    "art-04-wykonywanie-posuniec": "Art. 4 — The act of moving the pieces",
+    "art-05-zakonczenie-partii": "Art. 5 — The completion of the game",
+    "art-06-zegar-szachowy": "Art. 6 — The chessclock",
+    "art-07-nieprawidlowosci": "Art. 7 — Irregularities",
+    "art-08-zapis-przebiegu-partii": "Art. 8 — The recording of the moves",
+    "art-09-partia-remisowa": "Art. 9 — The drawn game",
+    "art-10-punktacja": "Art. 10 — Points",
+    "art-11-zachowanie-zawodnikow": "Art. 11 — The conduct of the players",
+    "art-12-rola-sedziego": "Art. 12 — The role of the arbiter",
+    "aneks-a-szachy-szybkie": "Appendix A — Rapid chess",
+    "aneks-b-gra-blyskawiczna": "Appendix B — Blitz",
+    "aneks-c-notacja-algebraiczna": "Appendix C — Algebraic notation",
+    "aneks-d-zawodnicy-niewidomi": "Appendix D — Games with blind and visually disabled players",
+    "wytyczne-i-partie-odlozone": "Guidelines I — Adjourned games",
+    "wytyczne-ii-chess960": "Guidelines II — Chess960 rules",
+    "wytyczne-iii-szybki-finisz": "Guidelines III — Games without increment, quickplay finish",
+    "kojarzenie-i-systemy": "Pairing and tournament systems",
+    "punktacje-pomocnicze": "Tie-breaks",
+    "ranking-i-normy": "Ratings and classification norms",
+    "organizacja-turnieju": "Tournament organisation"
+  },
+  "topicAll": "All topics",
+  "topicGroups": {
+    "podstawowe-przepisy": "Basic rules of play",
+    "zasady-turniejowe": "Competition rules",
+    "aneksy-i-wytyczne": "Appendices and guidelines",
+    "poza-przepisami-gry": "Outside the Laws of Chess"
   }
 }

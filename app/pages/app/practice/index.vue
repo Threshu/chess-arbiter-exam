@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { Level, QuestionTypeId } from '~~/shared/types/question'
+import type { Topic } from '~~/shared/constants'
+import { TOPIC_GROUPS } from '~~/shared/constants'
 
 definePageMeta({ layout: 'default' })
 
@@ -7,12 +9,14 @@ const { t } = useI18n()
 const localePath = useLocalePath()
 
 const level = ref<Level | 'all'>('all')
+const topic = ref<Topic | 'all'>('all')
 const type = ref<QuestionTypeId | 'all'>('all')
 const limit = ref<number | 'all'>('all')
 
 function start() {
   const query: Record<string, string> = {}
   if (level.value !== 'all') query.level = level.value
+  if (topic.value !== 'all') query.topic = topic.value
   if (type.value !== 'all') query.type = type.value
   if (limit.value !== 'all') query.limit = String(limit.value)
   navigateTo({ path: localePath('/app/practice/session'), query })
@@ -36,6 +40,20 @@ function start() {
             <option value="NA">NA</option>
             <option value="FA">FA</option>
             <option value="IA">IA</option>
+          </select>
+        </label>
+
+        <label for="practice-topic" class="flex flex-col gap-1.5">
+          <span class="text-fg text-sm font-medium">{{ t('practice.filterTopic') }}</span>
+          <select
+            id="practice-topic"
+            v-model="topic"
+            class="bg-bg text-fg border-border h-10 rounded-md border px-3 text-base"
+          >
+            <option value="all">{{ t('topicAll') }}</option>
+            <optgroup v-for="g in TOPIC_GROUPS" :key="g.key" :label="t(`topicGroups.${g.key}`)">
+              <option v-for="tp in g.topics" :key="tp" :value="tp">{{ t(`topics.${tp}`) }}</option>
+            </optgroup>
           </select>
         </label>
 

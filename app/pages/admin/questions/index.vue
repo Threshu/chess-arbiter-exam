@@ -12,6 +12,8 @@ import {
   type Unsubscribe,
 } from 'firebase/firestore'
 import type { Level, Question, QuestionStatus, QuestionTypeId } from '~~/shared/types/question'
+import type { Topic } from '~~/shared/constants'
+import { TOPIC_GROUPS } from '~~/shared/constants'
 
 definePageMeta({ middleware: ['admin'], layout: 'admin' })
 
@@ -27,6 +29,7 @@ const loading = ref(true)
 const typeFilter = ref<QuestionTypeId | 'all'>('all')
 const levelFilter = ref<Level | 'all'>('all')
 const statusFilter = ref<QuestionStatus | 'all'>('all')
+const topicFilter = ref<Topic | 'all'>('all')
 const search = ref('')
 const tagFilter = ref<string[]>([])
 
@@ -48,6 +51,7 @@ const filtered = computed(() => {
     if (typeFilter.value !== 'all' && r.type !== typeFilter.value) return false
     if (levelFilter.value !== 'all' && r.level !== levelFilter.value) return false
     if (statusFilter.value !== 'all' && r.status !== statusFilter.value) return false
+    if (topicFilter.value !== 'all' && r.topic !== topicFilter.value) return false
     if (tagFilter.value.length && !tagFilter.value.some((tag) => r.tags?.includes(tag))) {
       return false
     }
@@ -151,6 +155,19 @@ const statusVariant: Record<QuestionStatus, 'success' | 'warning' | 'neutral'> =
         <option value="NA">NA</option>
         <option value="FA">FA</option>
         <option value="IA">IA</option>
+      </select>
+
+      <select
+        v-model="topicFilter"
+        class="bg-bg text-fg border-border h-9 rounded-md border px-2 text-sm"
+        :aria-label="t('questions.filters.topic')"
+      >
+        <option value="all">
+          {{ t('questions.filters.topic') }}: {{ t('questions.filters.all') }}
+        </option>
+        <optgroup v-for="g in TOPIC_GROUPS" :key="g.key" :label="t(`topicGroups.${g.key}`)">
+          <option v-for="tp in g.topics" :key="tp" :value="tp">{{ t(`topics.${tp}`) }}</option>
+        </optgroup>
       </select>
 
       <select

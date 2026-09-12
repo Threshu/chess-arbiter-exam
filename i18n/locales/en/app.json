@@ -73,6 +73,7 @@
     "openEndedNote": "Open-ended questions do not affect your stats.",
     "diagramPlaceholder": "Chess diagram (rendering lands in a later phase)",
     "completed": "Session complete",
-    "completedSubtitle": "You answered {n} of {scored} scored questions correctly. Open-ended: {open}."
+    "completedSubtitle": "You answered {n} of {scored} scored questions correctly. Open-ended: {open}.",
+    "filterTopic": "Topic"
   }
 }
