@@ -1,9 +1,16 @@
-import { getCurrentUser } from 'vuefire'
-import { getIdTokenResult } from 'firebase/auth'
-import { collection, getDocs, query, where, type Firestore } from 'firebase/firestore'
+import { collection, getDocs, type Firestore } from 'firebase/firestore'
 import type { Question } from '~~/shared/types/question'
 
 export type ArchivedQuestion = Question & { id: string }
+
+/**
+ * Source codes that do not stand for an exam paper.
+ *
+ * `WP-luzne` collects the loose questions from `luzne_pytania_wp_*.pdf` — question sets that were
+ * never sat as a sheet, so they have no meaningful numbering to reconstruct. A deny-list rather
+ * than an allow-list, so a genuinely new exam shows up on its own after an import.
+ */
+const NON_EXAM_SOURCES = new Set(['WP-luzne'])
 
 /** One reconstructed exam sheet: every question that carries a `sources` entry for it. */
 export interface ExamSheet {
@@ -22,10 +29,9 @@ function sheetId(exam: string, year: number) {
 /**
  * Reads the question bank and regroups it by the exams the questions came from.
  *
- * Firestore rules let an admin read every question but everyone else only the published ones, and
- * a query that could return a draft is rejected outright rather than filtered — hence the two
- * shapes of the query. For a student the archive therefore fills up as questions get published,
- * and sheets show gaps in the numbering until then.
+ * Admin-only: the pages using this sit behind the `admin` middleware, and Firestore rules let an
+ * admin read drafts as well as published questions, so the archive shows every imported sheet
+ * whatever its review status.
  */
 export function useExamArchive() {
   const { $firestore } = useNuxtApp()
@@ -35,33 +41,17 @@ export function useExamArchive() {
   const loading = ref(true)
   const error = ref<string | null>(null)
 
-  /**
-   * Resolved here rather than through `useAuth().isAdmin`, whose claims arrive from an async
-   * watcher: reading it on mount is a race that would quietly narrow an admin's archive to the
-   * published questions only.
-   */
-  async function isAdminNow() {
-    const user = await getCurrentUser()
-    if (!user) return false
-    const token = await getIdTokenResult(user)
-    return token.claims.role === 'admin'
-  }
-
   async function load() {
     loading.value = true
     error.value = null
     try {
-      const questions = collection(firestore, 'questions')
-      const snap = await getDocs(
-        (await isAdminNow())
-          ? query(questions)
-          : query(questions, where('status', '==', 'published')),
-      )
+      const snap = await getDocs(collection(firestore, 'questions'))
 
       const grouped = new Map<string, ExamSheet>()
       for (const doc of snap.docs) {
         const question = { id: doc.id, ...(doc.data() as Question) }
         for (const source of question.sources ?? []) {
+          if (NON_EXAM_SOURCES.has(source.exam)) continue
           const key = sheetId(source.exam, source.year)
           let sheet = grouped.get(key)
           if (!sheet) {

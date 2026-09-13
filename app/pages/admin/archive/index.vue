@@ -1,5 +1,5 @@
 <script setup lang="ts">
-definePageMeta({ layout: 'default' })
+definePageMeta({ middleware: ['admin'], layout: 'admin' })
 
 const { t } = useI18n()
 const localePath = useLocalePath()
@@ -37,15 +37,13 @@ const totalQuestions = computed(() =>
       <ul class="flex flex-col gap-3">
         <li v-for="sheet in sheets" :key="`${sheet.exam}-${sheet.year}`">
           <NuxtLink
-            :to="localePath(`/app/archive/${encodeURIComponent(sheet.exam)}/${sheet.year}`)"
+            :to="localePath(`/admin/archive/${encodeURIComponent(sheet.exam)}/${sheet.year}`)"
             class="block"
           >
             <UiCard class="hover:border-accent transition-colors">
               <div class="flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <p class="font-display text-fg text-xl">
-                    {{ t(`archive.exams.${sheet.exam}`, sheet.exam) }} {{ sheet.year }}
-                  </p>
+                  <p class="font-display text-fg text-xl">{{ sheet.exam }} {{ sheet.year }}</p>
                   <p class="text-muted mt-1 text-sm">
                     {{ t('archive.questionCount', sheet.entries.length) }}
                   </p>

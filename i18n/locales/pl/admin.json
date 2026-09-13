@@ -3,7 +3,8 @@
     "dashboard": "Pulpit",
     "questions": "Pytania",
     "knowledge": "Baza wiedzy",
-    "examGenerator": "Generator egzaminu"
+    "examGenerator": "Generator egzaminu",
+    "archive": "Archiwum egzaminów"
   },
   "dashboard": {
     "title": "Panel administratora",
@@ -182,5 +183,21 @@
     "preview": {
       "modelAnswer": "Modelowa odpowiedź"
     }
+  },
+  "archive": {
+    "title": "Archiwum egzaminów",
+    "subtitle": "Arkusze egzaminacyjne odtworzone z pytań w banku, w oryginalnej kolejności numerów. Zbiory luźnych pytań nie są tu pokazywane — to nie są arkusze.",
+    "loading": "Wczytywanie archiwum…",
+    "error": "Nie udało się wczytać archiwum.",
+    "empty": "Archiwum jest na razie puste.",
+    "emptyHint": "Arkusz pojawia się tutaj, gdy pytania mają uzupełnione pochodzenie.",
+    "summary": "Egzaminów: {exams}, pytań: {questions}.",
+    "questionCount": "brak pytań | {count} pytanie | {count} pytania | {count} pytań",
+    "outdatedCount": "brak nieaktualnych | {count} wg nieaktualnych przepisów | {count} wg nieaktualnych przepisów | {count} wg nieaktualnych przepisów",
+    "outdatedBadge": "Przepisy nieaktualne",
+    "outdatedNote": "Odpowiedź była poprawna w dniu egzaminu, ale nie jest zgodna z obecnymi przepisami. To pytanie nie trafia do trybu praktyki.",
+    "gapsNote": "Numeracja ma przerwy — brakujących pytań nie zaimportowano (duplikaty, warianty do decyzji albo zadania wymagające tabel klasyfikacyjnych).",
+    "backToList": "Wróć do listy egzaminów",
+    "sheetNotFound": "Nie znaleziono takiego arkusza."
   }
 }

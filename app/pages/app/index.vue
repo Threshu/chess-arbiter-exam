@@ -65,9 +65,6 @@ const displayName = computed(
       <NuxtLink :to="localePath('/app/history')">
         <UiButton variant="secondary" size="lg">{{ t('practice.history.title') }}</UiButton>
       </NuxtLink>
-      <NuxtLink :to="localePath('/app/archive')">
-        <UiButton variant="secondary" size="lg">{{ t('dashboard.archiveCta') }}</UiButton>
-      </NuxtLink>
       <NuxtLink :to="localePath('/app/settings')">
         <UiButton variant="ghost" size="lg">{{ t('dashboard.settingsCta') }}</UiButton>
       </NuxtLink>

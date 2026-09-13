@@ -3,7 +3,8 @@
     "dashboard": "Dashboard",
     "questions": "Questions",
     "knowledge": "Knowledge base",
-    "examGenerator": "Exam generator"
+    "examGenerator": "Exam generator",
+    "archive": "Exam archive"
   },
   "dashboard": {
     "title": "Admin dashboard",
@@ -182,5 +183,21 @@
     "preview": {
       "modelAnswer": "Model answer"
     }
+  },
+  "archive": {
+    "title": "Exam archive",
+    "subtitle": "Exam sheets reconstructed from the question bank, in their original numbering. Collections of loose questions are left out — they are not sheets.",
+    "loading": "Loading the archive…",
+    "error": "The archive could not be loaded.",
+    "empty": "The archive is empty for now.",
+    "emptyHint": "A sheet shows up here once its questions record where they came from.",
+    "summary": "Exams: {exams}, questions: {questions}.",
+    "questionCount": "no questions | {count} question | {count} questions",
+    "outdatedCount": "none outdated | {count} under superseded rules | {count} under superseded rules",
+    "outdatedBadge": "Superseded rules",
+    "outdatedNote": "This answer was correct on the day of the exam but no longer follows the current Laws. The question is kept out of practice mode.",
+    "gapsNote": "The numbering has gaps — the missing questions were never imported (duplicates, variants awaiting a decision, or tasks that need the classification tables).",
+    "backToList": "Back to the exam list",
+    "sheetNotFound": "No such sheet was found."
   }
 }
