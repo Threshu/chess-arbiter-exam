@@ -7,7 +7,8 @@
     "statsAccuracy": "Accuracy",
     "continueCta": "Practice",
     "assistantCta": "AI Assistant",
-    "settingsCta": "Settings"
+    "settingsCta": "Settings",
+    "archiveCta": "Exam archive"
   },
   "settings": {
     "title": "Account settings",
@@ -75,5 +76,26 @@
     "completed": "Session complete",
     "completedSubtitle": "You answered {n} of {scored} scored questions correctly. Open-ended: {open}.",
     "filterTopic": "Topic"
+  },
+  "archive": {
+    "title": "Exam archive",
+    "subtitle": "Exam sheets reconstructed from the question bank, in their original numbering.",
+    "loading": "Loading the archive…",
+    "error": "The archive could not be loaded.",
+    "empty": "The archive is empty for now.",
+    "emptyHint": "A sheet shows up here once its questions record where they came from and are published.",
+    "summary": "Exams: {exams}, questions: {questions}.",
+    "questionCount": "no questions | {count} question | {count} questions",
+    "outdatedCount": "none outdated | {count} under superseded rules | {count} under superseded rules",
+    "outdatedBadge": "Superseded rules",
+    "outdatedNote": "This answer was correct on the day of the exam but no longer follows the current Laws. The question is kept out of practice mode.",
+    "gapsNote": "The numbering has gaps — the missing questions are not published yet, or were never imported.",
+    "backToList": "Back to the exam list",
+    "sheetNotFound": "No such sheet was found.",
+    "exams": {
+      "WP": "Rules workshop",
+      "WP-luzne": "Rules workshop — loose questions",
+      "PZSzach": "PZSzach exam"
+    }
   }
 }

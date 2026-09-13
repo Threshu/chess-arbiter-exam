@@ -7,7 +7,8 @@
     "statsAccuracy": "Skuteczność",
     "continueCta": "Trenuj",
     "assistantCta": "Asystent AI",
-    "settingsCta": "Ustawienia"
+    "settingsCta": "Ustawienia",
+    "archiveCta": "Archiwum egzaminów"
   },
   "settings": {
     "title": "Ustawienia konta",
@@ -75,5 +76,26 @@
     "completed": "Sesja zakończona",
     "completedSubtitle": "Rozwiązałeś {n} z {scored} pytań poprawnie. Pytań otwartych: {open}.",
     "filterTopic": "Temat"
+  },
+  "archive": {
+    "title": "Archiwum egzaminów",
+    "subtitle": "Arkusze egzaminacyjne odtworzone z pytań w banku, w oryginalnej kolejności numerów.",
+    "loading": "Wczytywanie archiwum…",
+    "error": "Nie udało się wczytać archiwum.",
+    "empty": "Archiwum jest na razie puste.",
+    "emptyHint": "Arkusz pojawia się tutaj, gdy pytania z niego mają uzupełnione pochodzenie i status „opublikowane”.",
+    "summary": "Egzaminów: {exams}, pytań: {questions}.",
+    "questionCount": "brak pytań | {count} pytanie | {count} pytania | {count} pytań",
+    "outdatedCount": "brak nieaktualnych | {count} wg nieaktualnych przepisów | {count} wg nieaktualnych przepisów | {count} wg nieaktualnych przepisów",
+    "outdatedBadge": "Przepisy nieaktualne",
+    "outdatedNote": "Odpowiedź była poprawna w dniu egzaminu, ale nie jest zgodna z obecnymi przepisami. To pytanie nie trafia do trybu praktyki.",
+    "gapsNote": "Numeracja ma przerwy — brakujące pytania nie są jeszcze opublikowane albo nie zostały zaimportowane.",
+    "backToList": "Wróć do listy egzaminów",
+    "sheetNotFound": "Nie znaleziono takiego arkusza.",
+    "exams": {
+      "WP": "Warsztaty przepisowe",
+      "WP-luzne": "Warsztaty przepisowe — pytania luźne",
+      "PZSzach": "Egzamin PZSzach"
+    }
   }
 }

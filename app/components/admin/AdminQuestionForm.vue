@@ -1,6 +1,12 @@
 <script setup lang="ts">
 import { collection, getDocs, type Firestore } from 'firebase/firestore'
-import type { Diagram, Level, Question, QuestionTypeId } from '~~/shared/types/question'
+import type {
+  Diagram,
+  Level,
+  Question,
+  QuestionSource,
+  QuestionTypeId,
+} from '~~/shared/types/question'
 import type { Topic } from '~~/shared/constants'
 import { TOPIC_GROUPS } from '~~/shared/constants'
 
@@ -25,14 +31,21 @@ const level = ref<Level>(props.initialValue?.level ?? 'NA')
 const topic = ref<Topic | ''>(props.initialValue?.topic ?? '')
 const tags = ref<string[]>(props.initialValue?.tags ?? [])
 const tagSuggestions = ref<string[]>([])
+const sources = ref<QuestionSource[]>(props.initialValue?.sources ?? [])
+const examSuggestions = ref<string[]>([])
 
 onMounted(async () => {
   const snap = await getDocs(collection($firestore as Firestore, 'questions'))
   const all = new Set<string>()
+  const exams = new Set<string>()
   snap.forEach((d) => {
     for (const tag of (d.data().tags as string[] | undefined) ?? []) all.add(tag)
+    for (const source of (d.data().sources as QuestionSource[] | undefined) ?? []) {
+      exams.add(source.exam)
+    }
   })
   tagSuggestions.value = Array.from(all).sort()
+  examSuggestions.value = Array.from(exams).sort()
 })
 
 const diagramKind = ref<'none' | 'fen' | 'pgn'>(props.initialValue?.diagram?.kind ?? 'none')
@@ -168,6 +181,7 @@ function submit(publish: boolean) {
     topic: topic.value,
     status: publish ? 'published' : 'draft',
     tags: tags.value,
+    sources: sources.value,
     version: (props.initialValue?.version ?? 0) + 1,
   }
 
@@ -247,7 +261,7 @@ function submit(publish: boolean) {
             :for="`qf-diagram-${kind}`"
             class="flex items-center gap-2"
           >
-            <input :id="`qf-diagram-${kind}`" v-model="diagramKind" type="radio" :value="kind" >
+            <input :id="`qf-diagram-${kind}`" v-model="diagramKind" type="radio" :value="kind" />
             <span class="text-sm">{{ t(`questions.form.diagramKind.${kind}`) }}</span>
           </label>
         </div>
@@ -293,14 +307,14 @@ function submit(publish: boolean) {
               type="radio"
               :value="opt.id"
               :aria-label="t('questions.form.correctSingle')"
-            >
+            />
             <input
               v-else
               :id="`qf-opt-${opt.id}`"
               v-model="opt.isCorrect"
               type="checkbox"
               :aria-label="t('questions.form.correctMulti')"
-            >
+            />
             <span class="text-muted text-xs uppercase">{{ opt.id }}</span>
           </label>
           <div class="flex flex-1 flex-col gap-2">
@@ -389,6 +403,12 @@ function submit(publish: boolean) {
           :suggestions="tagSuggestions"
           :aria-label="t('questions.form.tags')"
         />
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <span class="text-fg text-sm font-medium">{{ t('questions.form.sources') }}</span>
+        <p class="text-muted text-xs">{{ t('questions.form.sourcesHint') }}</p>
+        <AdminSourceInput v-model="sources" :exam-suggestions="examSuggestions" />
       </div>
 
       <ul v-if="errors.length" class="border-danger bg-danger/10 rounded-md border p-3">

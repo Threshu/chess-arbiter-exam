@@ -134,7 +134,14 @@
         "missingTopic": "Choose the topic of the question"
       },
       "topic": "Topic",
-      "topicPlaceholder": "— choose a topic —"
+      "topicPlaceholder": "— choose a topic —",
+      "sources": "Provenance (exams)",
+      "sourcesHint": "Where this question appeared. The same question comes back in later years — add one entry per sheet. The exam archive is built from this.",
+      "sourceExam": "Exam",
+      "sourceYear": "Year",
+      "sourceNo": "No.",
+      "addSource": "Add",
+      "removeSource": "Remove provenance"
     }
   },
   "examGenerator": {

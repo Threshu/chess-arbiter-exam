@@ -134,7 +134,14 @@
         "missingTopic": "Wybierz temat pytania"
       },
       "topic": "Temat",
-      "topicPlaceholder": "— wybierz temat —"
+      "topicPlaceholder": "— wybierz temat —",
+      "sources": "Pochodzenie (egzaminy)",
+      "sourcesHint": "Gdzie to pytanie wystąpiło. To samo pytanie wraca w kolejnych latach — dodaj wtedy kilka pozycji. Na tej podstawie budowane jest archiwum egzaminów.",
+      "sourceExam": "Egzamin",
+      "sourceYear": "Rok",
+      "sourceNo": "Nr",
+      "addSource": "Dodaj",
+      "removeSource": "Usuń pochodzenie"
     }
   },
   "examGenerator": {
