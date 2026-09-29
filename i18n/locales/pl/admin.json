@@ -142,7 +142,9 @@
       "sourceYear": "Rok",
       "sourceNo": "Nr",
       "addSource": "Dodaj",
-      "removeSource": "Usuń pochodzenie"
+      "removeSource": "Usuń pochodzenie",
+      "outdatedRules": "Odpowiedź wg nieaktualnych przepisów",
+      "outdatedRulesHint": "Zaznacz, jeśli odpowiedź była poprawna w dniu egzaminu, ale nie jest zgodna z obecnymi przepisami. Takie pytanie trafia do archiwum i nie jest losowane w trybie praktyki."
     }
   },
   "examGenerator": {

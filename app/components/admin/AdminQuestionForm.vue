@@ -33,6 +33,7 @@ const tags = ref<string[]>(props.initialValue?.tags ?? [])
 const tagSuggestions = ref<string[]>([])
 const sources = ref<QuestionSource[]>(props.initialValue?.sources ?? [])
 const examSuggestions = ref<string[]>([])
+const outdatedRules = ref(props.initialValue?.outdatedRules ?? false)
 
 onMounted(async () => {
   const snap = await getDocs(collection($firestore as Firestore, 'questions'))
@@ -182,6 +183,7 @@ function submit(publish: boolean) {
     status: publish ? 'published' : 'draft',
     tags: tags.value,
     sources: sources.value,
+    outdatedRules: outdatedRules.value,
     version: (props.initialValue?.version ?? 0) + 1,
   }
 
@@ -261,7 +263,7 @@ function submit(publish: boolean) {
             :for="`qf-diagram-${kind}`"
             class="flex items-center gap-2"
           >
-            <input :id="`qf-diagram-${kind}`" v-model="diagramKind" type="radio" :value="kind" />
+            <input :id="`qf-diagram-${kind}`" v-model="diagramKind" type="radio" :value="kind" >
             <span class="text-sm">{{ t(`questions.form.diagramKind.${kind}`) }}</span>
           </label>
         </div>
@@ -307,14 +309,14 @@ function submit(publish: boolean) {
               type="radio"
               :value="opt.id"
               :aria-label="t('questions.form.correctSingle')"
-            />
+            >
             <input
               v-else
               :id="`qf-opt-${opt.id}`"
               v-model="opt.isCorrect"
               type="checkbox"
               :aria-label="t('questions.form.correctMulti')"
-            />
+            >
             <span class="text-muted text-xs uppercase">{{ opt.id }}</span>
           </label>
           <div class="flex flex-1 flex-col gap-2">
@@ -409,6 +411,14 @@ function submit(publish: boolean) {
         <span class="text-fg text-sm font-medium">{{ t('questions.form.sources') }}</span>
         <p class="text-muted text-xs">{{ t('questions.form.sourcesHint') }}</p>
         <AdminSourceInput v-model="sources" :exam-suggestions="examSuggestions" />
+      </div>
+
+      <div class="flex flex-col gap-1.5">
+        <label for="qf-outdated" class="flex items-center gap-2">
+          <input id="qf-outdated" v-model="outdatedRules" type="checkbox" >
+          <span class="text-fg text-sm font-medium">{{ t('questions.form.outdatedRules') }}</span>
+        </label>
+        <p class="text-muted text-xs">{{ t('questions.form.outdatedRulesHint') }}</p>
       </div>
 
       <ul v-if="errors.length" class="border-danger bg-danger/10 rounded-md border p-3">

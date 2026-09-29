@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { examSheetHeading } from '~~/shared/constants'
+
 definePageMeta({ middleware: ['admin'], layout: 'admin' })
 
 const { t, locale } = useI18n()
@@ -12,6 +14,7 @@ const examParam = computed(() => String(route.params.exam ?? ''))
 const yearParam = computed(() => Number(route.params.year))
 
 const sheet = computed(() => findSheet(examParam.value, yearParam.value))
+const heading = computed(() => examSheetHeading(examParam.value, yearParam.value))
 
 /**
  * The sheet is reconstructed from the questions that made it into the bank, so the printed numbers
@@ -45,8 +48,11 @@ onMounted(load)
     </UiCard>
 
     <template v-else>
-      <h1 class="font-display text-fg mb-2 text-3xl">{{ sheet.exam }} {{ sheet.year }}</h1>
-      <p class="text-muted mb-2">{{ t('archive.questionCount', sheet.entries.length) }}</p>
+      <h1 class="font-display text-fg mb-2 text-3xl">{{ heading.title }}</h1>
+      <p class="text-muted mb-2">
+        <span v-if="heading.dateline">{{ heading.dateline }} &middot; </span>
+        {{ t('archive.questionCount', sheet.entries.length) }}
+      </p>
       <p v-if="hasGaps" class="text-muted mb-8 text-sm">{{ t('archive.gapsNote') }}</p>
       <div v-else class="mb-8" />
 

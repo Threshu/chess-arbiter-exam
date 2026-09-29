@@ -142,7 +142,9 @@
       "sourceYear": "Year",
       "sourceNo": "No.",
       "addSource": "Add",
-      "removeSource": "Remove provenance"
+      "removeSource": "Remove provenance",
+      "outdatedRules": "Answer follows superseded rules",
+      "outdatedRulesHint": "Tick this when the answer was correct on the day of the exam but no longer follows the current Laws. The question then belongs to the archive and is kept out of practice mode."
     }
   },
   "examGenerator": {

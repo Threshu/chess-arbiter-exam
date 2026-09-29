@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { examSheetHeading } from '~~/shared/constants'
+
 definePageMeta({ middleware: ['admin'], layout: 'admin' })
 
 const { t } = useI18n()
@@ -43,8 +45,13 @@ const totalQuestions = computed(() =>
             <UiCard class="hover:border-accent transition-colors">
               <div class="flex flex-wrap items-center justify-between gap-3">
                 <div>
-                  <p class="font-display text-fg text-xl">{{ sheet.exam }} {{ sheet.year }}</p>
+                  <p class="font-display text-fg text-xl">
+                    {{ examSheetHeading(sheet.exam, sheet.year).title }}
+                  </p>
                   <p class="text-muted mt-1 text-sm">
+                    <span v-if="examSheetHeading(sheet.exam, sheet.year).dateline">
+                      {{ examSheetHeading(sheet.exam, sheet.year).dateline }} &middot;
+                    </span>
                     {{ t('archive.questionCount', sheet.entries.length) }}
                   </p>
                 </div>

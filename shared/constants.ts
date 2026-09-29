@@ -91,3 +91,45 @@ export const TOPIC_GROUPS = [
     ],
   },
 ] as const
+
+/**
+ * Naglowki arkuszy egzaminacyjnych, przepisane z pierwszych stron PDF-ow w
+ * `content/imports/pdf/`. Klucz to `<exam> <year>` z pola `sources` pytania.
+ *
+ * Nie w i18n, bo to nazwy wlasne konkretnych dokumentow — tlumaczenie "Egzamin na klase
+ * okregowa" na angielski dawaloby tytul, ktory nigdy nie istnial. Arkusz bez wpisu tutaj
+ * wyswietla sie jako samo `<exam> <year>`, wiec nowy import nie znika z archiwum.
+ *
+ * WP 2017 i WP 2021 maja w PDF-ie rozjechany cmap (tekst wychodzi jako "centrainq klas^
+ * s^dziowskg") — te dwa tytuly odczytano z renderu strony, nie z warstwy tekstowej.
+ * PZSzach 2025 to skan bez warstwy tekstowej, odczytany tak samo; na arkuszu nie ma daty.
+ */
+export const EXAM_SHEETS: Record<string, { title: string; dateline?: string }> = {
+  'WP 2017': {
+    title: 'Egzamin na centralną klasę sędziowską',
+    dateline: 'Poznań, 21 maja 2017 r.',
+  },
+  'WP 2021': {
+    title: 'Egzamin na klasę okręgową',
+    dateline: 'Poznań, 21 sierpnia 2021 r.',
+  },
+  'WP 2022': {
+    title: 'Egzamin na sędziego szachowego klasy okręgowej',
+    dateline: 'Poznań, 22.10.2022 r.',
+  },
+  'WP 2023': {
+    title: 'Egzamin na sędziego szachowego klasy okręgowej',
+    dateline: 'Poznań, 19.08.2023 r.',
+  },
+  'WP 2025': {
+    title: 'Egzamin na sędziego szachowego klasy okręgowej',
+    dateline: 'Poznań, 20.09.2025 r.',
+  },
+  'PZSzach 2025': {
+    title: 'Centralny kurs sędziowski 2025 — egzamin na klasę państwową',
+  },
+}
+
+export function examSheetHeading(exam: string, year: number) {
+  return EXAM_SHEETS[`${exam} ${year}`] ?? { title: `${exam} ${year}` }
+}
