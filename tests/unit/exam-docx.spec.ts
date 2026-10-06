@@ -152,3 +152,51 @@ describe('buildExamDocument', () => {
     expect(contentTypes).toContain('Extension="png"')
   }, 15000) // first call warms up the native `canvas` addon, which can be slow
 })
+
+describe('buildExamDocument layout', () => {
+  async function documentXml(selected: LoadedQuestion[]) {
+    const state = createExamGeneratorState()
+    state.selectedQuestionIds = selected.map((q) => q.id)
+    const doc = await buildExamDocument(state, Object.fromEntries(selected.map((q) => [q.id, q])))
+    const zip = await JSZip.loadAsync(await Packer.toBuffer(doc))
+    return (await zip.file('word/document.xml')?.async('string')) ?? ''
+  }
+
+  // A floating board reserved no vertical space: boards overlapped the next question and did not
+  // move to a new page with their own one.
+  it('puts a diagram inline in an unsplittable table row next to the question', async () => {
+    const xml = await documentXml([diagramQuestion])
+    expect(xml).toContain('<w:tbl>')
+    expect(xml).toContain('<w:cantSplit/>')
+    expect(xml).toContain('<wp:inline')
+    expect(xml).not.toContain('<wp:anchor')
+  }, 15000)
+
+  it('lays out a question without a diagram as plain paragraphs', async () => {
+    const xml = await documentXml([openEndedQuestion])
+    expect(xml).not.toContain('<w:tbl>')
+  })
+
+  it('leaves the answer space of an open-ended question unframed', async () => {
+    const xml = await documentXml([openEndedQuestion])
+    expect(xml).not.toContain('<w:pBdr>')
+  })
+
+  // A raw newline printed as a space; a manual break inside a justified paragraph stretched the
+  // line before it across the page. Each line is its own paragraph instead.
+  it('puts each line of a multi-line stem in its own paragraph', async () => {
+    const multiline: LoadedQuestion = {
+      ...openEndedQuestion,
+      id: 'q-multiline',
+      content: { pl: { stem: 'Pierwsza linia\nDruga linia' }, en: { stem: 'First\nSecond' } },
+    }
+    const xml = await documentXml([multiline])
+    const first = xml.indexOf('Pierwsza linia')
+    const second = xml.indexOf('Druga linia')
+    expect(first).toBeGreaterThan(-1)
+    expect(second).toBeGreaterThan(first)
+    const between = xml.slice(first, second)
+    expect(between).toContain('</w:p>')
+    expect(between).not.toContain('<w:br/>')
+  })
+})

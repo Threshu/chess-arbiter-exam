@@ -1,19 +1,19 @@
 import { Chess } from 'chess.js'
 import {
   AlignmentType,
-  BorderStyle,
   Document,
-  HorizontalPositionAlign,
-  HorizontalPositionRelativeFrom,
   ImageRun,
   LineRuleType,
   Packer,
   Paragraph,
+  Table,
+  TableBorders,
+  TableCell,
+  TableLayoutType,
+  TableRow,
   TextRun,
-  TextWrappingSide,
-  TextWrappingType,
-  VerticalPositionAlign,
-  VerticalPositionRelativeFrom,
+  VerticalAlign,
+  WidthType,
 } from 'docx'
 import { buildExamFilename } from '~/utils/examFilename'
 import { fenToPngBytes } from '~/utils/chessDiagramImage'
@@ -31,6 +31,16 @@ const FONT_FAMILY = 'Tahoma'
 const BODY_SIZE = 22
 // Narrow page margins (twips): 720 = 0.5in on every side.
 const PAGE_MARGIN = 720
+// A4 in twips, set explicitly so the column widths below are computed against a known page.
+const PAGE_WIDTH = 11906
+const PAGE_HEIGHT = 16838
+const CONTENT_WIDTH = PAGE_WIDTH - 2 * PAGE_MARGIN
+// A question with a diagram is a two-column row: the 260 px board is 260 / 96 in = 3900 twips wide,
+// and the column adds a gutter so the text never runs up against it.
+const DIAGRAM_COLUMN = 4200
+const TEXT_COLUMN = CONTENT_WIDTH - DIAGRAM_COLUMN
+// Blank lines left under an open-ended question for the handwritten answer.
+const ANSWER_SPACE_LINES = 7
 
 // Spacing is in twentieths of a point (dxa): 240 = 12pt.
 const SPACE_BEFORE_QUESTION = 480
@@ -57,22 +67,13 @@ async function buildDiagramImage(question: Question): Promise<{
     }
 
     const png = await fenToPngBytes(fen)
+    // Inline rather than floating — a floating image reserves no vertical space, so a short question let
+    // the next one start beside its board, the next board overlapped it, and Word never carried
+    // the image to a new page together with its question.
     const image = new ImageRun({
       type: 'png',
       data: png,
       transformation: { width: DIAGRAM_PX, height: DIAGRAM_PX },
-      floating: {
-        horizontalPosition: {
-          relative: HorizontalPositionRelativeFrom.MARGIN,
-          align: HorizontalPositionAlign.RIGHT,
-        },
-        verticalPosition: {
-          relative: VerticalPositionRelativeFrom.PARAGRAPH,
-          align: VerticalPositionAlign.TOP,
-        },
-        wrap: { type: TextWrappingType.SQUARE, side: TextWrappingSide.LEFT },
-        margins: { left: 228600, bottom: 228600 },
-      },
     })
     return { image, moves, failed: false }
   } catch {
@@ -80,35 +81,72 @@ async function buildDiagramImage(question: Question): Promise<{
   }
 }
 
-async function questionParagraphs(
+interface LinesOptions {
+  bold?: boolean
+  italics?: boolean
+  justified?: boolean
+  /** Space before the first line and after the last one. */
+  before?: number
+  after?: number
+  /** Whether the last line is kept on the same page as whatever follows it. */
+  keepWithNext?: boolean
+}
+
+/**
+ * One paragraph per line of `text`. `docx` would print a raw `\n` as a space, and a manual line
+ * break inside a justified paragraph makes Word stretch the line before it across the full width;
+ * the last line of a paragraph is never stretched, so separate paragraphs keep every line natural.
+ */
+function lineParagraphs(text: string, options: LinesOptions = {}): Paragraph[] {
+  const lines = text.split('\n')
+  return lines.map(
+    (line, i) =>
+      new Paragraph({
+        alignment: options.justified ? AlignmentType.JUSTIFIED : undefined,
+        keepNext: i < lines.length - 1 || !!options.keepWithNext,
+        keepLines: true,
+        spacing: {
+          before: i === 0 ? (options.before ?? 0) : 0,
+          after: i === lines.length - 1 ? (options.after ?? 0) : 0,
+          line: 264,
+          lineRule: LineRuleType.AUTO,
+        },
+        children: [
+          new TextRun({
+            text: line,
+            bold: options.bold,
+            italics: options.italics,
+            size: BODY_SIZE,
+          }),
+        ],
+      }),
+  )
+}
+
+/**
+ * The question's own paragraphs, without the diagram. Each one is kept with the next, so the stem
+ * never ends up on a different page from its options or its answer space.
+ */
+function questionBodyParagraphs(
   question: Question,
   index: number,
   lang: 'pl' | 'en',
-): Promise<Paragraph[]> {
+  moves: string | null,
+  failed: boolean,
+): Paragraph[] {
   const content = localized(question.content, lang)
-  const { image, moves, failed } = await buildDiagramImage(question)
-
-  const stemChildren: (TextRun | ImageRun)[] = [
-    new TextRun({ text: `${index + 1}. ${content.stem}`, bold: true, size: BODY_SIZE }),
-  ]
-  if (image) stemChildren.push(image)
-
-  const paragraphs: Paragraph[] = [
-    new Paragraph({
-      alignment: AlignmentType.JUSTIFIED,
-      spacing: {
-        before: SPACE_BEFORE_QUESTION,
-        after: SPACE_AFTER_STEM,
-        line: 264,
-        lineRule: LineRuleType.AUTO,
-      },
-      children: stemChildren,
-    }),
-  ]
+  const paragraphs: Paragraph[] = lineParagraphs(`${index + 1}. ${content.stem}`, {
+    bold: true,
+    justified: true,
+    before: SPACE_BEFORE_QUESTION,
+    after: SPACE_AFTER_STEM,
+    keepWithNext: true,
+  })
 
   if (failed) {
     paragraphs.push(
       new Paragraph({
+        keepNext: true,
         spacing: { after: SPACE_AFTER_STEM },
         children: [
           new TextRun({
@@ -123,10 +161,11 @@ async function questionParagraphs(
 
   if (moves) {
     paragraphs.push(
-      new Paragraph({
-        alignment: AlignmentType.JUSTIFIED,
-        spacing: { after: SPACE_AFTER_STEM },
-        children: [new TextRun({ text: moves, italics: true, size: BODY_SIZE })],
+      ...lineParagraphs(moves, {
+        italics: true,
+        justified: true,
+        after: SPACE_AFTER_STEM,
+        keepWithNext: true,
       }),
     )
   }
@@ -134,34 +173,77 @@ async function questionParagraphs(
   if (question.type === 'single-choice' || question.type === 'multi-choice') {
     question.options.forEach((opt, i) => {
       paragraphs.push(
-        new Paragraph({
-          alignment: AlignmentType.JUSTIFIED,
-          spacing: { after: SPACE_AFTER_OPTION },
-          children: [
-            new TextRun({
-              text: `${OPTION_LETTERS[i]}) ${localized(opt.content, lang)}`,
-              size: BODY_SIZE,
-            }),
-          ],
+        ...lineParagraphs(`${OPTION_LETTERS[i]}) ${localized(opt.content, lang)}`, {
+          justified: true,
+          after: SPACE_AFTER_OPTION,
+          keepWithNext: i < question.options.length - 1,
         }),
       )
     })
   } else {
-    paragraphs.push(...openEndedAnswerSpace())
+    paragraphs.push(openEndedAnswerSpace())
   }
 
   return paragraphs
 }
 
-function openEndedAnswerSpace(): Paragraph[] {
-  const border = { style: BorderStyle.SINGLE, size: 6, color: 'BFBFBF' }
+/**
+ * A question without a diagram is plain paragraphs. A question with one is a borderless two-column
+ * table — text on the left, board on the right, both top-aligned — whose single row may not split,
+ * so a question that does not fit moves to the next page as a whole.
+ */
+async function questionBlocks(
+  question: Question,
+  index: number,
+  lang: 'pl' | 'en',
+): Promise<(Paragraph | Table)[]> {
+  const { image, moves, failed } = await buildDiagramImage(question)
+  const body = questionBodyParagraphs(question, index, lang, moves, failed)
+  if (!image) return body
+
   return [
-    new Paragraph({
-      spacing: { after: SPACE_AFTER_OPTION },
-      border: { top: border, bottom: border, left: border, right: border },
-      children: Array.from({ length: 7 }, () => new TextRun({ break: 1, size: BODY_SIZE })),
+    new Table({
+      width: { size: CONTENT_WIDTH, type: WidthType.DXA },
+      columnWidths: [TEXT_COLUMN, DIAGRAM_COLUMN],
+      layout: TableLayoutType.FIXED,
+      borders: TableBorders.NONE,
+      rows: [
+        new TableRow({
+          cantSplit: true,
+          children: [
+            new TableCell({
+              width: { size: TEXT_COLUMN, type: WidthType.DXA },
+              verticalAlign: VerticalAlign.TOP,
+              children: body,
+            }),
+            new TableCell({
+              width: { size: DIAGRAM_COLUMN, type: WidthType.DXA },
+              verticalAlign: VerticalAlign.TOP,
+              children: [
+                new Paragraph({
+                  alignment: AlignmentType.RIGHT,
+                  // Same space before as the stem, so the board's top lines up with the question.
+                  spacing: { before: SPACE_BEFORE_QUESTION },
+                  children: [image],
+                }),
+              ],
+            }),
+          ],
+        }),
+      ],
     }),
   ]
+}
+
+/** Blank space for the handwritten answer — deliberately no frame around it. */
+function openEndedAnswerSpace(): Paragraph {
+  return new Paragraph({
+    spacing: { after: SPACE_AFTER_OPTION },
+    children: Array.from(
+      { length: ANSWER_SPACE_LINES },
+      () => new TextRun({ break: 1, size: BODY_SIZE }),
+    ),
+  })
 }
 
 function answerKeyParagraphs(
@@ -189,21 +271,11 @@ function answerKeyParagraphs(
             .filter((v): v is string => v !== null)
             .join(', ')
 
-    paragraphs.push(
-      new Paragraph({
-        spacing: { after: 80 },
-        children: [new TextRun({ text: `${index + 1}. ${answer}`, bold: true, size: BODY_SIZE })],
-      }),
-    )
+    paragraphs.push(...lineParagraphs(`${index + 1}. ${answer}`, { bold: true, after: 80 }))
 
     const explanation = localized(question.content, lang).explanation
     if (explanation) {
-      paragraphs.push(
-        new Paragraph({
-          spacing: { after: SPACE_AFTER_OPTION },
-          children: [new TextRun({ text: explanation, italics: true, size: BODY_SIZE })],
-        }),
-      )
+      paragraphs.push(...lineParagraphs(explanation, { italics: true, after: SPACE_AFTER_OPTION }))
     }
   })
 
@@ -228,7 +300,7 @@ export async function buildExamDocument(
 ): Promise<Document> {
   const resolve = (id: string) =>
     (state.overrides[id] as LoadedQuestion | undefined) ?? questionsById[id]
-  const children: Paragraph[] = []
+  const children: (Paragraph | Table)[] = []
 
   children.push(...htmlToDocxParagraphs(state.headerHtml))
 
@@ -244,7 +316,7 @@ export async function buildExamDocument(
   for (let i = 0; i < state.selectedQuestionIds.length; i++) {
     const question = resolve(state.selectedQuestionIds[i]!)
     if (!question) continue
-    children.push(...(await questionParagraphs(question, i, state.language)))
+    children.push(...(await questionBlocks(question, i, state.language)))
   }
 
   children.push(...htmlToDocxParagraphs(state.footerHtml))
@@ -263,6 +335,7 @@ export async function buildExamDocument(
       {
         properties: {
           page: {
+            size: { width: PAGE_WIDTH, height: PAGE_HEIGHT },
             margin: {
               top: PAGE_MARGIN,
               right: PAGE_MARGIN,
