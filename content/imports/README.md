@@ -4,7 +4,7 @@ Miejsce pracy nad przenoszeniem pytań z PDF-ów dawnych egzaminów do kolekcji 
 
 ## Jak wrzucać materiały
 
-PDF-y idą do `pdf/`. Są ignorowane przez gita (`*.pdf` w `.gitignore`), więc nie trafią do repo — zostają lokalnie jako materiał źródłowy.
+PDF-y (albo DOCX) idą do `pdf/`. Są ignorowane przez gita (`*.pdf` i `content/imports/pdf/*.docx` w `.gitignore`), więc nie trafią do repo — zostają lokalnie jako materiał źródłowy. DOCX jest wygodniejszy niż PDF: tekst wychodzi bez problemów z kodowaniem, a diagramy są osobnymi plikami obrazów.
 
 Przy każdym PDF-ie podaj:
 

@@ -128,6 +128,10 @@ export const EXAM_SHEETS: Record<string, { title: string; dateline?: string }> =
   'PZSzach 2025': {
     title: 'Centralny kurs sędziowski 2025 — egzamin na klasę państwową',
   },
+  // Plik CKS-2026-I.docx nie ma nagłówka; tytuł przyjęty wzorem PZSzach 2025 (decyzja właściciela).
+  'PZSzach 2026': {
+    title: 'Centralny kurs sędziowski 2026 — egzamin na klasę państwową',
+  },
 }
 
 export function examSheetHeading(exam: string, year: number) {

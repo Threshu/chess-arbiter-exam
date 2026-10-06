@@ -40,3 +40,4 @@ Thumbs.db
 
 # source material for question imports (kept out of the repo)
 *.pdf
+content/imports/pdf/*.docx
