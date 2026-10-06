@@ -379,3 +379,398 @@ topic: art-05-zakonczenie-partii
 - **Id wariantu:** `NuXDM6llKWceb5650Yp4` (wstawione 2026-10-06)
 - **Zmiana:** gońce jednopolowe → różnopolowe
 - **Odpowiedź:** c) przerwać partię (martwa pozycja) → **a) nie interweniować (mat możliwy — sprawdzone)**
+
+# Druga partia (2026-10-07): zmienione pozycje i szczegóły
+
+Na prośbę właściciela egzamin próbny ma się różnić od zeszłorocznego w około dwóch trzecich pytań. Doszło 7 kolejnych pytań z WP 2025 i 5 lekko zmienionych z PZSzach 2026 — pozycje odbite lub nowe, inne tempo, inne liczby posunięć. Wszystkie pozycje sprawdzone silnikiem.
+
+## WP 2025 #2 — wariant
+
+```yaml
+level: NA
+status: draft
+type: open-ended
+topic: art-07-nieprawidlowosci
+modelAnswer:
+  pl: Partię należy rozpocząć od nowa właściwymi kolorami. Obaj zawodnicy wykonali mniej niż 10 posunięć, a wtedy partię rozgrywa się od nowa z prawidłowymi kolorami (art. 7.3). Dopiero od 10 posunięć partia toczyłaby się dalej.
+  en: The game must be restarted with the correct colours. Both players have made fewer than 10 moves, and in that case the game is replayed with the right colours (Art. 7.3). Only from 10 moves on would the game continue.
+content:
+  pl:
+    stem: Partia rozgrywana tempem 15'+10''. Podczas trwania rundy jeden z zawodników zgłasza sędziemu, że gra niewłaściwym kolorem. Po przyjściu do szachownicy okazuje się, że zawodnicy wykonali po 8 posunięć. Jaka będzie decyzja sędziego?
+    explanation: 'Granicą jest 10 posunięć wykonanych przez obu zawodników: poniżej niej partię zaczyna się od nowa właściwymi kolorami, od niej wzwyż — kontynuuje (art. 7.3). Przepis nie zależy od rodzaju tempa, więc obowiązuje tak samo w szachach szybkich.'
+  en:
+    stem: A game played at 15'+10''. During the round one of the players tells the arbiter that they are playing with the wrong colour. When the arbiter comes to the board it turns out that each player has made 8 moves. What is the arbiter's decision?
+    explanation: 'The threshold is 10 moves by both players: below it the game is restarted with the correct colours, from it on the game continues (Art. 7.3). The rule does not depend on the time control, so it applies in rapid as well.'
+tags:
+  - wariant
+```
+
+- **Oryginał:** `raQmiWYPp4ziOtUEPu0h` (WP 2025 #2) — bez zmian
+- **Id wariantu:** `3RjtK2EcdARCTKuzs5AA` (wstawione 2026-10-07)
+- **Zmiana:** tempo 60'+30'' → 15'+10''; po 14 → po 8 posunięć
+- **Odpowiedź:** kontynuować partię → **rozpocząć od nowa właściwymi kolorami (art. 7.3)**
+
+## WP 2025 #4 — wariant
+
+```yaml
+content:
+  pl:
+    stem: "Partia grana tempem 15'+10''. Biały przesuwa pionka na ostatnią linię i sięga po hetmana stojącego obok szachownicy, ale zmienia zdanie: odkłada hetmana, stawia na polu promocji skoczka, tą samą ręką zdejmuje pionka i przełącza zegar. Czarny reklamuje, że skoro biały dotknął hetmana, musi promować na hetmana. Jaka jest decyzja sędziego?"
+    explanation: Pytanie sprawdza, kiedy wybór figury przy promocji staje się wiążący. Nie wtedy, gdy zawodnik bierze figurę do ręki poza szachownicą, ale dopiero gdy nowa figura dotknie pola promocji (art. 4.4.4). Do tego momentu zawodnik może zmienić zdanie.
+  en:
+    stem: "A game played at 15'+10''. White moves a pawn to the last rank and reaches for a queen standing beside the board, but changes his mind: he puts the queen down, places a knight on the promotion square, removes the pawn with the same hand and presses the clock. Black claims that since White touched the queen, he must promote to a queen. What is the arbiter's decision?"
+    explanation: The question tests when the choice of piece in a promotion becomes binding. Not when the player picks a piece up off the board, but only once the new piece touches the promotion square (Art. 4.4.4). Until then the player may change his mind.
+level: NA
+status: draft
+type: open-ended
+modelAnswer:
+  pl: Sędzia odrzuca reklamację — skoczek zostaje. Wybór promowanej figury jest zakończony dopiero z chwilą, gdy nowa figura dotknie pola promocji (art. 4.4.4). Dotknięcie hetmana stojącego poza szachownicą niczego nie przesądza, bo zasada dotkniętej bierki dotyczy bierek stojących na szachownicy (art. 4.3). Promocja została wykonana jedną ręką, a kolejność zdjęcia pionka i postawienia figury jest dowolna (art. 4.6.2).
+  en: The arbiter rejects the claim — the knight stays. The choice of the promoted piece is final only when the new piece touches the promotion square (Art. 4.4.4). Touching a queen standing off the board commits the player to nothing, because the touch-move rule concerns pieces on the board (Art. 4.3). The promotion was made with one hand, and the pawn may be removed and the new piece placed in either order (Art. 4.6.2).
+topic: art-04-wykonywanie-posuniec
+tags:
+  - wariant
+```
+
+- **Oryginał:** `MecKxA2eJCGR3GPITr5i` (WP 2025 #4) — bez zmian
+- **Id wariantu:** `MQaIqdJnPSKPOuvRUkZ6` (wstawione 2026-10-07)
+- **Zmiana:** promocja: zawodnik dotyka hetmana poza szachownicą, ale promuje na skoczka; tempo 15'+10''
+- **Odpowiedź:** reklamacja odrzucona (kolejność dowolna) → **reklamacja odrzucona — wybór figury rozstrzyga dopiero dotknięcie pola promocji (art. 4.4.4)**
+
+## WP 2025 #10 — wariant
+
+```yaml
+content:
+  pl:
+    stem: Partia rozgrywana tempem 90'+30''. W 24. posunięciu zawodnik grający czarnymi zauważył, że szachownica jest ułożona nieprawidłowo — w prawym rogu przy każdym z zawodników znajduje się czarne pole. Zawodnicy proszą o interwencję sędziego. Opisz postępowanie.
+    explanation: Złe ułożenie szachownicy (wbrew art. 2.1) nie unieważnia partii — to nie to samo co niewłaściwa pozycja początkowa bierek, przy której partię rozgrywa się od nowa (art. 7.2.1). Pozycję przenosi się na poprawnie ułożoną szachownicę. W szachach szybkich i błyskawicznych po 10. posunięciu obu stron takich reklamacji już się nie uwzględnia (Aneks A.4.1.2), ale tu tempo jest standardowe.
+  en:
+    stem: A game played at 90'+30''. On move 24 Black notices that the board has been placed wrongly — each player has a dark square in the right-hand corner. The players ask the arbiter to intervene. Describe the procedure.
+    explanation: A wrongly placed board (contrary to Art. 2.1) does not annul the game — unlike an incorrect initial position of the pieces, which means replaying the game (Art. 7.2.1). The position is transferred to a correctly placed board. In rapid and blitz such claims are no longer upheld after both players have made 10 moves (Appendix A.4.1.2), but this is standard play.
+level: NA
+type: open-ended
+modelAnswer:
+  pl: Sędzia przenosi powstałą pozycję na prawidłowo ułożoną szachownicę i nakazuje kontynuować grę (art. 7.2.2). W szachach standardowych nie ma przy tym żadnego limitu posunięć — ułożenie szachownicy poprawia się bez względu na to, jak daleko zaszła partia.
+  en: The arbiter transfers the position reached to a correctly placed board and orders play to continue (Art. 7.2.2). In standard play there is no move limit for this — the board is corrected however far the game has gone.
+status: draft
+topic: art-07-nieprawidlowosci
+tags:
+  - wariant
+```
+
+- **Oryginał:** `ulPw1FNXcapwBfpP8hNx` (WP 2025 #10) — bez zmian
+- **Id wariantu:** `C4hrkInbv20TnpFQ4bvu` (wstawione 2026-10-07)
+- **Zmiana:** tempo 10'+3'' → 90'+30''; 3. → 24. posunięcie; szachownica z czarnym polem w prawym rogu
+- **Odpowiedź:** przenieść pozycję i kontynuować → **przenieść pozycję i kontynuować — w szachach standardowych bez limitu posunięć (art. 7.2.2)**
+
+## WP 2025 #11 — wariant
+
+```yaml
+content:
+  pl:
+    stem: 'Partia szachów standardowych. W pozycji na diagramie (po 10.G:e7) zawodnik grający czarnymi odbija 10…H:e7, ale przy przesuwaniu hetmana przypadkowo przesuwa też pionka z f7 na f6. Czarny przełącza zegar, nie zauważając błędu. Biały zatrzymuje zegar i woła sędziego, wskazując na nieprawidłowo przesuniętego pionka. Sędzia:'
+    explanation: Odbicie H:e7 jest prawidłowym, zakończonym posunięciem i zostaje w mocy. Przypadkowe przesunięcie pionka nie jest ani posunięciem, ani dotknięciem z zamiarem wykonania ruchu (art. 4.2.2) — to przemieszczenie bierki, które usuwa się, przywracając pionka na f7 (art. 7.4.1, 7.6). Zawodnik, który przemieścił bierkę, robi to na własnym czasie, a sędzia może go ukarać (art. 7.4.3).
+  en:
+    stem: 'A standard-play game. In the position shown (after 10.Bxe7) Black recaptures 10…Qxe7, but while moving the queen accidentally pushes the pawn from f7 to f6 as well. Black presses the clock without noticing. White stops the clock and calls the arbiter, pointing to the displaced pawn. The arbiter:'
+    explanation: The recapture Qxe7 is a legal, completed move and stands. Accidentally pushing the pawn is neither a move nor a touch with intent to move (Art. 4.2.2) — it is a displaced piece, put right by returning the pawn to f7 (Arts. 7.4.1, 7.6). The player who displaced it does so on his own time, and the arbiter may penalise him (Art. 7.4.3).
+level: NA
+type: single-choice
+options:
+  - id: a
+    content:
+      pl: nakazuje cofnięcie tylko hetmana i ponowne wykonanie ruchu H:e7
+      en: orders only the queen to be taken back and Qxe7 to be played again
+    isCorrect: false
+  - id: b
+    content:
+      pl: nakazuje cofnięcie obu bierek na wcześniejsze pola i wykonanie dowolnego ruchu
+      en: orders both pieces back to their previous squares and any move to be made
+    isCorrect: false
+  - id: c
+    content:
+      pl: nakazuje przywrócenie pionka na f7 i dalszą grę z hetmanem na e7
+      en: orders the pawn back to f7 and play to continue with the queen on e7
+    isCorrect: true
+  - id: d
+    content:
+      pl: dodaje Czarnym 2 minuty za nieprawidłową reklamację
+      en: adds 2 minutes to Black for an unjustified claim
+    isCorrect: false
+status: draft
+topic: art-07-nieprawidlowosci
+tags:
+  - wariant
+diagram:
+  kind: fen
+  fen: r1bq1rk1/pp1nBppp/2p1p3/3n4/2BP4/2N1PN2/PP3PPP/2RQK2R b K - 0 10
+```
+
+- **Oryginał:** `QTOyWOIjreiCZG6EHpDa` (WP 2025 #11) — bez zmian
+- **Id wariantu:** `ksWdV0ntfNrTQn0rxx3w` (wstawione 2026-10-07)
+- **Zmiana:** nowa pozycja (gambit hetmański); przemieszcza pionka zawodnik grający czarnymi
+- **Odpowiedź:** c) przywrócić pionka, posunięcie zostaje → **c) przywrócić pionka na f7, posunięcie H:e7 zostaje (art. 7.4, 7.6)**
+
+## WP 2025 #17 — wariant
+
+```yaml
+type: single-choice
+level: NA
+status: draft
+tags:
+  - wariant
+content:
+  pl:
+    stem: Partia rozgrywana tempem 60'+30''. W pozycji na diagramie zawodnik grający czarnymi zatrzymuje zegar i reklamuje remis, twierdząc, że pozycja jest teoretycznie remisowa. Jaką decyzję powinien podjąć sędzia?
+    explanation: 'Przepisy nie znają remisu z oceny pozycji. Partia kończy się remisem tylko w sytuacjach z art. 5.2 i 9: pat, martwa pozycja, zgoda, powtórzenie pozycji lub reguła 50 posunięć. Biały ma pionka, którym przy współpracy przeciwnika może dać mata, więc pozycja nie jest martwa (art. 5.2.2). Reklamacja z Wytycznych III też nie wchodzi w grę, bo tempo przewiduje dodatek 30 s (art. III.2.2). Sędzia odrzuca reklamację i partia toczy się dalej.'
+  en:
+    stem: A game played at 60'+30''. In the position shown Black stops the clock and claims a draw, arguing that the position is a theoretical draw. What should the arbiter decide?
+    explanation: "The Laws know no draw by assessment of the position. A game is drawn only in the cases of Arts. 5.2 and 9: stalemate, dead position, agreement, repetition or the 50-move rule. White has a pawn with which mate is possible given the opponent's cooperation, so the position is not dead (Art. 5.2.2). A claim under Guidelines III is not available either, because the time control has a 30-second increment (Art. III.2.2). The arbiter rejects the claim and play continues."
+options:
+  - id: a
+    content:
+      pl: przyjąć reklamację
+      en: uphold the claim
+    isCorrect: false
+  - id: b
+    content:
+      pl: odrzucić reklamację i nakazać dalszą grę
+      en: reject the claim and let play continue
+    isCorrect: true
+  - id: c
+    content:
+      pl: odłożyć podjęcie decyzji i obserwować dalszy przebieg partii
+      en: postpone the decision and watch how the game develops
+    isCorrect: false
+topic: art-09-partia-remisowa
+diagram:
+  kind: fen
+  fen: 7k/8/5K2/7P/8/8/8/8 b - - 0 1
+```
+
+- **Oryginał:** `up5B6S6u9wROX9Xf2ggv` (WP 2025 #17) — bez zmian
+- **Id wariantu:** `PdKpjUSobnLJAiFlhK6u` (wstawione 2026-10-07)
+- **Zmiana:** nowa pozycja (pionek h zamiast a); tempo 30'+30'' → 60'+30''
+- **Odpowiedź:** b) odrzucić reklamację → **b) odrzucić reklamację — pozycja nie jest martwa, Wytyczne III wyłączone przez dodatek**
+
+## WP 2025 #21 — wariant
+
+```yaml
+type: open-ended
+level: NA
+status: draft
+tags:
+  - wariant
+content:
+  pl:
+    stem: W pozycji na diagramie nastąpiło 1.W:a8 W:a8 2.W:a8 K:a8 3.Ka3. W trakcie wykonywania ostatniego ruchu 3.Ka3 Białemu skończył się czas. Zawodnicy nie mogą porozumieć się w kwestii wyniku partii i proszą o interwencję sędziego. Napisz, jaki jest wynik partii.
+    explanation: 'Po wymianie obu par wież zostają same króle i pionki, a łańcuchy pionków się blokują. To jednak nie czyni pozycji martwą: przepis nie wymaga, by mat dało się wymusić — wystarczy, że jakakolwiek seria prawidłowych posunięć, choćby z pomocą przeciwnika, do niego prowadzi. Pionek, który może dojść do przemiany, to zapewnia.'
+  en:
+    stem: In the position shown, 1.Rxa8 Rxa8 2.Rxa8 Kxa8 3.Ka3 followed. While making the last move 3.Ka3, White ran out of time. The players cannot agree on the result and ask the arbiter to intervene. Write what the result is.
+    explanation: "Once both pairs of rooks are exchanged only kings and pawns remain, and the pawn chains are locked. That does not make the position dead, though: the rule does not require that mate can be forced — it is enough that some series of legal moves, even with the opponent's help, leads to it. A pawn that can reach promotion guarantees that."
+modelAnswer:
+  pl: '0–1, wygrana Czarnego. Białemu opadła chorągiewka, a Czarny zachowuje pionki. Przekroczenie czasu przegrywa partię, o ile przeciwnik może dać mata jakąkolwiek serią prawidłowych posunięć (art. 6.9) — a taka seria istnieje: przy współpracy przeciwnika czarny król może zbić niechroniony pionek d3 i otworzyć drogę do przemiany pionka d4.'
+  en: "0–1, Black wins. White's flag has fallen and Black keeps his pawns. Running out of time loses the game if the opponent can mate by some series of legal moves (Art. 6.9) — and such a series exists: with the opponent's cooperation the black king can take the unprotected pawn on d3 and clear the way for the d4 pawn to promote."
+topic: art-06-zegar-szachowy
+diagram:
+  kind: fen
+  fen: rr6/1k6/1p5p/1Pp1p1p1/2PpPpP1/3P1P1P/RK6/R7 w - - 0 1
+```
+
+- **Oryginał:** `sf9Jno7vJBpoVVLsHzc6` (WP 2025 #21) — bez zmian
+- **Id wariantu:** `6RrLgiyBshFSub2IPdFN` (wstawione 2026-10-07)
+- **Zmiana:** pozycja odbita na skrzydło hetmańskie; wymiany na a8, 3.Ka3
+- **Odpowiedź:** 0–1 → **0–1 (bez zmian — inna pozycja)**
+
+## WP 2025 #30 — wariant
+
+```yaml
+type: open-ended
+level: NA
+status: draft
+tags:
+  - wariant
+modelAnswer:
+  pl: 'Sędzia orzeka remis. Białemu opadła chorągiewka, a Czarny ma samego króla, więc nie może zamatować żadną serią prawidłowych posunięć — partia kończy się remisem (art. 6.9). Żądanie Białego jest bezzasadne: partia zakończyła się z chwilą stwierdzenia przekroczenia czasu i żadnych dalszych posunięć się nie wykonuje. To, że Biały miałby mata w jednym ruchu, nie ma znaczenia.'
+  en: "The arbiter declares a draw. White's flag has fallen, and Black has only a king, so he cannot mate by any series of legal moves — the game is drawn (Art. 6.9). White's demand is unfounded: the game ended when the flag fall was established, and no further moves are made. That White would have mate in one is irrelevant."
+topic: art-09-partia-remisowa
+content:
+  pl:
+    stem: Partia rozgrywana tempem 60'+30''. W pozycji na diagramie Biały wykonał posunięcie 1.Sa6+, po czym skończył mu się czas. Czarny dotyka króla, ale nie wykonuje posunięcia. Dochodzi do dyskusji i zawodnicy proszą o interwencję sędziego. Czarny domaga się remisu, natomiast Biały domaga się wykonania jedynego posunięcia królem (1…Ka8), po którym nastąpi mat 2.Gg2. Napisz, jakie powinny być decyzje sędziego.
+    explanation: Przekroczenie czasu przegrywa partię tylko wtedy, gdy przeciwnik może dać mata jakąkolwiek serią prawidłowych posunięć. Liczy się materiał strony, której chorągiewka nie opadła — tutaj samotny król — a nie to, jak blisko mata był zawodnik, któremu skończył się czas.
+  en:
+    stem: A game played at 60'+30''. In the position shown White played 1.Na6+ and then ran out of time. Black touches the king but does not make a move. A dispute arises and the players ask the arbiter to intervene. Black demands a draw, while White demands that the only king move (1…Ka8) be played, after which mate follows with 2.Bg2. Write what the arbiter should decide.
+    explanation: Running out of time loses only if the opponent can mate by some series of legal moves. What counts is the material of the side whose flag did not fall — here a lone king — not how close to mate the player who ran out of time was.
+diagram:
+  kind: fen
+  fen: 1k6/8/1K6/8/1N6/7B/8/8 w - - 0 1
+```
+
+- **Oryginał:** `CgkVGB4fY8akAxvsveEw` (WP 2025 #30) — bez zmian
+- **Id wariantu:** `0jchi7DZmOWX3qkXYAIm` (wstawione 2026-10-07)
+- **Zmiana:** pozycja odbita (1.Sa6+, mat 2.Gg2); tempo 90' → 60'+30''
+- **Odpowiedź:** remis → **remis (bez zmian — inna pozycja)**
+
+## PZSzach 2026 #8 — wariant
+
+```yaml
+type: open-ended
+level: FA
+status: draft
+topic: art-06-zegar-szachowy
+tags:
+  - wariant
+content:
+  pl:
+    stem: |-
+      Partia rozgrywana jest tempem 5'+3'' na zawodnika.
+      W przedstawionej pozycji zawodnik grający białymi wykonał posunięcie 1.Kxc8 i przełączył zegar. Przed wykonaniem kolejnego posunięcia przez czarne zawodnikowi grającemu czarnymi spadła chorągiewka. Sytuację obserwował sędzia.
+      Jak powinien postąpić sędzia? Uzasadnij swoją decyzję.
+    explanation: Pozycja po 1.Kxc8 nie jest jeszcze martwa — czarny król ma ruch. Ale jedynym ruchem jest zbicie pionka a7 (pola b7 i b8 kontroluje biały król), a po nim zostaje król przeciwko królowi. Liczy się więc nie to, czy pozycja jest martwa w chwili opadnięcia chorągiewki, tylko czy jakakolwiek seria prawidłowych posunięć prowadzi do mata (art. 6.9). Tempo 5'+3'' to 5 + 3 = 8 minut, czyli szachy błyskawiczne, w których sędzia sygnalizuje opadnięcie chorągiewki z urzędu (Aneks A.4.5 w związku z B.4).
+  en:
+    stem: |-
+      The game is played at 5'+3'' per player.
+      In the position shown, White played 1.Kxc8 and pressed the clock. Before Black made the next move, Black's flag fell. The arbiter was watching.
+      What should the arbiter do? Justify the decision.
+    explanation: The position after 1.Kxc8 is not dead yet — the black king has a move. But the only move is capturing the a7 pawn (b7 and b8 are covered by the white king), after which it is king against king. What counts is not whether the position is dead when the flag falls, but whether any series of legal moves leads to mate (Art. 6.9). 5'+3'' means 5 + 3 = 8 minutes, i.e. blitz, where the arbiter calls a flag fall on their own initiative (Appendix A.4.5 read with B.4).
+modelAnswer:
+  pl: Sędzia przerywa partię i orzeka remis. Po 1.Kxc8 czarne mają tylko jedno prawidłowe posunięcie — 1…Kxa7 — po którym na szachownicy zostają same króle, czyli martwa pozycja. Przekroczenie czasu oznacza przegraną tylko wtedy, gdy przeciwnik może dać mata jakąkolwiek serią prawidłowych posunięć (art. 6.9); tutaj każda taka seria prowadzi do martwej pozycji, więc białe nie mogą zamatować.
+  en: The arbiter stops the game and declares a draw. After 1.Kxc8 Black has exactly one legal move — 1…Kxa7 — after which only the kings remain, a dead position. Exceeding the time limit loses only if the opponent can checkmate by some series of legal moves (Art. 6.9); here every such series leads to a dead position, so White cannot checkmate.
+diagram:
+  kind: fen
+  fen: k1r5/P2K4/8/8/8/8/8/8 w - - 0 1
+```
+
+- **Oryginał:** `OBMibkqT1822TRngsJAS` (PZSzach 2026 #8) — bez zmian
+- **Id wariantu:** `VQyF9WnLkItjTs6vtdfF` (wstawione 2026-10-07)
+- **Zmiana:** pozycja odbita (1.Kxc8, jedyny ruch 1…Kxa7); tempo 3'+2'' → 5'+3''
+- **Odpowiedź:** remis → **remis (bez zmian — inna pozycja)**
+
+## PZSzach 2026 #10 — wariant
+
+```yaml
+type: open-ended
+level: FA
+status: draft
+topic: art-11-zachowanie-zawodnikow
+tags:
+  - wariant
+content:
+  pl:
+    stem: |-
+      Partia rozgrywana jest tempem 60'+30'' na zawodnika.
+      W pozycji przedstawionej na diagramie z kieszeni marynarki zawodnika grającego czarnymi wydobywa się dźwięk telefonu komórkowego.
+      Jak powinien postąpić sędzia? Czy wynik partii zależy od pozycji na szachownicy? Odpowiedź uzasadnij.
+    explanation: 'Pułapka jest tu odwrócona: to przewiniający ma przygniatającą przewagę, a przeciwnik samotnego króla, którym sam nigdy by nie zamatował. Przepis o urządzeniach elektronicznych nie bierze pod uwagę ani pozycji, ani materiału — przeciwnik po prostu wygrywa. To odróżnia go od art. 6.9 i 7.5.5, gdzie brak materiału matującego u przeciwnika daje remis.'
+  en:
+    stem: |-
+      The game is played at 60'+30'' per player.
+      In the position shown, a mobile phone rings in the jacket pocket of the player with the black pieces.
+      What should the arbiter do? Does the result depend on the position on the board? Justify your answer.
+    explanation: "The trap is reversed here: it is the offender who has an overwhelming advantage, and the opponent who has a lone king that could never mate. The rule on electronic devices takes neither the position nor the material into account — the opponent simply wins. That sets it apart from Arts. 6.9 and 7.5.5, where the opponent's lack of mating material means a draw."
+modelAnswer:
+  pl: Sędzia orzeka przegraną czarnych i zwycięstwo białych — niezależnie od pozycji, także wtedy, gdy białym został sam król, a czarne mają wieżę i skoczka. Zawodnik nie może mieć przy sobie w strefie rozgrywek telefonu ani innego urządzenia elektronicznego (art. 11.3.2.1), a jeżeli nie ma wątpliwości, że je wniósł, przegrywa partię, a przeciwnik ją wygrywa (art. 11.3.2.2). Regulamin turnieju może przewidywać łagodniejszą karę. Niezależnie od rozstrzygnięcia sędzia może rozważyć, czy nie doszło do próby oszustwa, i zażądać kontroli (art. 11.3.3).
+  en: The arbiter declares the game lost by Black and won by White — whatever the position, even though White has only a king left and Black has a rook and a knight. A player may not have a mobile phone or any other electronic device on them in the playing venue (Art. 11.3.2.1), and if it is evident that they brought one in, they lose the game and the opponent wins (Art. 11.3.2.2). The tournament regulations may set a milder penalty. Separately, the arbiter may consider whether cheating was attempted and require an inspection (Art. 11.3.3).
+diagram:
+  kind: fen
+  fen: 8/8/8/8/3n4/4k3/1r6/7K b - - 0 1
+```
+
+- **Oryginał:** `5a1tCyjQMOXjBCzFTMeE` (PZSzach 2026 #10) — bez zmian
+- **Id wariantu:** `HJLfMBCp6H4YSCbz9E4j` (wstawione 2026-10-07)
+- **Zmiana:** telefon dzwoni u czarnych, którzy mają przygniatającą przewagę; tempo 90'+30'' → 60'+30''
+- **Odpowiedź:** przegrana białych mimo przewagi → **przegrana czarnych mimo przewagi — białe wygrywają samym królem (art. 11.3.2.2)**
+
+## PZSzach 2026 #11 — wariant
+
+```yaml
+type: open-ended
+level: FA
+status: draft
+topic: art-07-nieprawidlowosci
+tags:
+  - wariant
+content:
+  pl:
+    stem: |-
+      Partia rozgrywana jest tempem 5'+3'' na zawodnika.
+      W pozycji przedstawionej na diagramie zawodnik grający białymi wykonał posunięcie 1.exf8, doprowadzając pionka na ostatnią linię. Na polu promocji pozostawił jednak pionka i przełączył zegar, nie dokonując zamiany na żadną figurę. Następnie zawodnikowi grającemu czarnymi skończył się czas do namysłu.
+      Jaką decyzję powinien podjąć sędzia? Odpowiedź uzasadnij.
+    explanation: 'Na diagramie białe stoją w szachu od skoczka z f8, więc bicie e7:f8 nie tylko promuje pionka, ale też likwiduje szacha. Przepis sam rozstrzyga, na jaką figurę zamienia się pionka: na hetmana. Hetman na f8 razem ze skoczkiem z e5 odbiera czarnemu królowi wszystkie pola (g6, g7, g8, h6, h8), nie dając szacha. Bonifikata za nieprawidłowe posunięcie nie ma już znaczenia, bo pat zakończył partię.'
+  en:
+    stem: |-
+      The game is played at 5'+3'' per player.
+      In the position shown, White played 1.exf8, bringing the pawn to the last rank. However, they left the pawn on the promotion square and pressed the clock without exchanging it for any piece. Black's time then ran out.
+      What decision should the arbiter take? Justify your answer.
+    explanation: 'In the diagram White is in check from the knight on f8, so the capture exf8 both promotes and removes the check. The rule itself decides what the pawn becomes: a queen. A queen on f8 together with the knight on e5 takes away every square from the black king (g6, g7, g8, h6, h8) without giving check. The time bonus for the illegal move is moot, because stalemate has ended the game.'
+modelAnswer:
+  pl: Remis. Pozostawienie pionka na polu promocji i przełączenie zegara to nieprawidłowe posunięcie, a pionka zamienia się wtedy na hetmana tego samego koloru (art. 7.5.2). Po 1.exf8=H czarny król na h7 nie stoi w szachu i nie ma żadnego prawidłowego posunięcia — to pat, który natychmiast kończy partię (art. 5.2.1). Późniejsze opadnięcie chorągiewki czarnych nie ma już znaczenia.
+  en: A draw. Leaving the pawn on the promotion square and pressing the clock is an illegal move, and the pawn is then replaced by a queen of the same colour (Art. 7.5.2). After 1.exf8=Q the black king on h7 is not in check and has no legal move — stalemate, which ends the game immediately (Art. 5.2.1). Black's flag falling afterwards no longer matters.
+diagram:
+  kind: fen
+  fen: 5n2/4P2k/4K3/4N3/8/8/8/8 w - - 0 1
+```
+
+- **Oryginał:** `aVnuOEIQ9rnRUXjHfRX1` (PZSzach 2026 #11) — bez zmian
+- **Id wariantu:** `i11VjpO8FhlyblGfCi5f` (wstawione 2026-10-07)
+- **Zmiana:** pozycja odbita (1.exf8 bez promocji); tempo 3'+2'' → 5'+3''
+- **Odpowiedź:** remis (pat) → **remis (pat) — bez zmian, inna pozycja**
+
+## PZSzach 2026 #13 — wariant
+
+```yaml
+type: open-ended
+level: FA
+status: draft
+topic: art-04-wykonywanie-posuniec
+tags:
+  - wariant
+content:
+  pl:
+    stem: |-
+      Partia rozgrywana jest tempem 15 min + 5 s na posunięcie.
+      W pozycji przedstawionej na diagramie zawodnik grający białymi wykonał posunięcie 1.Sxc6, nie przełączając jednak zegara. Zawodnik grający czarnymi natychmiast zatrzymał zegar i zareklamował sędziemu, że przeciwnik wykonał nieprawidłowe posunięcie. W partii nie wystąpiły wcześniej żadne nieprawidłowości.
+      Jak powinien postąpić sędzia? Odpowiedź uzasadnij.
+    explanation: Skoczek b4 osłania białego króla na b2 przed wieżą z b8, więc nie może zejść z linii „b” — dlatego 1.Sxc6 było nieprawidłowe. Gdyby chodziło tylko o skoczka, biały mógłby zagrać dowolnie (art. 4.5). Ale dotknięty został także czarny pionek na c6, a art. 4.3.3 każe go wtedy zbić, jeśli to możliwe — i wieża z c3 może to zrobić.
+  en:
+    stem: |-
+      The game is played at 15 min + 5 s per move.
+      In the position shown, White played 1.Nxc6 but did not press the clock. Black immediately stopped the clock and claimed to the arbiter that the opponent had made an illegal move. There had been no earlier irregularities in the game.
+      What should the arbiter do? Justify your answer.
+    explanation: The knight on b4 shields the white king on b2 from the rook on b8, so it cannot leave the b-file — which is why 1.Nxc6 was illegal. Had only the knight been touched, White could play anything (Art. 4.5). But Black's pawn on c6 was touched as well, and Art. 4.3.3 then requires capturing it if possible — which the rook on c3 can do.
+modelAnswer:
+  pl: 'Reklamacja nieprawidłowego posunięcia jest bezzasadna: zegar nie został przełączony, więc posunięcie nie zostało zakończone (art. 7.5.1) i biały może je jeszcze naprawić — nie ma bonifikaty. Obowiązuje jednak zasada dotkniętej bierki. Biały dotknął własnego skoczka i czarnego pionka na c6, więc rozstrzyga art. 4.3.3. Skoczek z b4 jest związany wieżą z b8 i nie ma żadnego prawidłowego posunięcia, dlatego biały musi zbić dotkniętego pionka inną bierką — jedynym takim posunięciem jest Wxc6.'
+  en: "The illegal-move claim fails: the clock was not pressed, so the move was not completed (Art. 7.5.1) and White may still correct it — there is no time bonus. The touch-move rule applies, though. White touched their own knight and Black's pawn on c6, so Art. 4.3.3 governs. The knight on b4 is pinned by the rook on b8 and has no legal move, so White must capture the touched pawn with another piece — and the only such move is Rxc6."
+diagram:
+  kind: fen
+  fen: 1rr5/4k1p1/2pb3p/3p1p2/1N6/P1R2P2/1KP3PP/R7 w - - 0 1
+```
+
+- **Oryginał:** `7kOHcN2urKlAb2oEtiYT` (PZSzach 2026 #13) — bez zmian
+- **Id wariantu:** `mhWYpUEV3QW8YXYgCUSw` (wstawione 2026-10-07)
+- **Zmiana:** pozycja odbita (1.Sxc6, skoczek związany na linii b); tempo 10 min + 5 s → 15 min + 5 s
+- **Odpowiedź:** bicie W:f6 → **bicie W:c6 (art. 4.3.3) — bez zmian, inna pozycja**
+
+## PZSzach 2026 #14 — wariant
+
+```yaml
+type: open-ended
+level: FA
+status: draft
+topic: kojarzenie-i-systemy
+tags:
+  - wariant
+content:
+  pl:
+    stem: Podaj kojarzenie 5. rundy turnieju rozgrywanego systemem kołowym z udziałem 7 zawodników.
+    explanation: W rundzie 5 tabeli Bergera dla 8 numerów są pary 3–8, 4–2, 5–1, 6–7; ponieważ numer 8 to pauza, pauzuje zawodnik nr 3. Przy nieparzystej liczbie zawodników zawsze korzysta się z tabeli dla liczby o jeden większej, a zawodnik skojarzony z ostatnim numerem pauzuje.
+  en:
+    stem: Give the pairings for round 5 of a round-robin tournament with 7 players.
+    explanation: Round 5 of the Berger table for 8 numbers pairs 3–8, 4–2, 5–1, 6–7; as number 8 is the bye, player 3 sits out. With an odd number of players the table for one more number is always used, and whoever is paired with the last number has the bye.
+modelAnswer:
+  pl: 'Przy 7 zawodnikach korzysta się z tabeli Bergera dla 8 numerów, a numer 8 oznacza pauzę. Runda 5: 3 – pauza, 4–2, 5–1, 6–7.'
+  en: 'With 7 players the Berger table for 8 numbers is used, number 8 meaning a bye. Round 5: 3 – bye, 4–2, 5–1, 6–7.'
+```
+
+- **Oryginał:** `rqLoq47rXvr1Kruw97qg` (PZSzach 2026 #14) — bez zmian
+- **Id wariantu:** `yIuItzn7FQRBz7b5pGlU` (wstawione 2026-10-07)
+- **Zmiana:** 9 zawodników, runda 4 → 7 zawodników, runda 5
+- **Odpowiedź:** 7 – pauza, 8–6, 9–5, 1–4, 2–3 → **3 – pauza, 4–2, 5–1, 6–7**
