@@ -11,14 +11,18 @@ import {
   type Unsubscribe,
 } from 'firebase/firestore'
 import type { Question } from '~~/shared/types/question'
-import { createExamGeneratorState } from '~/types/examGenerator'
+import { createExamGeneratorState, type ExamGeneratorState } from '~/types/examGenerator'
+import type { SavedExamSummary } from '~/composables/useSavedExams'
 
 definePageMeta({ middleware: ['admin'], layout: 'admin' })
 
 const { t, locale } = useI18n()
+const route = useRoute()
+const router = useRouter()
 const { $firestore } = useNuxtApp()
 const firestore = $firestore as Firestore
 const { generateExamDocx } = useExamDocx()
+const savedExams = useSavedExams()
 
 const currentLocale = computed(() => locale.value as 'pl' | 'en')
 
@@ -43,6 +47,8 @@ onMounted(() => {
     rows.value = snap.docs.map((d) => ({ id: d.id, ...(d.data() as Question) }))
     loading.value = false
   })
+  // `?exam=<id>` opens a saved exam directly — the URL survives a reload and can be shared.
+  if (typeof route.query.exam === 'string') openExam(route.query.exam)
 })
 
 onBeforeUnmount(() => unsubscribe?.())
@@ -118,6 +124,116 @@ function useOnlyInDocument() {
   editQuestion.value = null
 }
 
+// Saved exams
+const currentExamId = ref<string | null>(null)
+const currentExamTitle = ref('')
+const lastSavedAt = ref<Date | null>(null)
+const savingExam = ref(false)
+const examNotFound = ref(false)
+const loadDialogOpen = ref(false)
+const loadingList = ref(false)
+const savedList = ref<SavedExamSummary[]>([])
+const examToDelete = ref<SavedExamSummary | null>(null)
+const deletingExam = ref(false)
+
+async function setExamQuery(id: string | null) {
+  const next = { ...route.query }
+  if (id) next.exam = id
+  else Reflect.deleteProperty(next, 'exam')
+  await router.replace({ query: next })
+}
+
+function applyState(next: ExamGeneratorState) {
+  Object.assign(state, next)
+}
+
+async function openExam(id: string) {
+  const stored = await savedExams.load(id)
+  if (!stored) {
+    examNotFound.value = true
+    return
+  }
+  applyState(stored)
+  currentExamId.value = id
+  currentExamTitle.value = stored.examTitle
+  lastSavedAt.value = null
+  examNotFound.value = false
+  loadDialogOpen.value = false
+  await setExamQuery(id)
+}
+
+async function openLoadDialog() {
+  loadDialogOpen.value = true
+  loadingList.value = true
+  try {
+    savedList.value = await savedExams.list()
+  } finally {
+    loadingList.value = false
+  }
+}
+
+async function saveExam(asNew: boolean) {
+  savingExam.value = true
+  try {
+    const id = await savedExams.save(state, asNew ? null : currentExamId.value)
+    currentExamId.value = id
+    currentExamTitle.value = state.examTitle
+    lastSavedAt.value = new Date()
+    examNotFound.value = false
+    await setExamQuery(id)
+  } finally {
+    savingExam.value = false
+  }
+}
+
+async function newExam() {
+  applyState(createExamGeneratorState())
+  currentExamId.value = null
+  currentExamTitle.value = ''
+  lastSavedAt.value = null
+  await setExamQuery(null)
+}
+
+function closeDeleteDialog(open: boolean) {
+  if (!open) examToDelete.value = null
+}
+
+async function confirmDeleteExam() {
+  const target = examToDelete.value
+  if (!target) return
+  deletingExam.value = true
+  try {
+    await savedExams.remove(target.id)
+    savedList.value = savedList.value.filter((e) => e.id !== target.id)
+    if (currentExamId.value === target.id) {
+      currentExamId.value = null
+      currentExamTitle.value = ''
+      await setExamQuery(null)
+    }
+    examToDelete.value = null
+  } finally {
+    deletingExam.value = false
+  }
+}
+
+const currentExamLabel = computed(() =>
+  currentExamId.value
+    ? t('examGenerator.saved.current', {
+        title: currentExamTitle.value || t('examGenerator.saved.untitled'),
+      })
+    : t('examGenerator.saved.unsaved'),
+)
+
+const deleteDescription = computed(() =>
+  t('examGenerator.saved.deleteDescription', {
+    title: examToDelete.value?.examTitle || t('examGenerator.saved.untitled'),
+  }),
+)
+
+function formatDate(date: Date | null) {
+  return date ? date.toLocaleString(locale.value) : ''
+}
+
 async function onGenerate() {
   generating.value = true
   try {
@@ -156,6 +272,38 @@ async function onGenerate() {
           <circle cx="7" cy="18" r="2" fill="currentColor" stroke="none" />
         </svg>
       </button>
+    </div>
+
+    <div
+      class="border-border bg-surface flex flex-wrap items-center justify-between gap-3 rounded-md border px-4 py-3"
+    >
+      <div class="text-sm">
+        <p class="text-fg font-medium">{{ currentExamLabel }}</p>
+        <p v-if="lastSavedAt" class="text-muted">
+          {{ t('examGenerator.saved.savedAt', { time: formatDate(lastSavedAt) }) }}
+        </p>
+        <p v-if="examNotFound" class="text-danger">{{ t('examGenerator.saved.notFound') }}</p>
+      </div>
+      <div class="flex flex-wrap gap-2">
+        <UiButton variant="ghost" size="sm" @click="newExam">
+          {{ t('examGenerator.saved.new') }}
+        </UiButton>
+        <UiButton variant="secondary" size="sm" @click="openLoadDialog">
+          {{ t('examGenerator.saved.open') }}
+        </UiButton>
+        <UiButton
+          v-if="currentExamId"
+          variant="secondary"
+          size="sm"
+          :loading="savingExam"
+          @click="saveExam(true)"
+        >
+          {{ t('examGenerator.saved.saveAs') }}
+        </UiButton>
+        <UiButton variant="primary" size="sm" :loading="savingExam" @click="saveExam(false)">
+          {{ t('examGenerator.saved.save') }}
+        </UiButton>
+      </div>
     </div>
 
     <div class="grid gap-6 lg:grid-cols-2">
@@ -275,6 +423,59 @@ async function onGenerate() {
     >
       <AdminQuestionForm :initial-value="editQuestion" @save="onEditFormSave" />
     </UiConfirmDialog>
+
+    <!-- Saved exams dialog -->
+    <UiConfirmDialog
+      :open="loadDialogOpen"
+      :title="t('examGenerator.saved.listTitle')"
+      size="md"
+      hide-actions
+      @update:open="loadDialogOpen = $event"
+    >
+      <p v-if="loadingList" class="text-muted text-sm">…</p>
+      <p v-else-if="!savedList.length" class="text-muted text-sm">
+        {{ t('examGenerator.saved.empty') }}
+      </p>
+      <ul v-else class="flex flex-col gap-2">
+        <li
+          v-for="exam in savedList"
+          :key="exam.id"
+          class="border-border flex flex-wrap items-center justify-between gap-3 rounded-md border p-3"
+        >
+          <div class="text-sm">
+            <p class="text-fg font-medium">
+              {{ exam.examTitle || t('examGenerator.saved.untitled') }}
+            </p>
+            <p class="text-muted">
+              {{ t('examGenerator.saved.questionCount', exam.questionCount) }}
+              <span v-if="exam.updatedAt"> &middot; {{ formatDate(exam.updatedAt) }}</span>
+            </p>
+          </div>
+          <div class="flex gap-2">
+            <UiButton variant="ghost" size="sm" @click="examToDelete = exam">
+              {{ t('examGenerator.saved.delete') }}
+            </UiButton>
+            <UiButton variant="primary" size="sm" @click="openExam(exam.id)">
+              {{ t('examGenerator.saved.load') }}
+            </UiButton>
+          </div>
+        </li>
+      </ul>
+      <div class="mt-4 flex justify-end">
+        <UiButton variant="ghost" @click="loadDialogOpen = false">{{ t('actions.back') }}</UiButton>
+      </div>
+    </UiConfirmDialog>
+
+    <UiConfirmDialog
+      :open="examToDelete !== null"
+      :title="t('examGenerator.saved.deleteTitle')"
+      :description="deleteDescription"
+      :confirm-text="t('examGenerator.saved.delete')"
+      variant="danger"
+      :loading="deletingExam"
+      @update:open="closeDeleteDialog"
+      @confirm="confirmDeleteExam"
+    />
 
     <AdminSaveChoiceDialog
       v-model:open="saveChoiceOpen"

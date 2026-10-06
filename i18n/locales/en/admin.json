@@ -184,6 +184,24 @@
     },
     "preview": {
       "modelAnswer": "Model answer"
+    },
+    "saved": {
+      "new": "New exam",
+      "open": "Open exam",
+      "save": "Save exam",
+      "saveAs": "Save as new",
+      "current": "Exam: {title}",
+      "unsaved": "New, unsaved exam",
+      "untitled": "(untitled)",
+      "savedAt": "Saved {time}",
+      "notFound": "The saved exam from the link was not found.",
+      "listTitle": "Saved exams",
+      "empty": "No saved exams yet.",
+      "questionCount": "no questions | {count} question | {count} questions",
+      "load": "Open",
+      "delete": "Delete",
+      "deleteTitle": "Delete this exam?",
+      "deleteDescription": "The exam “{title}” will be deleted. The questions in the bank stay as they are."
     }
   },
   "archive": {

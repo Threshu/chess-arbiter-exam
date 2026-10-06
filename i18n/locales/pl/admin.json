@@ -184,6 +184,24 @@
     },
     "preview": {
       "modelAnswer": "Modelowa odpowiedź"
+    },
+    "saved": {
+      "new": "Nowy egzamin",
+      "open": "Wczytaj egzamin",
+      "save": "Zapisz egzamin",
+      "saveAs": "Zapisz jako nowy",
+      "current": "Egzamin: {title}",
+      "unsaved": "Nowy, niezapisany egzamin",
+      "untitled": "(bez tytułu)",
+      "savedAt": "Zapisano {time}",
+      "notFound": "Nie znaleziono zapisanego egzaminu z linku.",
+      "listTitle": "Zapisane egzaminy",
+      "empty": "Nie ma jeszcze zapisanych egzaminów.",
+      "questionCount": "brak pytań | {count} pytanie | {count} pytania | {count} pytań",
+      "load": "Otwórz",
+      "delete": "Usuń",
+      "deleteTitle": "Usunąć egzamin?",
+      "deleteDescription": "Egzamin „{title}” zostanie usunięty. Pytania w bazie pozostaną bez zmian."
     }
   },
   "archive": {

@@ -54,5 +54,10 @@ service cloud.firestore {
       allow read: if isSignedIn();
       allow write: if isAdmin();
     }
+
+    // Egzaminy z generatora — referencje do pytan plus klucz odpowiedzi, wiec nigdy dla uczniow.
+    match /exams/{eid} {
+      allow read, write: if isAdmin();
+    }
   }
 }
