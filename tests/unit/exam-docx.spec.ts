@@ -174,6 +174,12 @@ describe('buildExamDocument layout', () => {
     expect(xml).not.toContain('<wp:anchor')
   }, 15000)
 
+  it('keeps consecutive diagram questions in separate tables', async () => {
+    const xml = await documentXml([diagramQuestion, { ...diagramQuestion, id: 'q-diagram-2' }])
+    expect(xml.match(/<w:tbl>/g)).toHaveLength(2)
+    expect(xml).not.toMatch(/<\/w:tbl>\s*<w:tbl>/)
+  }, 15000)
+
   it('lays out a question without a diagram as plain paragraphs', async () => {
     const xml = await documentXml([openEndedQuestion])
     expect(xml).not.toContain('<w:tbl>')

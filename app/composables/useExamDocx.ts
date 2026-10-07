@@ -249,6 +249,9 @@ async function questionBlocks(
         }),
       ],
     }),
+    // Word merges tables that touch into one, so consecutive diagram questions became a single
+    // table and could not be moved around separately. An empty paragraph keeps them apart.
+    new Paragraph({ spacing: { before: 0, after: 0 }, children: [] }),
   ]
 }
 
