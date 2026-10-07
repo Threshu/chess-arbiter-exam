@@ -48,7 +48,19 @@ onMounted(load)
     </UiCard>
 
     <template v-else>
-      <h1 class="font-display text-fg mb-2 text-3xl">{{ heading.title }}</h1>
+      <div class="mb-2 flex flex-wrap items-start justify-between gap-3">
+        <h1 class="font-display text-fg text-3xl">{{ heading.title }}</h1>
+        <NuxtLink
+          :to="
+            localePath({
+              path: '/admin/exam-generator',
+              query: { archive: `${sheet.exam}:${sheet.year}` },
+            })
+          "
+        >
+          <UiButton variant="secondary" size="sm">{{ t('archive.openInGenerator') }}</UiButton>
+        </NuxtLink>
+      </div>
       <p class="text-muted mb-2">
         <span v-if="heading.dateline">{{ heading.dateline }} &middot; </span>
         {{ t('archive.questionCount', sheet.entries.length) }}

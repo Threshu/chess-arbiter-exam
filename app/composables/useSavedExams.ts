@@ -12,7 +12,7 @@ import {
   type Firestore,
   type Timestamp,
 } from 'firebase/firestore'
-import type { ExamGeneratorState } from '~/types/examGenerator'
+import { createExamGeneratorState, type ExamGeneratorState } from '~/types/examGenerator'
 
 export interface SavedExamSummary {
   id: string
@@ -24,6 +24,9 @@ export interface SavedExamSummary {
 function toStored(state: ExamGeneratorState): ExamGeneratorState {
   return {
     examTitle: state.examTitle,
+    dateline: state.dateline,
+    showCandidateTable: state.showCandidateTable,
+    classOptions: state.classOptions,
     language: state.language,
     headerHtml: state.headerHtml,
     footerHtml: state.footerHtml,
@@ -60,8 +63,13 @@ export function useSavedExams() {
     const snap = await getDoc(doc(exams, id))
     if (!snap.exists()) return null
     const data = snap.data()
+    // Exams saved before a field existed get the same defaults as a new exam.
+    const defaults = createExamGeneratorState()
     return {
       examTitle: data.examTitle ?? '',
+      dateline: data.dateline ?? defaults.dateline,
+      showCandidateTable: data.showCandidateTable ?? defaults.showCandidateTable,
+      classOptions: data.classOptions ?? defaults.classOptions,
       language: data.language === 'en' ? 'en' : 'pl',
       headerHtml: data.headerHtml ?? '',
       footerHtml: data.footerHtml ?? '',

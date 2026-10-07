@@ -152,7 +152,7 @@
     "examTitle": "Tytuł egzaminu",
     "language": "Język dokumentu",
     "includeAnswerKey": "Dołącz klucz odpowiedzi",
-    "headerText": "Tekst nagłówka",
+    "headerText": "Tekst pod tabelą",
     "footerText": "Tekst stopki",
     "generate": "Generuj DOCX",
     "settings": {
@@ -201,8 +201,15 @@
       "load": "Otwórz",
       "delete": "Usuń",
       "deleteTitle": "Usunąć egzamin?",
-      "deleteDescription": "Egzamin „{title}” zostanie usunięty. Pytania w bazie pozostaną bez zmian."
-    }
+      "deleteDescription": "Egzamin „{title}” zostanie usunięty. Pytania w bazie pozostaną bez zmian.",
+      "archivedTitle": "Archiwalne egzaminy",
+      "archivedHint": "Odtworzone z banku pytań. Otwarcie tworzy nowy, niezapisany egzamin — archiwum się nie zmienia.",
+      "fromArchive": "Nowy egzamin na podstawie: {title}",
+      "archivedNotFound": "Nie znaleziono archiwalnego arkusza z linku."
+    },
+    "dateline": "Miejsce i data (np. Poznań, 20.09.2025 r.)",
+    "showCandidateTable": "Tabela dla zdającego (imię i nazwisko, klasa)",
+    "classOptions": "Klasy do wyboru, po przecinku — puste pole usuwa wiersz z klasą"
   },
   "archive": {
     "title": "Archiwum egzaminów",
@@ -218,6 +225,7 @@
     "outdatedNote": "Odpowiedź była poprawna w dniu egzaminu, ale nie jest zgodna z obecnymi przepisami. To pytanie nie trafia do trybu praktyki.",
     "gapsNote": "Numeracja ma przerwy — brakujących pytań nie zaimportowano (duplikaty, warianty do decyzji albo zadania wymagające tabel klasyfikacyjnych).",
     "backToList": "Wróć do listy egzaminów",
-    "sheetNotFound": "Nie znaleziono takiego arkusza."
+    "sheetNotFound": "Nie znaleziono takiego arkusza.",
+    "openInGenerator": "Otwórz w generatorze"
   }
 }

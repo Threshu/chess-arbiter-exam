@@ -152,7 +152,7 @@
     "examTitle": "Exam title",
     "language": "Document language",
     "includeAnswerKey": "Include answer key",
-    "headerText": "Header text",
+    "headerText": "Text under the candidate box",
     "footerText": "Footer text",
     "generate": "Generate DOCX",
     "settings": {
@@ -201,8 +201,15 @@
       "load": "Open",
       "delete": "Delete",
       "deleteTitle": "Delete this exam?",
-      "deleteDescription": "The exam “{title}” will be deleted. The questions in the bank stay as they are."
-    }
+      "deleteDescription": "The exam “{title}” will be deleted. The questions in the bank stay as they are.",
+      "archivedTitle": "Archived exams",
+      "archivedHint": "Reconstructed from the question bank. Opening one starts a new, unsaved exam — the archive stays as it is.",
+      "fromArchive": "New exam based on: {title}",
+      "archivedNotFound": "The archived sheet from the link was not found."
+    },
+    "dateline": "Place and date (e.g. Poznań, 20.09.2025)",
+    "showCandidateTable": "Candidate box (name, class)",
+    "classOptions": "Classes to choose from, comma-separated — leave empty to drop the class row"
   },
   "archive": {
     "title": "Exam archive",
@@ -218,6 +225,7 @@
     "outdatedNote": "This answer was correct on the day of the exam but no longer follows the current Laws. The question is kept out of practice mode.",
     "gapsNote": "The numbering has gaps — the missing questions were never imported (duplicates, variants awaiting a decision, or tasks that need the classification tables).",
     "backToList": "Back to the exam list",
-    "sheetNotFound": "No such sheet was found."
+    "sheetNotFound": "No such sheet was found.",
+    "openInGenerator": "Open in exam generator"
   }
 }

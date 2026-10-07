@@ -1,7 +1,9 @@
 import { Chess } from 'chess.js'
 import {
   AlignmentType,
+  BorderStyle,
   Document,
+  HeightRule,
   ImageRun,
   LineRuleType,
   Packer,
@@ -11,6 +13,7 @@ import {
   TableCell,
   TableLayoutType,
   TableRow,
+  TabStopType,
   TextRun,
   VerticalAlign,
   WidthType,
@@ -26,7 +29,8 @@ const DEFAULT_START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 
 const OPTION_LETTERS = 'abcdefgh'.split('')
 const DIAGRAM_PX = 260
 
-const FONT_FAMILY = 'Tahoma'
+// The face of the WP exam sheets, so a generated exam looks like the papers it continues.
+const FONT_FAMILY = 'Trebuchet MS'
 // Font size is in half-points (docx convention): 22 = 11pt, applied document-wide.
 const BODY_SIZE = 22
 // Narrow page margins (twips): 720 = 0.5in on every side.
@@ -41,6 +45,19 @@ const DIAGRAM_COLUMN = 4200
 const TEXT_COLUMN = CONTENT_WIDTH - DIAGRAM_COLUMN
 // Blank lines left under an open-ended question for the handwritten answer.
 const ANSWER_SPACE_LINES = 7
+
+// Sheet header, measured on WP 2025: title line in 11 pt italics, candidate box and instruction in
+// 10 pt, the box's label column about a third of the width, each row about 29 pt high.
+const HEADER_TITLE_SIZE = 22
+const HEADER_SIZE = 20
+const CANDIDATE_LABEL_COLUMN = 3300
+const CANDIDATE_ROW_HEIGHT = 580
+// Text inset from the box's left edge, as on the WP sheet (about 6 pt).
+const CANDIDATE_CELL_MARGINS = { left: 115, right: 115 }
+const CANDIDATE_LABELS = {
+  pl: { name: 'Imię i nazwisko:', classes: 'Egzamin na klasę:' },
+  en: { name: 'Name:', classes: 'Exam for class:' },
+} as const
 
 // Spacing is in twentieths of a point (dxa): 240 = 12pt.
 const SPACE_BEFORE_QUESTION = 480
@@ -246,6 +263,95 @@ function openEndedAnswerSpace(): Paragraph {
   })
 }
 
+/** "Title ……… Place, date" — the first line of a WP sheet, the date flush right. */
+function titleLine(state: ExamGeneratorState): Paragraph | null {
+  const title = state.examTitle.trim()
+  const dateline = state.dateline.trim()
+  if (!title && !dateline) return null
+  return new Paragraph({
+    tabStops: [{ type: TabStopType.RIGHT, position: CONTENT_WIDTH }],
+    spacing: { after: 480 },
+    children: [
+      new TextRun({ text: title, italics: true, size: HEADER_TITLE_SIZE }),
+      ...(dateline
+        ? [new TextRun({ text: `\t${dateline}`, italics: true, size: HEADER_TITLE_SIZE })]
+        : []),
+    ],
+  })
+}
+
+/**
+ * The candidate box of a WP sheet: a framed two-row table, the label column in bold, rows split by
+ * a horizontal rule but no vertical one. The class row lists the classes evenly with empty boxes.
+ */
+function candidateTable(state: ExamGeneratorState): Table | null {
+  if (!state.showCandidateTable) return null
+  const labels = CANDIDATE_LABELS[state.language]
+  const classes = state.classOptions
+    .split(',')
+    .map((c) => c.trim())
+    .filter(Boolean)
+  const valueWidth = CONTENT_WIDTH - CANDIDATE_LABEL_COLUMN
+  const line = { style: BorderStyle.SINGLE, size: 6, color: '000000' }
+  const none = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' }
+
+  const row = (label: string, value: Paragraph) =>
+    new TableRow({
+      height: { value: CANDIDATE_ROW_HEIGHT, rule: HeightRule.ATLEAST },
+      children: [
+        new TableCell({
+          width: { size: CANDIDATE_LABEL_COLUMN, type: WidthType.DXA },
+          margins: CANDIDATE_CELL_MARGINS,
+          verticalAlign: VerticalAlign.CENTER,
+          children: [
+            new Paragraph({
+              children: [new TextRun({ text: label, bold: true, size: HEADER_SIZE })],
+            }),
+          ],
+        }),
+        new TableCell({
+          width: { size: valueWidth, type: WidthType.DXA },
+          margins: CANDIDATE_CELL_MARGINS,
+          verticalAlign: VerticalAlign.CENTER,
+          children: [value],
+        }),
+      ],
+    })
+
+  const rows = [row(labels.name, new Paragraph({}))]
+  if (classes.length) {
+    const step = Math.floor(valueWidth / classes.length)
+    rows.push(
+      row(
+        labels.classes,
+        new Paragraph({
+          tabStops: classes
+            .slice(1)
+            .map((_, i) => ({ type: TabStopType.LEFT, position: step * (i + 1) })),
+          children: classes.map(
+            (c, i) => new TextRun({ text: `${i ? '\t' : ''}□ ${c}`, size: HEADER_SIZE }),
+          ),
+        }),
+      ),
+    )
+  }
+
+  return new Table({
+    width: { size: CONTENT_WIDTH, type: WidthType.DXA },
+    columnWidths: [CANDIDATE_LABEL_COLUMN, valueWidth],
+    layout: TableLayoutType.FIXED,
+    borders: {
+      top: line,
+      bottom: line,
+      left: line,
+      right: line,
+      insideHorizontal: line,
+      insideVertical: none,
+    },
+    rows,
+  })
+}
+
 function answerKeyParagraphs(
   ids: string[],
   resolve: (id: string) => LoadedQuestion | undefined,
@@ -302,16 +408,12 @@ export async function buildExamDocument(
     (state.overrides[id] as LoadedQuestion | undefined) ?? questionsById[id]
   const children: (Paragraph | Table)[] = []
 
-  children.push(...htmlToDocxParagraphs(state.headerHtml))
-
-  if (state.examTitle.trim()) {
-    children.push(
-      new Paragraph({
-        spacing: { after: SPACE_AFTER_STEM },
-        children: [new TextRun({ text: state.examTitle.trim(), bold: true, size: BODY_SIZE })],
-      }),
-    )
-  }
+  // Laid out like a WP sheet: title and date, candidate box, then the free text under the box.
+  const title = titleLine(state)
+  if (title) children.push(title)
+  const candidates = candidateTable(state)
+  if (candidates) children.push(candidates)
+  children.push(...htmlToDocxParagraphs(state.headerHtml, { size: HEADER_SIZE, spaceBefore: 40 }))
 
   for (let i = 0; i < state.selectedQuestionIds.length; i++) {
     const question = resolve(state.selectedQuestionIds[i]!)

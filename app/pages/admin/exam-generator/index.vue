@@ -13,6 +13,8 @@ import {
 import type { Question } from '~~/shared/types/question'
 import { createExamGeneratorState, type ExamGeneratorState } from '~/types/examGenerator'
 import type { SavedExamSummary } from '~/composables/useSavedExams'
+import { groupIntoSheets, type ExamSheet } from '~/utils/examSheets'
+import { examSheetHeading } from '~~/shared/constants'
 
 definePageMeta({ middleware: ['admin'], layout: 'admin' })
 
@@ -40,15 +42,22 @@ const questionsById = computed<Record<string, Row>>(() =>
 const overriddenIds = computed(() => Object.keys(state.overrides))
 
 let unsubscribe: Unsubscribe | null = null
+let pendingArchive: string | null = null
 
 onMounted(() => {
   const q = query(collection(firestore, 'questions'), orderBy('createdAt', 'desc'))
   unsubscribe = onSnapshot(q, (snap) => {
     rows.value = snap.docs.map((d) => ({ id: d.id, ...(d.data() as Question) }))
     loading.value = false
+    // `?archive=<exam>:<year>` needs the bank loaded, so it is handled after the first snapshot.
+    if (pendingArchive) {
+      openArchivedFromQuery(pendingArchive)
+      pendingArchive = null
+    }
   })
   // `?exam=<id>` opens a saved exam directly — the URL survives a reload and can be shared.
   if (typeof route.query.exam === 'string') openExam(route.query.exam)
+  else if (typeof route.query.archive === 'string') pendingArchive = route.query.archive
 })
 
 onBeforeUnmount(() => unsubscribe?.())
@@ -136,10 +145,12 @@ const savedList = ref<SavedExamSummary[]>([])
 const examToDelete = ref<SavedExamSummary | null>(null)
 const deletingExam = ref(false)
 
-async function setExamQuery(id: string | null) {
+async function setExamQuery(id: string | null, archive: string | null = null) {
   const next = { ...route.query }
+  Reflect.deleteProperty(next, 'exam')
+  Reflect.deleteProperty(next, 'archive')
   if (id) next.exam = id
-  else Reflect.deleteProperty(next, 'exam')
+  else if (archive) next.archive = archive
   await router.replace({ query: next })
 }
 
@@ -156,6 +167,7 @@ async function openExam(id: string) {
   applyState(stored)
   currentExamId.value = id
   currentExamTitle.value = stored.examTitle
+  basedOnSheet.value = ''
   lastSavedAt.value = null
   examNotFound.value = false
   loadDialogOpen.value = false
@@ -178,6 +190,7 @@ async function saveExam(asNew: boolean) {
     const id = await savedExams.save(state, asNew ? null : currentExamId.value)
     currentExamId.value = id
     currentExamTitle.value = state.examTitle
+    basedOnSheet.value = ''
     lastSavedAt.value = new Date()
     examNotFound.value = false
     await setExamQuery(id)
@@ -190,6 +203,7 @@ async function newExam() {
   applyState(createExamGeneratorState())
   currentExamId.value = null
   currentExamTitle.value = ''
+  basedOnSheet.value = ''
   lastSavedAt.value = null
   await setExamQuery(null)
 }
@@ -216,13 +230,50 @@ async function confirmDeleteExam() {
   }
 }
 
-const currentExamLabel = computed(() =>
-  currentExamId.value
-    ? t('examGenerator.saved.current', {
-        title: currentExamTitle.value || t('examGenerator.saved.untitled'),
-      })
-    : t('examGenerator.saved.unsaved'),
-)
+// Archived exams come from the same reconstruction as the exam archive (`groupIntoSheets`), read
+// off the bank this page already listens to — one source of truth, nothing copied.
+const archivedSheets = computed(() => groupIntoSheets(rows.value))
+const basedOnSheet = ref('')
+const archivedNotFound = ref(false)
+
+function sheetKey(sheet: ExamSheet) {
+  return `${sheet.exam}:${sheet.year}`
+}
+
+/** Starts a new, unsaved exam from an archived sheet; saving it never touches the archive. */
+async function openArchivedSheet(sheet: ExamSheet) {
+  const heading = examSheetHeading(sheet.exam, sheet.year)
+  applyState({
+    ...createExamGeneratorState(),
+    examTitle: heading.title,
+    dateline: heading.dateline ?? '',
+    selectedQuestionIds: [...new Set(sheet.entries.map((e) => e.question.id))],
+  })
+  currentExamId.value = null
+  currentExamTitle.value = ''
+  basedOnSheet.value = heading.dateline ? `${heading.title} (${heading.dateline})` : heading.title
+  lastSavedAt.value = null
+  examNotFound.value = false
+  archivedNotFound.value = false
+  loadDialogOpen.value = false
+  await setExamQuery(null, sheetKey(sheet))
+}
+
+function openArchivedFromQuery(key: string) {
+  const sheet = archivedSheets.value.find((s) => sheetKey(s) === key)
+  if (sheet) openArchivedSheet(sheet)
+  else archivedNotFound.value = true
+}
+
+const currentExamLabel = computed(() => {
+  if (currentExamId.value) {
+    return t('examGenerator.saved.current', {
+      title: currentExamTitle.value || t('examGenerator.saved.untitled'),
+    })
+  }
+  if (basedOnSheet.value) return t('examGenerator.saved.fromArchive', { title: basedOnSheet.value })
+  return t('examGenerator.saved.unsaved')
+})
 
 const deleteDescription = computed(() =>
   t('examGenerator.saved.deleteDescription', {
@@ -283,6 +334,9 @@ async function onGenerate() {
           {{ t('examGenerator.saved.savedAt', { time: formatDate(lastSavedAt) }) }}
         </p>
         <p v-if="examNotFound" class="text-danger">{{ t('examGenerator.saved.notFound') }}</p>
+        <p v-if="archivedNotFound" class="text-danger">
+          {{ t('examGenerator.saved.archivedNotFound') }}
+        </p>
       </div>
       <div class="flex flex-wrap gap-2">
         <UiButton variant="ghost" size="sm" @click="newExam">
@@ -361,6 +415,17 @@ async function onGenerate() {
     >
       <div class="flex flex-col gap-4">
         <UiInput v-model="state.examTitle" :label="t('examGenerator.examTitle')" />
+        <UiInput v-model="state.dateline" :label="t('examGenerator.dateline')" />
+
+        <label for="eg-candidate-table" class="flex items-center gap-2">
+          <input id="eg-candidate-table" v-model="state.showCandidateTable" type="checkbox" >
+          <span class="text-fg text-sm">{{ t('examGenerator.showCandidateTable') }}</span>
+        </label>
+        <UiInput
+          v-if="state.showCandidateTable"
+          v-model="state.classOptions"
+          :label="t('examGenerator.classOptions')"
+        />
 
         <div class="flex flex-wrap items-end gap-4">
           <label for="eg-lang" class="flex flex-col gap-1.5">
@@ -461,6 +526,32 @@ async function onGenerate() {
           </div>
         </li>
       </ul>
+
+      <h3 class="font-display text-fg mt-6 mb-1 text-base">
+        {{ t('examGenerator.saved.archivedTitle') }}
+      </h3>
+      <p class="text-muted mb-2 text-xs">{{ t('examGenerator.saved.archivedHint') }}</p>
+      <ul class="flex flex-col gap-2">
+        <li
+          v-for="sheet in archivedSheets"
+          :key="sheetKey(sheet)"
+          class="border-border flex flex-wrap items-center justify-between gap-3 rounded-md border p-3"
+        >
+          <div class="text-sm">
+            <p class="text-fg font-medium">{{ examSheetHeading(sheet.exam, sheet.year).title }}</p>
+            <p class="text-muted">
+              <span v-if="examSheetHeading(sheet.exam, sheet.year).dateline">
+                {{ examSheetHeading(sheet.exam, sheet.year).dateline }} &middot;
+              </span>
+              {{ t('examGenerator.saved.questionCount', sheet.entries.length) }}
+            </p>
+          </div>
+          <UiButton variant="secondary" size="sm" @click="openArchivedSheet(sheet)">
+            {{ t('examGenerator.saved.load') }}
+          </UiButton>
+        </li>
+      </ul>
+
       <div class="mt-4 flex justify-end">
         <UiButton variant="ghost" @click="loadDialogOpen = false">{{ t('actions.back') }}</UiButton>
       </div>

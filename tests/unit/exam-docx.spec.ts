@@ -156,6 +156,8 @@ describe('buildExamDocument', () => {
 describe('buildExamDocument layout', () => {
   async function documentXml(selected: LoadedQuestion[]) {
     const state = createExamGeneratorState()
+    // Only the questions are under test here — the candidate box is a table of its own.
+    state.showCandidateTable = false
     state.selectedQuestionIds = selected.map((q) => q.id)
     const doc = await buildExamDocument(state, Object.fromEntries(selected.map((q) => [q.id, q])))
     const zip = await JSZip.loadAsync(await Packer.toBuffer(doc))
@@ -198,5 +200,47 @@ describe('buildExamDocument layout', () => {
     const between = xml.slice(first, second)
     expect(between).toContain('</w:p>')
     expect(between).not.toContain('<w:br/>')
+  })
+})
+
+describe('buildExamDocument sheet header', () => {
+  async function headerXml(edit: (state: ReturnType<typeof createExamGeneratorState>) => void) {
+    const state = createExamGeneratorState()
+    edit(state)
+    const doc = await buildExamDocument(state, {})
+    const zip = await JSZip.loadAsync(await Packer.toBuffer(doc))
+    return (await zip.file('word/document.xml')?.async('string')) ?? ''
+  }
+
+  // Laid out like WP 2025: title and date, then the candidate box, then the instruction.
+  it('prints the title line, then the candidate box, then the text under it', async () => {
+    const xml = await headerXml((s) => {
+      s.examTitle = 'Egzamin na sędziego szachowego klasy okręgowej'
+      s.dateline = 'Poznań, 20.09.2025 r.'
+    })
+    const title = xml.indexOf('Egzamin na sędziego szachowego klasy okręgowej')
+    const date = xml.indexOf('Poznań, 20.09.2025 r.')
+    const table = xml.indexOf('<w:tbl>')
+    const instruction = xml.indexOf('Jeżeli w pytaniu pojawia się reklamacja')
+    expect(title).toBeGreaterThan(-1)
+    expect(date).toBeGreaterThan(title)
+    expect(table).toBeGreaterThan(date)
+    expect(instruction).toBeGreaterThan(table)
+  })
+
+  it('frames the candidate box without a vertical rule between its columns', async () => {
+    const xml = await headerXml(() => {})
+    expect(xml).toContain('Imię i nazwisko:')
+    expect(xml).toContain('Egzamin na klasę:')
+    expect(xml).toContain('□ młodzieżową')
+    expect(xml).toMatch(/<w:insideV w:val="none"/)
+  })
+
+  it('drops the class row when no classes are listed, and the box when it is switched off', async () => {
+    const noClasses = await headerXml((s) => (s.classOptions = ''))
+    expect(noClasses).toContain('Imię i nazwisko:')
+    expect(noClasses).not.toContain('Egzamin na klasę:')
+    const noBox = await headerXml((s) => (s.showCandidateTable = false))
+    expect(noBox).not.toContain('Imię i nazwisko:')
   })
 })

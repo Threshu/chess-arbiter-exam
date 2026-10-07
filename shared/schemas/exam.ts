@@ -10,6 +10,10 @@ import { z } from 'zod'
  */
 export const savedExamSchema = z.object({
   examTitle: z.string(),
+  // Opcjonalne, bo dodane po pierwszych zapisanych egzaminach — przy wczytaniu dostaja domyslne.
+  dateline: z.string().optional(),
+  showCandidateTable: z.boolean().optional(),
+  classOptions: z.string().optional(),
   language: z.enum(['pl', 'en']),
   headerHtml: z.string(),
   footerHtml: z.string(),
