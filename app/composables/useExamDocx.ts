@@ -2,21 +2,27 @@ import { Chess } from 'chess.js'
 import {
   AlignmentType,
   BorderStyle,
+  BuilderElement,
   Document,
   HeightRule,
+  HorizontalPositionAlign,
+  HorizontalPositionRelativeFrom,
   ImageRun,
   LineRuleType,
   Packer,
   Paragraph,
   Table,
-  TableBorders,
   TableCell,
   TableLayoutType,
   TableRow,
   TabStopType,
   TextRun,
+  TextWrappingSide,
+  TextWrappingType,
   VerticalAlign,
+  VerticalPositionRelativeFrom,
   WidthType,
+  type ParagraphChild,
 } from 'docx'
 import { buildExamFilename } from '~/utils/examFilename'
 import { fenToPngBytes } from '~/utils/chessDiagramImage'
@@ -39,10 +45,8 @@ const PAGE_MARGIN = 720
 const PAGE_WIDTH = 11906
 const PAGE_HEIGHT = 16838
 const CONTENT_WIDTH = PAGE_WIDTH - 2 * PAGE_MARGIN
-// A question with a diagram is a two-column row: the 260 px board is 260 / 96 in = 3900 twips wide,
-// and the column adds a gutter so the text never runs up against it.
-const DIAGRAM_COLUMN = 4200
-const TEXT_COLUMN = CONTENT_WIDTH - DIAGRAM_COLUMN
+// Gap between a floating board and the text wrapped beside it, in EMU (914400 per inch): 0.2 in.
+const DIAGRAM_GAP_EMU = 182880
 // Blank lines left under an open-ended question for the handwritten answer.
 const ANSWER_SPACE_LINES = 7
 
@@ -84,13 +88,25 @@ async function buildDiagramImage(question: Question): Promise<{
     }
 
     const png = await fenToPngBytes(fen)
-    // Inline rather than floating — a floating image reserves no vertical space, so a short question let
-    // the next one start beside its board, the next board overlapped it, and Word never carried
-    // the image to a new page together with its question.
+    // Floating at the right margin with the question's text wrapped on its left. It is anchored to
+    // the stem, so it moves with the question when the user deletes or adds text above it.
     const image = new ImageRun({
       type: 'png',
       data: png,
       transformation: { width: DIAGRAM_PX, height: DIAGRAM_PX },
+      floating: {
+        horizontalPosition: {
+          relative: HorizontalPositionRelativeFrom.MARGIN,
+          align: HorizontalPositionAlign.RIGHT,
+        },
+        verticalPosition: { relative: VerticalPositionRelativeFrom.PARAGRAPH, offset: 0 },
+        wrap: { type: TextWrappingType.SQUARE, side: TextWrappingSide.LEFT },
+        margins: { left: DIAGRAM_GAP_EMU, bottom: DIAGRAM_GAP_EMU },
+        allowOverlap: false,
+        lockAnchor: false,
+        behindDocument: false,
+        layoutInCell: true,
+      },
     })
     return { image, moves, failed: false }
   } catch {
@@ -107,6 +123,8 @@ interface LinesOptions {
   after?: number
   /** Whether the last line is kept on the same page as whatever follows it. */
   keepWithNext?: boolean
+  /** Runs put in front of the first line, e.g. the floating board anchored to the stem. */
+  leading?: ParagraphChild[]
 }
 
 /**
@@ -129,6 +147,7 @@ function lineParagraphs(text: string, options: LinesOptions = {}): Paragraph[] {
           lineRule: LineRuleType.AUTO,
         },
         children: [
+          ...(i === 0 ? (options.leading ?? []) : []),
           new TextRun({
             text: line,
             bold: options.bold,
@@ -141,18 +160,19 @@ function lineParagraphs(text: string, options: LinesOptions = {}): Paragraph[] {
 }
 
 /**
- * The question's own paragraphs, without the diagram. Each one is kept with the next, so the stem
- * never ends up on a different page from its options or its answer space.
+ * The question's own paragraphs, the board (if any) floating beside them. Each one is kept with the
+ * next, so the stem never ends up on a different page from its options or its answer space.
  */
 function questionBodyParagraphs(
   question: Question,
   index: number,
   lang: 'pl' | 'en',
-  moves: string | null,
-  failed: boolean,
+  diagram: { image: ImageRun | null; moves: string | null; failed: boolean },
 ): Paragraph[] {
+  const { image, moves, failed } = diagram
   const content = localized(question.content, lang)
   const paragraphs: Paragraph[] = lineParagraphs(`${index + 1}. ${content.stem}`, {
+    leading: image ? [image] : [],
     bold: true,
     justified: true,
     before: SPACE_BEFORE_QUESTION,
@@ -193,71 +213,57 @@ function questionBodyParagraphs(
         ...lineParagraphs(`${OPTION_LETTERS[i]}) ${localized(opt.content, lang)}`, {
           justified: true,
           after: SPACE_AFTER_OPTION,
-          keepWithNext: i < question.options.length - 1,
+          // With a board, the last option is kept with the line that clears it.
+          keepWithNext: !!image || i < question.options.length - 1,
         }),
       )
     })
   } else {
-    paragraphs.push(openEndedAnswerSpace())
+    paragraphs.push(openEndedAnswerSpace(!!image))
   }
 
   return paragraphs
 }
 
 /**
- * A question without a diagram is plain paragraphs. A question with one is a borderless two-column
- * table — text on the left, board on the right, both top-aligned — whose single row may not split,
- * so a question that does not fit moves to the next page as a whole.
+ * Every question is plain paragraphs, so the user can move questions around in Word with Enter and
+ * Backspace. A board floats beside its text; the question ends with a line that clears the board,
+ * so the next question always starts below it and boards never overlap.
  */
 async function questionBlocks(
   question: Question,
   index: number,
   lang: 'pl' | 'en',
-): Promise<(Paragraph | Table)[]> {
-  const { image, moves, failed } = await buildDiagramImage(question)
-  const body = questionBodyParagraphs(question, index, lang, moves, failed)
-  if (!image) return body
+): Promise<Paragraph[]> {
+  const diagram = await buildDiagramImage(question)
+  const body = questionBodyParagraphs(question, index, lang, diagram)
+  if (!diagram.image) return body
+  return [...body, new Paragraph({ children: [clearFloatsBreak()] })]
+}
 
-  return [
-    new Table({
-      width: { size: CONTENT_WIDTH, type: WidthType.DXA },
-      columnWidths: [TEXT_COLUMN, DIAGRAM_COLUMN],
-      layout: TableLayoutType.FIXED,
-      borders: TableBorders.NONE,
-      rows: [
-        new TableRow({
-          cantSplit: true,
-          children: [
-            new TableCell({
-              width: { size: TEXT_COLUMN, type: WidthType.DXA },
-              verticalAlign: VerticalAlign.TOP,
-              children: body,
-            }),
-            new TableCell({
-              width: { size: DIAGRAM_COLUMN, type: WidthType.DXA },
-              verticalAlign: VerticalAlign.TOP,
-              children: [
-                new Paragraph({
-                  alignment: AlignmentType.RIGHT,
-                  // Same space before as the stem, so the board's top lines up with the question.
-                  spacing: { before: SPACE_BEFORE_QUESTION },
-                  children: [image],
-                }),
-              ],
-            }),
-          ],
-        }),
-      ],
-    }),
-    // Word merges tables that touch into one, so consecutive diagram questions became a single
-    // table and could not be moved around separately. An empty paragraph keeps them apart.
-    new Paragraph({ spacing: { before: 0, after: 0 }, children: [] }),
-  ]
+/**
+ * A text-wrapping break that moves what follows below every floating object, like CSS `clear: both`.
+ * `docx` has no class for it, so the run is built from raw elements.
+ */
+function clearFloatsBreak(): ParagraphChild {
+  return new BuilderElement({
+    name: 'w:r',
+    children: [
+      new BuilderElement<{ type: string; clear: string }>({
+        name: 'w:br',
+        attributes: {
+          type: { key: 'w:type', value: 'textWrapping' },
+          clear: { key: 'w:clear', value: 'all' },
+        },
+      }),
+    ],
+  }) as unknown as ParagraphChild
 }
 
 /** Blank space for the handwritten answer — deliberately no frame around it. */
-function openEndedAnswerSpace(): Paragraph {
+function openEndedAnswerSpace(keepWithNext: boolean): Paragraph {
   return new Paragraph({
+    keepNext: keepWithNext,
     spacing: { after: SPACE_AFTER_OPTION },
     children: Array.from(
       { length: ANSWER_SPACE_LINES },

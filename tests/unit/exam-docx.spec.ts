@@ -164,20 +164,13 @@ describe('buildExamDocument layout', () => {
     return (await zip.file('word/document.xml')?.async('string')) ?? ''
   }
 
-  // A floating board reserved no vertical space: boards overlapped the next question and did not
-  // move to a new page with their own one.
-  it('puts a diagram inline in an unsplittable table row next to the question', async () => {
-    const xml = await documentXml([diagramQuestion])
-    expect(xml).toContain('<w:tbl>')
-    expect(xml).toContain('<w:cantSplit/>')
-    expect(xml).toContain('<wp:inline')
-    expect(xml).not.toContain('<wp:anchor')
-  }, 15000)
-
-  it('keeps consecutive diagram questions in separate tables', async () => {
+  // A table per diagram question could not be moved in Word with Backspace, and touching tables
+  // merged into one. The board floats beside plain paragraphs and a clearing break ends the question.
+  it('floats a diagram beside plain paragraphs and clears it before the next question', async () => {
     const xml = await documentXml([diagramQuestion, { ...diagramQuestion, id: 'q-diagram-2' }])
-    expect(xml.match(/<w:tbl>/g)).toHaveLength(2)
-    expect(xml).not.toMatch(/<\/w:tbl>\s*<w:tbl>/)
+    expect(xml).not.toContain('<w:tbl>')
+    expect(xml.match(/<wp:anchor/g)).toHaveLength(2)
+    expect(xml.match(/<w:br w:type="textWrapping" w:clear="all"\/>/g)).toHaveLength(2)
   }, 15000)
 
   it('lays out a question without a diagram as plain paragraphs', async () => {
