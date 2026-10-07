@@ -68,6 +68,14 @@ const SPACE_BEFORE_QUESTION = 480
 const SPACE_AFTER_STEM = 240
 const SPACE_AFTER_OPTION = 120
 
+// On paper a multi-choice question looks like a single-choice one, so the sheet says so — unless the
+// stem already asks for all correct answers.
+const MULTI_CHOICE_HINT = {
+  pl: '(zaznacz wszystkie poprawne odpowiedzi)',
+  en: '(select all correct answers)',
+} as const
+const ASKS_FOR_ALL = /zaznacz wszystkie|select all/i
+
 export type LoadedQuestion = Question & { id: string }
 
 async function buildDiagramImage(question: Question): Promise<{
@@ -179,6 +187,16 @@ function questionBodyParagraphs(
     after: SPACE_AFTER_STEM,
     keepWithNext: true,
   })
+
+  if (question.type === 'multi-choice' && !ASKS_FOR_ALL.test(content.stem)) {
+    paragraphs.push(
+      ...lineParagraphs(MULTI_CHOICE_HINT[lang], {
+        italics: true,
+        after: SPACE_AFTER_STEM,
+        keepWithNext: true,
+      }),
+    )
+  }
 
   if (failed) {
     paragraphs.push(

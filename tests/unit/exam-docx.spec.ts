@@ -173,6 +173,23 @@ describe('buildExamDocument layout', () => {
     expect(xml.match(/<w:br w:type="textWrapping" w:clear="all"\/>/g)).toHaveLength(2)
   }, 15000)
 
+  it('tells a multi-choice question apart unless the stem already asks for all answers', async () => {
+    const multi: LoadedQuestion = {
+      ...singleChoiceQuestion,
+      id: 'q-multi',
+      type: 'multi-choice',
+      content: { pl: { stem: 'Które kończą partię?' }, en: { stem: 'Which end the game?' } },
+    }
+    const explicit: LoadedQuestion = {
+      ...multi,
+      id: 'q-multi-explicit',
+      content: { pl: { stem: 'Zaznacz wszystkie, które kończą partię.' }, en: { stem: 'x' } },
+    }
+    expect(await documentXml([multi])).toContain('zaznacz wszystkie poprawne odpowiedzi')
+    expect(await documentXml([explicit])).not.toContain('zaznacz wszystkie poprawne odpowiedzi')
+    expect(await documentXml([singleChoiceQuestion])).not.toContain('zaznacz wszystkie poprawne')
+  })
+
   it('lays out a question without a diagram as plain paragraphs', async () => {
     const xml = await documentXml([openEndedQuestion])
     expect(xml).not.toContain('<w:tbl>')
