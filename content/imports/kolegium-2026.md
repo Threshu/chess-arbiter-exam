@@ -44,3 +44,12 @@ Druga runda uwag właściciela: w 13 dystraktor „orzec przegraną białego” 
 gońcem); drugi cykl celowo innym ruchem, bo przy samym wahaniu wieżą biały mógłby poprawnie reklamować remis
 zapowiedzianym posunięciem Wg1 (art. 9.2.1.1). Punkty nie są drukowane na arkuszu, tylko w kluczu; zadania 29 i 30
 bez dopisku „tylko dla klasy II” (próg dla klasy III w kluczu i tak je pomija).
+
+Trzecia runda (2026-10-08): 30 — ranking FIDE (`pvfLWKwQNovCqo7Ng0E1`, przeniesione na klasę państwową) zastąpione
+normą na kategorię PZSzach (`6jSnqVPOVf6msrD0n02c`: IV kat., 7 rund P'60, Ru = 1581 → norma na III). Liczone wg
+Regulaminu Klasyfikacyjnego PZSzach 2025 (Rs ze średniej przeciwników i samego zawodnika, ΔR = 400(W−P)/(n+1)),
+wzór sprawdzony na kluczu PZSzach 2026#20 (Rs 1595 i normy punktowe), wynik potwierdzony w kalkulatorach
+szachygrodzisk.pl i szachowarodzina.pl. Przy okazji poprawiony klucz WP 2021#22 c/d (`JuqxKH0DXxH50Xh4byDq`): liczył
+po FIDE (≈1310), a wg RK Ru = 1240 i normy brak (4 partie, z pkt 4.3 potrzeba 2 pkt, jest 1,5) — oba kalkulatory zgodne.
+25 przepisane na wieczny szach (prawo do roszady tracone przez Kf1 po szachu). Plansze wyrównane z pierwszą linią
+pytania (odstęp między pytaniami przeniesiony za poprzednie pytanie).
