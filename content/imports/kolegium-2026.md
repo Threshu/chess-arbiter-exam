@@ -53,3 +53,6 @@ szachygrodzisk.pl i szachowarodzina.pl. Przy okazji poprawiony klucz WP 2021#22 
 po FIDE (≈1310), a wg RK Ru = 1240 i normy brak (4 partie, z pkt 4.3 potrzeba 2 pkt, jest 1,5) — oba kalkulatory zgodne.
 25 przepisane na wieczny szach (prawo do roszady tracone przez Kf1 po szachu). Plansze wyrównane z pierwszą linią
 pytania (odstęp między pytaniami przeniesiony za poprzednie pytanie).
+
+Czwarta runda: 25 — wieczny szach też za bardzo podchwytliwy; zamiast niego proste pytanie z banku „Jak powinna
+wyglądać prawidłowa reklamacja trzykrotnego powtórzenia pozycji?” (`eeeueMJx7OcrKN7UwNu8`, WP 2022), klucz uzupełniony o art. 9.2.1 i 9.5.3.
