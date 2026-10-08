@@ -60,3 +60,6 @@ wyglądać prawidłowa reklamacja trzykrotnego powtórzenia pozycji?” (`eeeueM
 Piąta runda: 26 — zamiast kar (12.9) wieczny szach z utraconym prawem do roszady (`cmDFO3d6DluSjf71S6EY`), zgodnie z
 propozycją Kolegium. Diagram poprawiony: wcześniej białe miały dwa czarnopolowe gońce (e3 i g5); teraz jeden goniec
 na stronę, materiał równy.
+
+Szósta runda: 25 — zamiast pytania o procedurę reklamacji (dublowało temat z 26) wersja Kolegium z maila:
+K+G białopolowy vs K, poddanie po martwej pozycji = remis (`qO0yNiOVTA02jUB2QAh6`).
