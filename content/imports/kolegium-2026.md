@@ -56,3 +56,7 @@ pytania (odstęp między pytaniami przeniesiony za poprzednie pytanie).
 
 Czwarta runda: 25 — wieczny szach też za bardzo podchwytliwy; zamiast niego proste pytanie z banku „Jak powinna
 wyglądać prawidłowa reklamacja trzykrotnego powtórzenia pozycji?” (`eeeueMJx7OcrKN7UwNu8`, WP 2022), klucz uzupełniony o art. 9.2.1 i 9.5.3.
+
+Piąta runda: 26 — zamiast kar (12.9) wieczny szach z utraconym prawem do roszady (`cmDFO3d6DluSjf71S6EY`), zgodnie z
+propozycją Kolegium. Diagram poprawiony: wcześniej białe miały dwa czarnopolowe gońce (e3 i g5); teraz jeden goniec
+na stronę, materiał równy.
