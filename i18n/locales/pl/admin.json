@@ -144,7 +144,9 @@
       "addSource": "Dodaj",
       "removeSource": "Usuń pochodzenie",
       "outdatedRules": "Odpowiedź wg nieaktualnych przepisów",
-      "outdatedRulesHint": "Zaznacz, jeśli odpowiedź była poprawna w dniu egzaminu, ale nie jest zgodna z obecnymi przepisami. Takie pytanie trafia do archiwum i nie jest losowane w trybie praktyki."
+      "outdatedRulesHint": "Zaznacz, jeśli odpowiedź była poprawna w dniu egzaminu, ale nie jest zgodna z obecnymi przepisami. Takie pytanie trafia do archiwum i nie jest losowane w trybie praktyki.",
+      "points": "Punkty na egzaminie",
+      "pointsHint": "Puste = 1 pkt. Zadania obliczeniowe zwykle są warte więcej."
     }
   },
   "examGenerator": {
@@ -168,7 +170,9 @@
       "empty": "Nie wybrano jeszcze żadnych pytań.",
       "overridden": "Zmodyfikowane lokalnie",
       "remove": "Usuń z listy",
-      "reorderHint": "Przeciągnij, aby zmienić kolejność, lub użyj strzałek w górę/w dół"
+      "reorderHint": "Przeciągnij, aby zmienić kolejność, lub użyj strzałek w górę/w dół",
+      "pointsUnit": "pkt",
+      "pointsLabel": "Punkty za pytanie {n}"
     },
     "saveChoice": {
       "title": "Zapisać zmiany?",
@@ -209,7 +213,16 @@
     },
     "dateline": "Miejsce i data (np. Poznań, 20.09.2025 r.)",
     "showCandidateTable": "Tabela dla zdającego (imię i nazwisko, klasa)",
-    "classOptions": "Klasy do wyboru, po przecinku — puste pole usuwa wiersz z klasą"
+    "classOptions": "Klasy do wyboru, po przecinku — puste pole usuwa wiersz z klasą",
+    "scoring": {
+      "title": "Progi zaliczenia",
+      "hint": "Próg to procent punktów możliwych do zdobycia na danej klasie. Pytania z wyższej klasy nie wliczają się do niższej. Progi trafiają do klucza odpowiedzi.",
+      "class": "Klasa",
+      "percent": "Próg w procentach",
+      "add": "Dodaj próg",
+      "remove": "Usuń",
+      "summary": "{cls}: zalicza co najmniej {required} z {max} pkt ({percent}%)"
+    }
   },
   "archive": {
     "title": "Archiwum egzaminów",

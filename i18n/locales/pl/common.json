@@ -66,5 +66,14 @@
     "zasady-turniejowe": "Zasady rozgrywania turniejów",
     "aneksy-i-wytyczne": "Aneksy i wytyczne",
     "poza-przepisami-gry": "Poza Przepisami gry"
+  },
+  "levels": {
+    "youth": "Młodzieżowa",
+    "III": "III klasa",
+    "II": "II klasa",
+    "I": "I klasa",
+    "national": "Państwowa",
+    "FA": "FA (sędzia FIDE)",
+    "IA": "IA (sędzia międzynarodowy)"
   }
 }

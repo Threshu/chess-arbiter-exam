@@ -11,7 +11,7 @@ function question(
     type: 'open-ended',
     content: { pl: { stem: id }, en: { stem: id } },
     modelAnswer: { pl: '', en: '' },
-    level: 'NA',
+    level: 'III',
     status: 'draft',
     sources,
     outdatedRules,

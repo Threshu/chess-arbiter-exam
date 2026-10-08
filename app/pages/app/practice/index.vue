@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Level, QuestionTypeId } from '~~/shared/types/question'
 import type { Topic } from '~~/shared/constants'
-import { TOPIC_GROUPS } from '~~/shared/constants'
+import { LEVELS, TOPIC_GROUPS } from '~~/shared/constants'
 
 definePageMeta({ layout: 'default' })
 
@@ -37,9 +37,7 @@ function start() {
             class="bg-bg text-fg border-border h-10 rounded-md border px-3 text-base"
           >
             <option value="all">{{ t('practice.filterAll') }}</option>
-            <option value="NA">NA</option>
-            <option value="FA">FA</option>
-            <option value="IA">IA</option>
+            <option v-for="l in LEVELS" :key="l" :value="l">{{ t(`levels.${l}`) }}</option>
           </select>
         </label>
 

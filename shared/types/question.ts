@@ -1,8 +1,8 @@
-import type { Topic } from '../constants.js'
+import type { Level, Topic } from '../constants.js'
 
 export type QuestionTypeId = 'single-choice' | 'multi-choice' | 'open-ended'
 
-export type Level = 'NA' | 'FA' | 'IA'
+export type { Level }
 
 export type QuestionStatus = 'draft' | 'published' | 'archived'
 
@@ -39,6 +39,8 @@ interface QuestionBase {
   tags?: string[]
   sources?: QuestionSource[]
   outdatedRules?: boolean
+  /** Points on an exam; missing means 1. */
+  points?: number
   version: number
   createdBy: string
   createdAt: unknown

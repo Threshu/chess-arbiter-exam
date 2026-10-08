@@ -8,7 +8,7 @@ import type {
   QuestionTypeId,
 } from '~~/shared/types/question'
 import type { Topic } from '~~/shared/constants'
-import { TOPIC_GROUPS } from '~~/shared/constants'
+import { LEVELS, TOPIC_GROUPS } from '~~/shared/constants'
 
 interface Props {
   initialValue?: Question
@@ -27,13 +27,14 @@ const stemPl = ref(props.initialValue?.content.pl.stem ?? '')
 const stemEn = ref(props.initialValue?.content.en.stem ?? '')
 const explanationPl = ref(props.initialValue?.content.pl.explanation ?? '')
 const explanationEn = ref(props.initialValue?.content.en.explanation ?? '')
-const level = ref<Level>(props.initialValue?.level ?? 'NA')
+const level = ref<Level>(props.initialValue?.level ?? 'III')
 const topic = ref<Topic | ''>(props.initialValue?.topic ?? '')
 const tags = ref<string[]>(props.initialValue?.tags ?? [])
 const tagSuggestions = ref<string[]>([])
 const sources = ref<QuestionSource[]>(props.initialValue?.sources ?? [])
 const examSuggestions = ref<string[]>([])
 const outdatedRules = ref(props.initialValue?.outdatedRules ?? false)
+const points = ref<number>(props.initialValue?.points ?? 1)
 
 onMounted(async () => {
   const snap = await getDocs(collection($firestore as Firestore, 'questions'))
@@ -184,6 +185,7 @@ function submit(publish: boolean) {
     tags: tags.value,
     sources: sources.value,
     outdatedRules: outdatedRules.value,
+    points: points.value > 0 ? points.value : 1,
     version: (props.initialValue?.version ?? 0) + 1,
   }
 
@@ -378,10 +380,21 @@ function submit(publish: boolean) {
           v-model="level"
           class="bg-bg text-fg border-border focus-visible:ring-primary h-10 rounded-md border px-3 font-sans text-base focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
         >
-          <option value="NA">NA</option>
-          <option value="FA">FA</option>
-          <option value="IA">IA</option>
+          <option v-for="l in LEVELS" :key="l" :value="l">{{ t(`levels.${l}`) }}</option>
         </select>
+      </label>
+
+      <label for="qf-points" class="flex flex-col gap-1.5">
+        <span class="text-fg text-sm font-medium">{{ t('questions.form.points') }}</span>
+        <input
+          id="qf-points"
+          v-model.number="points"
+          type="number"
+          min="0.5"
+          step="0.5"
+          class="bg-bg text-fg border-border focus-visible:ring-primary h-10 w-28 rounded-md border px-3 font-sans text-base focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+        >
+        <span class="text-muted text-xs">{{ t('questions.form.pointsHint') }}</span>
       </label>
 
       <label for="qf-topic" class="flex flex-col gap-1.5">

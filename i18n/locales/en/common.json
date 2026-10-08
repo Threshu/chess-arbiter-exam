@@ -66,5 +66,14 @@
     "zasady-turniejowe": "Competition rules",
     "aneksy-i-wytyczne": "Appendices and guidelines",
     "poza-przepisami-gry": "Outside the Laws of Chess"
+  },
+  "levels": {
+    "youth": "Youth",
+    "III": "Class III",
+    "II": "Class II",
+    "I": "Class I",
+    "national": "National",
+    "FA": "FA (FIDE Arbiter)",
+    "IA": "IA (International Arbiter)"
   }
 }

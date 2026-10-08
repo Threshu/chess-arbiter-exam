@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { TOPICS } from '../constants.js'
+import { LEVELS, TOPICS } from '../constants.js'
 
 export const bilingualStringSchema = z.object({
   pl: z.string(),
@@ -27,7 +27,7 @@ export const diagramSchema = z.discriminatedUnion('kind', [
   z.object({ kind: z.literal('pgn'), pgn: z.string().min(1) }),
 ])
 
-export const levelSchema = z.enum(['NA', 'FA', 'IA'])
+export const levelSchema = z.enum(LEVELS)
 export const topicSchema = z.enum(TOPICS)
 export const questionStatusSchema = z.enum(['draft', 'published', 'archived'])
 
@@ -57,6 +57,8 @@ const baseShape = {
    * Takie pytania naleza do archiwum i nie moga trafiac do losowania w praktyce.
    */
   outdatedRules: z.boolean().optional(),
+  /** Punkty za pytanie na egzaminie; brak oznacza 1 pkt. Zadania obliczeniowe sa warte wiecej. */
+  points: z.number().positive().optional(),
   version: z.number().int().nonnegative(),
   createdBy: z.string().min(1),
   createdAt: z.unknown(),

@@ -144,7 +144,9 @@
       "addSource": "Add",
       "removeSource": "Remove provenance",
       "outdatedRules": "Answer follows superseded rules",
-      "outdatedRulesHint": "Tick this when the answer was correct on the day of the exam but no longer follows the current Laws. The question then belongs to the archive and is kept out of practice mode."
+      "outdatedRulesHint": "Tick this when the answer was correct on the day of the exam but no longer follows the current Laws. The question then belongs to the archive and is kept out of practice mode.",
+      "points": "Exam points",
+      "pointsHint": "Empty = 1 point. Calculation tasks are usually worth more."
     }
   },
   "examGenerator": {
@@ -168,7 +170,9 @@
       "empty": "No questions selected yet.",
       "overridden": "Modified locally",
       "remove": "Remove from list",
-      "reorderHint": "Drag to reorder, or use the up/down arrow keys"
+      "reorderHint": "Drag to reorder, or use the up/down arrow keys",
+      "pointsUnit": "pts",
+      "pointsLabel": "Points for question {n}"
     },
     "saveChoice": {
       "title": "Save changes?",
@@ -209,7 +213,16 @@
     },
     "dateline": "Place and date (e.g. Poznań, 20.09.2025)",
     "showCandidateTable": "Candidate box (name, class)",
-    "classOptions": "Classes to choose from, comma-separated — leave empty to drop the class row"
+    "classOptions": "Classes to choose from, comma-separated — leave empty to drop the class row",
+    "scoring": {
+      "title": "Pass marks",
+      "hint": "A pass mark is a percentage of the points available for that class. Questions of a higher class do not count towards a lower one. Pass marks are printed in the answer key.",
+      "class": "Class",
+      "percent": "Pass mark in percent",
+      "add": "Add pass mark",
+      "remove": "Remove",
+      "summary": "{cls}: passes with at least {required} of {max} points ({percent}%)"
+    }
   },
   "archive": {
     "title": "Exam archive",

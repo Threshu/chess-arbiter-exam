@@ -14,7 +14,8 @@ import type { Question } from '~~/shared/types/question'
 import { createExamGeneratorState, type ExamGeneratorState } from '~/types/examGenerator'
 import type { SavedExamSummary } from '~/composables/useSavedExams'
 import { groupIntoSheets, type ExamSheet } from '~/utils/examSheets'
-import { examSheetHeading } from '~~/shared/constants'
+import { examSheetHeading, LEVELS } from '~~/shared/constants'
+import { scoreExam } from '~/utils/examScoring'
 
 definePageMeta({ middleware: ['admin'], layout: 'admin' })
 
@@ -40,6 +41,29 @@ const questionsById = computed<Record<string, Row>>(() =>
   Object.fromEntries(rows.value.map((r) => [r.id, r])),
 )
 const overriddenIds = computed(() => Object.keys(state.overrides))
+
+/** Points available and the pass mark per class, for the line under the selected questions. */
+const scoring = computed(() =>
+  scoreExam(
+    state.selectedQuestionIds,
+    (id) => state.overrides[id] ?? questionsById.value[id],
+    state.points,
+    state.passThresholds,
+  ),
+)
+
+function setPoints(id: string, points: number | null) {
+  const { [id]: _previous, ...rest } = state.points
+  state.points = points === null ? rest : { ...rest, [id]: points }
+}
+
+function addThreshold() {
+  state.passThresholds.push({ level: 'III', percent: 80 })
+}
+
+function removeThreshold(index: number) {
+  state.passThresholds.splice(index, 1)
+}
 
 let unsubscribe: Unsubscribe | null = null
 let pendingArchive: string | null = null
@@ -388,9 +412,26 @@ async function onGenerate() {
           :questions-by-id="questionsById"
           :overridden-ids="overriddenIds"
           :locale="currentLocale"
+          :points="state.points"
           @reorder="reorderSelected"
           @remove="removeSelected"
+          @set-points="setPoints"
         />
+        <ul
+          v-if="state.selectedQuestionIds.length && scoring.length"
+          class="text-muted mt-3 text-sm"
+        >
+          <li v-for="s in scoring" :key="s.level">
+            {{
+              t('examGenerator.scoring.summary', {
+                cls: t(`levels.${s.level}`),
+                required: s.required,
+                max: s.max,
+                percent: s.percent,
+              })
+            }}
+          </li>
+        </ul>
       </UiCard>
     </div>
 
@@ -445,6 +486,43 @@ async function onGenerate() {
             <span class="text-fg text-sm">{{ t('examGenerator.includeAnswerKey') }}</span>
           </label>
         </div>
+
+        <fieldset class="flex flex-col gap-2">
+          <legend class="text-fg mb-1 text-sm font-medium">
+            {{ t('examGenerator.scoring.title') }}
+          </legend>
+          <p class="text-muted text-xs">{{ t('examGenerator.scoring.hint') }}</p>
+          <div
+            v-for="(threshold, i) in state.passThresholds"
+            :key="i"
+            class="flex flex-wrap items-center gap-2"
+          >
+            <select
+              v-model="threshold.level"
+              :aria-label="t('examGenerator.scoring.class')"
+              class="bg-bg text-fg border-border h-9 rounded-md border px-2 text-sm"
+            >
+              <option v-for="l in LEVELS" :key="l" :value="l">{{ t(`levels.${l}`) }}</option>
+            </select>
+            <input
+              v-model.number="threshold.percent"
+              type="number"
+              min="0"
+              max="100"
+              :aria-label="t('examGenerator.scoring.percent')"
+              class="bg-bg text-fg border-border h-9 w-20 rounded-md border px-2 text-right text-sm"
+            >
+            <span class="text-muted text-sm">%</span>
+            <UiButton variant="ghost" size="sm" @click="removeThreshold(i)">
+              {{ t('examGenerator.scoring.remove') }}
+            </UiButton>
+          </div>
+          <div>
+            <UiButton variant="secondary" size="sm" @click="addThreshold">
+              {{ t('examGenerator.scoring.add') }}
+            </UiButton>
+          </div>
+        </fieldset>
 
         <div class="flex flex-col gap-1.5">
           <span class="text-fg text-sm font-medium">{{ t('examGenerator.headerText') }}</span>

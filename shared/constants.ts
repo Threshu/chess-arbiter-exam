@@ -3,7 +3,18 @@ export const FIRESTORE_REGION = 'europe-west3' as const
 export const SUPPORTED_LOCALES = ['pl', 'en'] as const
 export const DEFAULT_LOCALE = 'pl' as const
 
-export const LEVELS = ['NA', 'FA', 'IA'] as const
+/**
+ * Klasy sedziowskie od najnizszej: mlodziezowa (po 18. roku zycia przechodzi w III), III, II, I,
+ * panstwowa, a potem tytuly FIDE. Pytanie ma jedna klase — najnizsza, na ktorej egzaminie ma sens;
+ * egzamin na dana klase obejmuje tez wszystkie pytania z klas nizszych.
+ */
+export const LEVELS = ['youth', 'III', 'II', 'I', 'national', 'FA', 'IA'] as const
+export type Level = (typeof LEVELS)[number]
+
+/** Czy pytanie klasy `question` nalezy do egzaminu na klase `exam` (czyli nie jest od niej wyzsze). */
+export function levelWithin(question: Level, exam: Level): boolean {
+  return LEVELS.indexOf(question) <= LEVELS.indexOf(exam)
+}
 
 /**
  * Tematyka pytania wg struktury Przepisow gry FIDE w polskim przekladzie PZSzach

@@ -13,7 +13,7 @@ import {
 } from 'firebase/firestore'
 import type { Level, Question, QuestionStatus, QuestionTypeId } from '~~/shared/types/question'
 import type { Topic } from '~~/shared/constants'
-import { TOPIC_GROUPS } from '~~/shared/constants'
+import { LEVELS, TOPIC_GROUPS } from '~~/shared/constants'
 
 definePageMeta({ middleware: ['admin'], layout: 'admin' })
 
@@ -152,9 +152,7 @@ const statusVariant: Record<QuestionStatus, 'success' | 'warning' | 'neutral'> =
         <option value="all">
           {{ t('questions.filters.level') }}: {{ t('questions.filters.all') }}
         </option>
-        <option value="NA">NA</option>
-        <option value="FA">FA</option>
-        <option value="IA">IA</option>
+        <option v-for="l in LEVELS" :key="l" :value="l">{{ t(`levels.${l}`) }}</option>
       </select>
 
       <select
@@ -264,7 +262,7 @@ const statusVariant: Record<QuestionStatus, 'success' | 'warning' | 'neutral'> =
             <td class="py-3 pr-4">
               <span class="text-muted text-xs">{{ t(`questions.types.${row.type}`) }}</span>
             </td>
-            <td class="py-3 pr-4 text-sm">{{ row.level }}</td>
+            <td class="py-3 pr-4 text-sm">{{ t(`levels.${row.level}`) }}</td>
             <td class="py-3 pr-4">
               <UiBadge :variant="statusVariant[row.status]" dot>
                 {{ t(`questions.status.${row.status}`) }}

@@ -11,7 +11,7 @@ const openEndedQuestion: LoadedQuestion = {
   type: 'open-ended',
   content: { pl: { stem: 'Jaka jest kara za spóźnienie?' }, en: { stem: 'What is the penalty?' } },
   modelAnswer: { pl: 'Upomnienie ustne.', en: 'A verbal warning.' },
-  level: 'NA',
+  level: 'III',
   status: 'published',
   version: 1,
   createdBy: 'tester',
@@ -30,7 +30,7 @@ const singleChoiceQuestion: LoadedQuestion = {
     { id: 'a', content: { pl: '6', en: '6' }, isCorrect: false },
     { id: 'b', content: { pl: '8', en: '8' }, isCorrect: true },
   ],
-  level: 'NA',
+  level: 'III',
   status: 'published',
   version: 1,
   createdBy: 'tester',
@@ -47,7 +47,7 @@ const diagramQuestion: LoadedQuestion = {
     { id: 'a', content: { pl: 'Białych', en: 'White' }, isCorrect: true },
     { id: 'b', content: { pl: 'Czarnych', en: 'Black' }, isCorrect: false },
   ],
-  level: 'NA',
+  level: 'III',
   status: 'published',
   version: 1,
   createdBy: 'tester',
@@ -112,6 +112,25 @@ describe('buildExamDocument', () => {
     await expect(docxContainsText(buffer, 'Ile pionków ma każda strona')).resolves.toBe(true)
     await expect(docxContainsText(buffer, 'Jaka jest kara za sp')).resolves.toBe(true)
     await expect(docxContainsText(buffer, 'Klucz odpowiedzi')).resolves.toBe(true)
+  })
+
+  it('prints the pass marks in the answer key and the points of a question worth more', async () => {
+    const state = createExamGeneratorState()
+    state.selectedQuestionIds = [singleChoiceQuestion.id, openEndedQuestion.id]
+    state.points = { [openEndedQuestion.id]: 2 }
+    state.includeAnswerKey = true
+
+    const doc = await buildExamDocument(state, {
+      [singleChoiceQuestion.id]: singleChoiceQuestion,
+      [openEndedQuestion.id]: openEndedQuestion,
+    })
+    const buffer = await Packer.toBuffer(doc)
+    // 3 points: 80% → 2.4 → 3, 85% → 2.55 → 3.
+    await expect(
+      docxContainsText(buffer, 'Klasa III — próg 80%: co najmniej 3 z 3 pkt.'),
+    ).resolves.toBe(true)
+    await expect(docxContainsText(buffer, 'Klasa II — próg 85%')).resolves.toBe(true)
+    await expect(docxContainsText(buffer, '2. (2 pkt) Jaka jest kara')).resolves.toBe(true)
   })
 
   it('omits the answer key section when includeAnswerKey is false', async () => {

@@ -73,7 +73,7 @@ onMounted(load)
           <UiCard>
             <div class="mb-3 flex flex-wrap items-center gap-2">
               <span class="font-display text-fg text-lg">{{ entry.no }}.</span>
-              <UiBadge variant="neutral">{{ entry.question.level }}</UiBadge>
+              <UiBadge variant="neutral">{{ t(`levels.${entry.question.level}`) }}</UiBadge>
               <UiBadge v-if="entry.question.status !== 'published'" variant="warning">
                 {{ t(`questions.status.${entry.question.status}`) }}
               </UiBadge>

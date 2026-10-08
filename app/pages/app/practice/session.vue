@@ -14,6 +14,7 @@ import {
 import type { ClosedQuestion, Level, Question, QuestionTypeId } from '~~/shared/types/question'
 import type { Topic } from '~~/shared/constants'
 import { isClosedQuestion } from '~~/shared/types/question'
+import { levelWithin } from '~~/shared/constants'
 
 definePageMeta({ layout: 'default' })
 
@@ -142,7 +143,7 @@ onMounted(async () => {
     .filter(
       (q) => q.type === 'single-choice' || q.type === 'multi-choice' || q.type === 'open-ended',
     )
-    .filter((q) => !levelFilter.value || q.level === levelFilter.value)
+    .filter((q) => !levelFilter.value || levelWithin(q.level, levelFilter.value))
     .filter((q) => !typeFilter.value || q.type === typeFilter.value)
     .filter((q) => !topicFilter.value || q.topic === topicFilter.value)
     // Pytania z odpowiedzia wg uchylonych przepisow naleza do archiwum, nie do nauki.

@@ -1,5 +1,6 @@
 import type { Locale } from '~~/shared/types/user'
 import type { Question } from '~~/shared/types/question'
+import { DEFAULT_PASS_THRESHOLDS, type PassThreshold } from '~/utils/examScoring'
 
 /**
  * The instruction printed under the candidate table on the WP exam sheets (WP 2025), used as the
@@ -30,6 +31,10 @@ export interface ExamGeneratorState {
   selectedQuestionIds: string[]
   /** Edited copies, keyed by question id — used only when generating the DOCX. */
   overrides: Record<string, Question>
+  /** Points set for this exam only, keyed by question id; otherwise the question's own points. */
+  points: Record<string, number>
+  /** Pass marks printed with the answer key, one per class the exam is for. */
+  passThresholds: PassThreshold[]
   includeAnswerKey: boolean
 }
 
@@ -44,6 +49,8 @@ export function createExamGeneratorState(): ExamGeneratorState {
     footerHtml: '',
     selectedQuestionIds: [],
     overrides: {},
+    points: {},
+    passThresholds: DEFAULT_PASS_THRESHOLDS.map((t) => ({ ...t })),
     includeAnswerKey: false,
   }
 }

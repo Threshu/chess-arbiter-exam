@@ -8,7 +8,7 @@ PDF-y (albo DOCX) idą do `pdf/`. Są ignorowane przez gita (`*.pdf` i `content/
 
 Przy każdym PDF-ie podaj:
 
-- **poziom** — `NA`, `FA` albo `IA`
+- **klasę** — najniższą klasę sędziowską, na którą jest egzamin: `youth` (młodzieżowa), `III`, `II`, `I`, `national` (państwowa), `FA` albo `IA`
 - **rok i typ egzaminu** — do tagów, np. `WP 2021`
 - **czy w pliku jest klucz odpowiedzi** — a jeśli tak, na której stronie
 
@@ -83,8 +83,9 @@ options:
 
 ## Ustalenia (2026-09-08)
 
-- **Poziomy wg klasy egzaminu, nie wg nazwy pliku:** egzaminy na klase **okregowa** (WP 2021-2025) -> `level: NA`.
-  Egzaminy na klase **centralna** (WP 2017) i **panstwowa** (PZSzach 2025) -> `level: FA`.
+- **Poziomy wg klasy egzaminu, nie wg nazwy pliku:** egzaminy na klase **okregowa** (WP 2021-2025) -> `level: III`.
+  Egzamin na klase **centralna** (WP 2017) -> `level: II`, egzaminy na klase **panstwowa** (PZSzach) -> `level: national`.
+  (Do 2026-10-08 poziomy byly tylko `NA`/`FA`/`IA`: `NA` przeszlo na `III`, `FA` na `II` albo `national` wg zrodla.)
 - **WP 2017 nie ma zadnych odpowiedzi** — to czysty, niewypelniony arkusz. Odpowiedzi wyprowadzane z przepisow
   FIDE, a uzasadnienie zawsze trafia do `explanation`, zeby dalo sie je zweryfikowac bez siegania do zrodla.
 - **Tagi:** `["WP", "<rok>"]` albo `["PZSzach", "<rok>"]` wg nazwy pliku. Pytania z plikow `luzne_*`, ktore nie maja odpowiednika w zadnym egzaminie, ida **bez tagow**. Jesli pytanie wystepuje i w pliku luznym, i w egzaminie, wygrywa wersja z egzaminu (z tagami).

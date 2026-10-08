@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { levelSchema } from './question.js'
 
 /**
  * Egzamin zapisany w generatorze — kolekcja `exams`, dostepna wylacznie dla admina, bo moze
@@ -19,6 +20,10 @@ export const savedExamSchema = z.object({
   footerHtml: z.string(),
   selectedQuestionIds: z.array(z.string().min(1)),
   overrides: z.record(z.string(), z.unknown()),
+  points: z.record(z.string(), z.number().positive()).optional(),
+  passThresholds: z
+    .array(z.object({ level: levelSchema, percent: z.number().min(0).max(100) }))
+    .optional(),
   includeAnswerKey: z.boolean(),
   createdBy: z.string().min(1),
   createdAt: z.unknown(),

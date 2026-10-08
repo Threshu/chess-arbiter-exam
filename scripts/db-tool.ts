@@ -11,7 +11,7 @@
 //   pnpm tsx scripts/db-tool.ts get <id>
 //   pnpm tsx scripts/db-tool.ts insert <path-to-question.json>
 //   pnpm tsx scripts/db-tool.ts update <id> <path-to-partial.json>
-//   pnpm tsx scripts/db-tool.ts list [--type=single-choice] [--level=NA] [--status=draft]
+//   pnpm tsx scripts/db-tool.ts list [--type=single-choice] [--level=III] [--status=draft]
 import { initializeApp, cert } from 'firebase-admin/app'
 import { getFirestore, FieldValue } from 'firebase-admin/firestore'
 import { readFileSync } from 'node:fs'

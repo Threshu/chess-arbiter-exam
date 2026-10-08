@@ -35,6 +35,8 @@ function toStored(state: ExamGeneratorState): ExamGeneratorState {
     // which a write rejects. The DOCX generator only needs the question content, so a JSON round
     // trip gives a clean, storable copy.
     overrides: JSON.parse(JSON.stringify(state.overrides)),
+    points: { ...state.points },
+    passThresholds: state.passThresholds.map((t) => ({ ...t })),
     includeAnswerKey: state.includeAnswerKey,
   }
 }
@@ -75,6 +77,8 @@ export function useSavedExams() {
       footerHtml: data.footerHtml ?? '',
       selectedQuestionIds: data.selectedQuestionIds ?? [],
       overrides: data.overrides ?? {},
+      points: data.points ?? {},
+      passThresholds: data.passThresholds ?? defaults.passThresholds,
       includeAnswerKey: data.includeAnswerKey ?? false,
     }
   }

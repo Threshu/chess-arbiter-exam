@@ -28,8 +28,10 @@ import { buildExamFilename } from '~/utils/examFilename'
 import { fenToPngBytes } from '~/utils/chessDiagramImage'
 import { htmlToDocxParagraphs } from '~/utils/htmlToDocxBlocks'
 import { localized } from '~/utils/localized'
+import { questionPoints, scoreExam } from '~/utils/examScoring'
 import type { ExamGeneratorState } from '~/types/examGenerator'
 import type { Question } from '~~/shared/types/question'
+import type { Level } from '~~/shared/constants'
 
 const DEFAULT_START_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1'
 const OPTION_LETTERS = 'abcdefgh'.split('')
@@ -75,6 +77,26 @@ const MULTI_CHOICE_HINT = {
   en: '(select all correct answers)',
 } as const
 const ASKS_FOR_ALL = /zaznacz wszystkie|select all/i
+
+// Class names as they read after "klasa" / "class" in the answer key's pass marks.
+const CLASS_NAMES: Record<'pl' | 'en', Record<Level, string>> = {
+  pl: {
+    youth: 'młodzieżowa',
+    III: 'III',
+    II: 'II',
+    I: 'I',
+    national: 'państwowa',
+    FA: 'FA',
+    IA: 'IA',
+  },
+  en: { youth: 'youth', III: 'III', II: 'II', I: 'I', national: 'national', FA: 'FA', IA: 'IA' },
+}
+
+/** "(2 pkt)" in front of a stem worth other than the usual single point; empty otherwise. */
+function pointsLabel(points: number, lang: 'pl' | 'en'): string {
+  if (points === 1) return ''
+  return lang === 'pl' ? `(${points} pkt) ` : `(${points} pts) `
+}
 
 export type LoadedQuestion = Question & { id: string }
 
@@ -176,17 +198,21 @@ function questionBodyParagraphs(
   index: number,
   lang: 'pl' | 'en',
   diagram: { image: ImageRun | null; moves: string | null; failed: boolean },
+  points: number,
 ): Paragraph[] {
   const { image, moves, failed } = diagram
   const content = localized(question.content, lang)
-  const paragraphs: Paragraph[] = lineParagraphs(`${index + 1}. ${content.stem}`, {
-    leading: image ? [image] : [],
-    bold: true,
-    justified: true,
-    before: SPACE_BEFORE_QUESTION,
-    after: SPACE_AFTER_STEM,
-    keepWithNext: true,
-  })
+  const paragraphs: Paragraph[] = lineParagraphs(
+    `${index + 1}. ${pointsLabel(points, lang)}${content.stem}`,
+    {
+      leading: image ? [image] : [],
+      bold: true,
+      justified: true,
+      before: SPACE_BEFORE_QUESTION,
+      after: SPACE_AFTER_STEM,
+      keepWithNext: true,
+    },
+  )
 
   if (question.type === 'multi-choice' && !ASKS_FOR_ALL.test(content.stem)) {
     paragraphs.push(
@@ -252,9 +278,10 @@ async function questionBlocks(
   question: Question,
   index: number,
   lang: 'pl' | 'en',
+  points: number,
 ): Promise<Paragraph[]> {
   const diagram = await buildDiagramImage(question)
-  const body = questionBodyParagraphs(question, index, lang, diagram)
+  const body = questionBodyParagraphs(question, index, lang, diagram, points)
   if (!diagram.image) return body
   return [...body, new Paragraph({ children: [clearFloatsBreak()] })]
 }
@@ -379,11 +406,32 @@ function candidateTable(state: ExamGeneratorState): Table | null {
   })
 }
 
-function answerKeyParagraphs(
-  ids: string[],
+/** "Klasa III — próg 80%: co najmniej 23 z 28 pkt (bez zadań 29, 30)." — one line per class. */
+function passMarkLines(
+  state: ExamGeneratorState,
   resolve: (id: string) => LoadedQuestion | undefined,
-  lang: 'pl' | 'en',
+): string[] {
+  const lang = state.language
+  const scoring = scoreExam(state.selectedQuestionIds, resolve, state.points, state.passThresholds)
+  return scoring.map((s) => {
+    const name = CLASS_NAMES[lang][s.level]
+    const without = s.excluded.length
+      ? lang === 'pl'
+        ? ` (bez zadań ${s.excluded.join(', ')})`
+        : ` (without questions ${s.excluded.join(', ')})`
+      : ''
+    return lang === 'pl'
+      ? `Klasa ${name} — próg ${s.percent}%: co najmniej ${s.required} z ${s.max} pkt${without}.`
+      : `Class ${name} — pass mark ${s.percent}%: at least ${s.required} of ${s.max} points${without}.`
+  })
+}
+
+function answerKeyParagraphs(
+  state: ExamGeneratorState,
+  resolve: (id: string) => LoadedQuestion | undefined,
 ): Paragraph[] {
+  const ids = state.selectedQuestionIds
+  const lang = state.language
   const paragraphs: Paragraph[] = [
     new Paragraph({
       pageBreakBefore: true,
@@ -391,6 +439,13 @@ function answerKeyParagraphs(
       children: [new TextRun({ text: 'Klucz odpowiedzi', bold: true, size: BODY_SIZE })],
     }),
   ]
+
+  const passMarks = passMarkLines(state, resolve)
+  passMarks.forEach((line, i) => {
+    paragraphs.push(
+      ...lineParagraphs(line, { after: i === passMarks.length - 1 ? SPACE_AFTER_STEM : 0 }),
+    )
+  })
 
   ids.forEach((id, index) => {
     const question = resolve(id)
@@ -404,7 +459,10 @@ function answerKeyParagraphs(
             .filter((v): v is string => v !== null)
             .join(', ')
 
-    paragraphs.push(...lineParagraphs(`${index + 1}. ${answer}`, { bold: true, after: 80 }))
+    const points = pointsLabel(questionPoints(id, question, state.points), lang)
+    paragraphs.push(
+      ...lineParagraphs(`${index + 1}. ${points}${answer}`, { bold: true, after: 80 }),
+    )
 
     const explanation = localized(question.content, lang).explanation
     if (explanation) {
@@ -445,13 +503,14 @@ export async function buildExamDocument(
   for (let i = 0; i < state.selectedQuestionIds.length; i++) {
     const question = resolve(state.selectedQuestionIds[i]!)
     if (!question) continue
-    children.push(...(await questionBlocks(question, i, state.language)))
+    const points = questionPoints(state.selectedQuestionIds[i]!, question, state.points)
+    children.push(...(await questionBlocks(question, i, state.language, points)))
   }
 
   children.push(...htmlToDocxParagraphs(state.footerHtml))
 
   if (state.includeAnswerKey) {
-    children.push(...answerKeyParagraphs(state.selectedQuestionIds, resolve, state.language))
+    children.push(...answerKeyParagraphs(state, resolve))
   }
 
   return new Document({

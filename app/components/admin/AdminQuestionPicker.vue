@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Level, Question, QuestionStatus, QuestionTypeId } from '~~/shared/types/question'
 import type { Locale } from '~~/shared/types/user'
+import { LEVELS, levelWithin } from '~~/shared/constants'
 
 type Row = Question & { id: string }
 
@@ -42,7 +43,8 @@ const filtered = computed(() => {
   const term = search.value.trim().toLowerCase()
   return props.questions.filter((r) => {
     if (typeFilter.value !== 'all' && r.type !== typeFilter.value) return false
-    if (levelFilter.value !== 'all' && r.level !== levelFilter.value) return false
+    // An exam for a class covers the questions of the classes below it too.
+    if (levelFilter.value !== 'all' && !levelWithin(r.level, levelFilter.value)) return false
     if (statusFilter.value !== 'all' && r.status !== statusFilter.value) return false
     if (tagFilter.value.length && !tagFilter.value.some((tag) => r.tags?.includes(tag))) {
       return false
@@ -79,9 +81,7 @@ function isSelected(id: string) {
         :aria-label="t('questions.filters.level')"
       >
         <option value="all">{{ t('questions.filters.all') }}</option>
-        <option value="NA">NA</option>
-        <option value="FA">FA</option>
-        <option value="IA">IA</option>
+        <option v-for="l in LEVELS" :key="l" :value="l">{{ t(`levels.${l}`) }}</option>
       </select>
       <select
         v-model="statusFilter"
@@ -167,7 +167,7 @@ function isSelected(id: string) {
           <p class="text-fg line-clamp-2 text-sm">{{ localized(q.content, locale).stem }}</p>
           <div class="mt-1 flex flex-wrap gap-2">
             <UiBadge size="sm" variant="neutral">{{ t(`questions.types.${q.type}`) }}</UiBadge>
-            <UiBadge size="sm" variant="info">{{ q.level }}</UiBadge>
+            <UiBadge size="sm" variant="info">{{ t(`levels.${q.level}`) }}</UiBadge>
             <UiBadge
               size="sm"
               :variant="

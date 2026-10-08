@@ -2,6 +2,7 @@
 import { HoverCardContent, HoverCardPortal, HoverCardRoot, HoverCardTrigger } from 'reka-ui'
 import type { Question } from '~~/shared/types/question'
 import type { Locale } from '~~/shared/types/user'
+import { questionPoints } from '~/utils/examScoring'
 
 type Row = Question & { id: string }
 
@@ -10,6 +11,8 @@ interface Props {
   questionsById: Record<string, Row>
   overriddenIds: string[]
   locale: Locale
+  /** Points set for this exam only; a question without an entry is worth its own points. */
+  points: Record<string, number>
 }
 
 const props = defineProps<Props>()
@@ -17,6 +20,8 @@ const props = defineProps<Props>()
 const emit = defineEmits<{
   reorder: [ids: string[]]
   remove: [id: string]
+  /** `null` drops the exam's own setting, so the question's points apply again. */
+  setPoints: [id: string, points: number | null]
 }>()
 
 const { t } = useI18n()
@@ -27,6 +32,18 @@ const dragOverId = ref<string | null>(null)
 function stemOf(id: string) {
   const q = props.questionsById[id]
   return q ? localized(q.content, props.locale).stem : id
+}
+
+function pointsOf(id: string) {
+  return questionPoints(id, props.questionsById[id], props.points)
+}
+
+function onPointsInput(id: string, event: Event) {
+  const value = Number((event.target as HTMLInputElement).value)
+  if (!Number.isFinite(value) || value <= 0) return
+  // Back at the question's own value, the exam keeps no separate setting.
+  const own = props.questionsById[id]?.points ?? 1
+  emit('setPoints', id, value === own ? null : value)
 }
 
 function isOverridden(id: string) {
@@ -127,6 +144,22 @@ function onKeydown(event: KeyboardEvent, id: string) {
           </HoverCardContent>
         </HoverCardPortal>
       </HoverCardRoot>
+
+      <div class="text-muted flex shrink-0 items-center gap-1 text-xs">
+        <input
+          type="number"
+          min="0.5"
+          step="0.5"
+          :value="pointsOf(id)"
+          :aria-label="t('examGenerator.selected.pointsLabel', { n: index + 1 })"
+          class="bg-bg text-fg border-border h-7 w-14 rounded border px-1 text-right text-sm"
+          draggable="false"
+          @dragstart.prevent.stop
+          @keydown.stop
+          @change="onPointsInput(id, $event)"
+        >
+        {{ t('examGenerator.selected.pointsUnit') }}
+      </div>
 
       <button
         type="button"
