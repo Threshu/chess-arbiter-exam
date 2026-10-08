@@ -114,7 +114,7 @@ describe('buildExamDocument', () => {
     await expect(docxContainsText(buffer, 'Klucz odpowiedzi')).resolves.toBe(true)
   })
 
-  it('prints the pass marks in the answer key and the points of a question worth more', async () => {
+  it('prints pass marks and points in the answer key, never points on the sheet', async () => {
     const state = createExamGeneratorState()
     state.selectedQuestionIds = [singleChoiceQuestion.id, openEndedQuestion.id]
     state.points = { [openEndedQuestion.id]: 2 }
@@ -130,7 +130,8 @@ describe('buildExamDocument', () => {
       docxContainsText(buffer, 'Klasa III — próg 80%: co najmniej 3 z 3 pkt.'),
     ).resolves.toBe(true)
     await expect(docxContainsText(buffer, 'Klasa II — próg 85%')).resolves.toBe(true)
-    await expect(docxContainsText(buffer, '2. (2 pkt) Jaka jest kara')).resolves.toBe(true)
+    await expect(docxContainsText(buffer, '2. (2 pkt) Upomnienie ustne.')).resolves.toBe(true)
+    await expect(docxContainsText(buffer, '(2 pkt) Jaka jest kara')).resolves.toBe(false)
   })
 
   it('omits the answer key section when includeAnswerKey is false', async () => {

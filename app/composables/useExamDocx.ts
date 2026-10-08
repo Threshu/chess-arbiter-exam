@@ -92,7 +92,10 @@ const CLASS_NAMES: Record<'pl' | 'en', Record<Level, string>> = {
   en: { youth: 'youth', III: 'III', II: 'II', I: 'I', national: 'national', FA: 'FA', IA: 'IA' },
 }
 
-/** "(2 pkt)" in front of a stem worth other than the usual single point; empty otherwise. */
+/**
+ * "(2 pkt)" in front of an answer worth other than the usual single point; empty otherwise. Only the
+ * answer key shows points — the candidates' sheet never does.
+ */
 function pointsLabel(points: number, lang: 'pl' | 'en'): string {
   if (points === 1) return ''
   return lang === 'pl' ? `(${points} pkt) ` : `(${points} pts) `
@@ -299,17 +302,14 @@ function questionBodyParagraphs(
 ): (Paragraph | Table)[] {
   const { image, moves, failed } = diagram
   const content = localized(question.content, lang)
-  const paragraphs: (Paragraph | Table)[] = textBlocks(
-    `${index + 1}. ${pointsLabel(points, lang)}${content.stem}`,
-    {
-      leading: image ? [image] : [],
-      bold: true,
-      justified: true,
-      before: SPACE_BEFORE_QUESTION,
-      after: SPACE_AFTER_STEM,
-      keepWithNext: true,
-    },
-  )
+  const paragraphs: (Paragraph | Table)[] = textBlocks(`${index + 1}. ${content.stem}`, {
+    leading: image ? [image] : [],
+    bold: true,
+    justified: true,
+    before: SPACE_BEFORE_QUESTION,
+    after: SPACE_AFTER_STEM,
+    keepWithNext: true,
+  })
 
   if (question.type === 'multi-choice' && !ASKS_FOR_ALL.test(content.stem)) {
     paragraphs.push(
