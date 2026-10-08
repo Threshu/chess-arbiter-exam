@@ -66,6 +66,9 @@ const CANDIDATE_LABELS = {
 } as const
 
 // Spacing is in twentieths of a point (dxa): 240 = 12pt.
+// Gap between questions. It sits after the previous question, not before the next one: Word measures
+// a floating board from the top of the stem's paragraph including its space before, so a board beside
+// a question with space before stood higher than the question's first line.
 const SPACE_BEFORE_QUESTION = 480
 const SPACE_AFTER_STEM = 240
 const SPACE_AFTER_OPTION = 120
@@ -132,6 +135,7 @@ async function buildDiagramImage(question: Question): Promise<{
           relative: HorizontalPositionRelativeFrom.MARGIN,
           align: HorizontalPositionAlign.RIGHT,
         },
+        // Level with the stem's first line, because the stem has no space before it (see SPACE_BEFORE_QUESTION).
         verticalPosition: { relative: VerticalPositionRelativeFrom.PARAGRAPH, offset: 0 },
         wrap: { type: TextWrappingType.SQUARE, side: TextWrappingSide.LEFT },
         margins: { left: DIAGRAM_GAP_EMU, bottom: DIAGRAM_GAP_EMU },
@@ -306,7 +310,8 @@ function questionBodyParagraphs(
     leading: image ? [image] : [],
     bold: true,
     justified: true,
-    before: SPACE_BEFORE_QUESTION,
+    // Only the first question keeps space above it; the others get the gap from the question before.
+    before: index === 0 ? SPACE_BEFORE_QUESTION : 0,
     after: SPACE_AFTER_STEM,
     keepWithNext: true,
   })
@@ -353,7 +358,10 @@ function questionBodyParagraphs(
       paragraphs.push(
         ...lineParagraphs(`${OPTION_LETTERS[i]}) ${localized(opt.content, lang)}`, {
           justified: true,
-          after: SPACE_AFTER_OPTION,
+          after:
+            !image && i === question.options.length - 1
+              ? SPACE_BEFORE_QUESTION
+              : SPACE_AFTER_OPTION,
           // With a board, the last option is kept with the line that clears it.
           keepWithNext: !!image || i < question.options.length - 1,
         }),
@@ -383,7 +391,10 @@ async function questionBlocks(
   const diagram = await buildDiagramImage(question)
   const body = questionBodyParagraphs(question, index, lang, diagram, points)
   if (!diagram.image) return body
-  return [...body, new Paragraph({ children: [clearFloatsBreak()] })]
+  return [
+    ...body,
+    new Paragraph({ spacing: { after: SPACE_BEFORE_QUESTION }, children: [clearFloatsBreak()] }),
+  ]
 }
 
 /**
@@ -409,7 +420,8 @@ function clearFloatsBreak(): ParagraphChild {
 function openEndedAnswerSpace(keepWithNext: boolean, lines = ANSWER_SPACE_LINES): Paragraph {
   return new Paragraph({
     keepNext: keepWithNext,
-    spacing: { after: SPACE_AFTER_OPTION },
+    // With a board the clearing line after it carries the gap to the next question.
+    spacing: { after: keepWithNext ? SPACE_AFTER_OPTION : SPACE_BEFORE_QUESTION },
     children: Array.from({ length: lines }, () => new TextRun({ break: 1, size: BODY_SIZE })),
   })
 }
