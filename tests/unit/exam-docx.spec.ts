@@ -214,6 +214,22 @@ describe('buildExamDocument layout', () => {
     expect(xml).not.toContain('<w:tbl>')
   })
 
+  it('prints a table written as "a | b" lines as a real table', async () => {
+    const calc: LoadedQuestion = {
+      ...openEndedQuestion,
+      id: 'q-calc',
+      content: {
+        pl: { stem: 'Oblicz:\nRunda | Wynik\n1 | 1\n2 | ½\nPodaj sumę.' },
+        en: { stem: 'x' },
+      },
+    }
+    const xml = await documentXml([calc])
+    expect(xml.match(/<w:tbl>/g)).toHaveLength(1)
+    expect(xml.match(/<w:tr>|<w:tr /g)).toHaveLength(3)
+    expect(xml).not.toContain('Runda | Wynik')
+    expect(xml).toContain('Podaj sumę.')
+  })
+
   it('leaves the answer space of an open-ended question unframed', async () => {
     const xml = await documentXml([openEndedQuestion])
     expect(xml).not.toContain('<w:pBdr>')
