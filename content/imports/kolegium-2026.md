@@ -71,3 +71,10 @@ karze się jej bonifikatą z 9.5.3 — sędzia może jedynie przyznać czas za p
 (poprawna d). Ten sam błąd w objaśnieniach WP 2021#16 (`YVVIK4plvTb9B6O5iRfQ`) i WP 2017#34 (`p3h4UGsi7vTTlWNPQSAF`)
 — poprawiony. Przy okazji cytaty aneksów w pytaniach 10, 14, 19, 22, 24 przeniesione na numerację z Manuala 2026
 (A.4.x → A.5.x, B.4 → B.3, bonifikata 1 min w szybkich: A.3).
+
+Korekta (2026-10-09): zdanie „nie jest to nieprawidłowa reklamacja… sędzia może dać czas za przeszkadzanie” jest nowe w
+Manualu 2026 — w wydaniach 2024 i 2025 komentarz do 9.4 mówi tylko o powrocie prawa do reklamacji w następnym ruchu
+(starszych wydań nie ma już na arbiters.fide.com). Archiwalne WP 2021#16 i WP 2017#34 przywrócone do pierwotnej treści
+(z bonifikatą), z dopiskiem o zmianie; WP 2021#16 oznaczone `outdatedRules`, bo jego odpowiedź zawiera bonifikatę.
+WP 2017#34 bez flagi — wybrana odpowiedź („odrzucić reklamację”) jest poprawna także dziś. Pytanie 7 egzaminu
+(wariant bez źródła) zostaje zgodne z Manualem 2026.
