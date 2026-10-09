@@ -485,6 +485,15 @@ async function onGenerate() {
             <input id="eg-answer-key" v-model="state.includeAnswerKey" type="checkbox" >
             <span class="text-fg text-sm">{{ t('examGenerator.includeAnswerKey') }}</span>
           </label>
+
+          <label
+            v-if="state.includeAnswerKey && state.language === 'pl'"
+            for="eg-original-laws"
+            class="mb-2 flex items-center gap-2"
+          >
+            <input id="eg-original-laws" v-model="state.includeOriginalLaws" type="checkbox" >
+            <span class="text-fg text-sm">{{ t('examGenerator.includeOriginalLaws') }}</span>
+          </label>
         </div>
 
         <fieldset class="flex flex-col gap-2">

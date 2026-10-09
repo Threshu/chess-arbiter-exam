@@ -25,6 +25,7 @@ export const savedExamSchema = z.object({
     .array(z.object({ level: levelSchema, percent: z.number().min(0).max(100) }))
     .optional(),
   includeAnswerKey: z.boolean(),
+  includeOriginalLaws: z.boolean().optional(),
   createdBy: z.string().min(1),
   createdAt: z.unknown(),
   updatedAt: z.unknown(),

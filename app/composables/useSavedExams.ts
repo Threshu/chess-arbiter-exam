@@ -38,6 +38,7 @@ function toStored(state: ExamGeneratorState): ExamGeneratorState {
     points: { ...state.points },
     passThresholds: state.passThresholds.map((t) => ({ ...t })),
     includeAnswerKey: state.includeAnswerKey,
+    includeOriginalLaws: state.includeOriginalLaws,
   }
 }
 
@@ -80,6 +81,7 @@ export function useSavedExams() {
       points: data.points ?? {},
       passThresholds: data.passThresholds ?? defaults.passThresholds,
       includeAnswerKey: data.includeAnswerKey ?? false,
+      includeOriginalLaws: data.includeOriginalLaws ?? false,
     }
   }
 

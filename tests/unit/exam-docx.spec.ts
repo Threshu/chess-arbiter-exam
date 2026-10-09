@@ -134,6 +134,48 @@ describe('buildExamDocument', () => {
     await expect(docxContainsText(buffer, '(2 pkt) Jaka jest kara')).resolves.toBe(false)
   })
 
+  it('quotes the cited articles in Polish, and the English original only when asked', async () => {
+    const cited: LoadedQuestion = {
+      ...openEndedQuestion,
+      id: 'q-cited',
+      modelAnswer: { pl: 'Biały stracił prawo do reklamacji (art. 9.4).', en: 'x' },
+    }
+    const state = createExamGeneratorState()
+    state.selectedQuestionIds = [cited.id]
+    state.includeAnswerKey = true
+    const plain = await Packer.toBuffer(await buildExamDocument(state, { [cited.id]: cited }))
+    await expect(
+      docxContainsText(plain, 'traci w danym posunięciu prawo do reklamacji remisu'),
+    ).resolves.toBe(true)
+    await expect(docxContainsText(plain, 'loses the right to claim a draw')).resolves.toBe(false)
+
+    state.includeOriginalLaws = true
+    const withOriginal = await Packer.toBuffer(
+      await buildExamDocument(state, { [cited.id]: cited }),
+    )
+    await expect(docxContainsText(withOriginal, 'loses the right to claim a draw')).resolves.toBe(
+      true,
+    )
+  })
+
+  it('quotes no articles for a question answered under superseded rules', async () => {
+    const outdated: LoadedQuestion = {
+      ...openEndedQuestion,
+      id: 'q-outdated',
+      outdatedRules: true,
+      modelAnswer: { pl: 'Bonifikata (art. 9.5.3).', en: 'x' },
+    }
+    const state = createExamGeneratorState()
+    state.selectedQuestionIds = [outdated.id]
+    state.includeAnswerKey = true
+    const buffer = await Packer.toBuffer(
+      await buildExamDocument(state, { [outdated.id]: outdated }),
+    )
+    await expect(docxContainsText(buffer, 'Przepisy gry FIDE (przekład PZSzach')).resolves.toBe(
+      false,
+    )
+  })
+
   it('omits the answer key section when includeAnswerKey is false', async () => {
     const state = createExamGeneratorState()
     state.selectedQuestionIds = [singleChoiceQuestion.id]

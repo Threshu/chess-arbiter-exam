@@ -18,6 +18,9 @@ Przy każdym PDF-ie podaj:
 - `pdf/FIDE Arbiters Manual 2026.pdf` — Podręcznik Sędziego FIDE 2026 (arbiters.fide.com): aktualne Przepisy z
   komentarzami interpretacyjnymi. Rozstrzyga, gdy przekład 2018 jest nieaktualny. Aneksy mają w nim nową numerację:
   A.3 (kary 1 min w szybkich i błyskawicznych), A.5.x (dawne A.4.x), B.3 (dawne B.4).
+- `app/data/laws/laws-{pl,en}-2023.json` — brzmienie artykułów Przepisów 2023 do klucza odpowiedzi: PL z
+  oficjalnego przekładu PZSzach (pzszach.pl, `2023-tlumaczenie-FIDE-Laws-of-Chess.pdf`), EN z Manuala 2026 (bez
+  komentarzy). Pytania cytują numerację 2023 (9.2.3.2, 11.3.2, A.5.x, B.3) — przy nowych pytaniach też jej używać.
 - Regulamin Klasyfikacyjny PZSzach 2025 (pzszach.pl) i kalkulatory norm (szachygrodzisk.pl/kalkulator,
   szachowarodzina.pl/kalkulator) — do zadań z kategorii szachowych.
 

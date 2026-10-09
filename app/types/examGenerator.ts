@@ -36,6 +36,8 @@ export interface ExamGeneratorState {
   /** Pass marks printed with the answer key, one per class the exam is for. */
   passThresholds: PassThreshold[]
   includeAnswerKey: boolean
+  /** Adds the English original under each quoted article of the Polish answer key. */
+  includeOriginalLaws: boolean
 }
 
 export function createExamGeneratorState(): ExamGeneratorState {
@@ -52,5 +54,6 @@ export function createExamGeneratorState(): ExamGeneratorState {
     points: {},
     passThresholds: DEFAULT_PASS_THRESHOLDS.map((t) => ({ ...t })),
     includeAnswerKey: false,
+    includeOriginalLaws: false,
   }
 }

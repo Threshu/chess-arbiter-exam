@@ -29,6 +29,7 @@ import { fenToPngBytes } from '~/utils/chessDiagramImage'
 import { htmlToDocxParagraphs } from '~/utils/htmlToDocxBlocks'
 import { localized } from '~/utils/localized'
 import { questionPoints, scoreExam } from '~/utils/examScoring'
+import { citedArticles, lawQuotes, loadLaws, type LawTexts } from '~/utils/lawsOfChess'
 import type { ExamGeneratorState } from '~/types/examGenerator'
 import type { Question } from '~~/shared/types/question'
 import type { Level } from '~~/shared/constants'
@@ -535,9 +536,64 @@ function passMarkLines(
   })
 }
 
+const LAW_SIZE = 18
+const LAW_HEADINGS = {
+  pl: 'Przepisy gry FIDE (przekład PZSzach, 2023):',
+  en: 'FIDE Laws of Chess (2023):',
+} as const
+
+/**
+ * The wording of the articles an answer cites, under it in the key — in the sheet's language, and
+ * optionally followed by the English original. A question answered under superseded rules gets none:
+ * its explanation cites the old wording, which the 2023 texts would contradict.
+ */
+function lawParagraphs(
+  question: LoadedQuestion,
+  lang: 'pl' | 'en',
+  laws: { primary: LawTexts; original: LawTexts | null },
+  citingText: string,
+): Paragraph[] {
+  if (question.outdatedRules) return []
+  const quotes = lawQuotes(citedArticles(citingText), laws.primary)
+  if (!quotes.length) return []
+  const paragraphs = [
+    new Paragraph({
+      keepNext: true,
+      spacing: { before: 40 },
+      children: [new TextRun({ text: LAW_HEADINGS[lang], bold: true, size: LAW_SIZE })],
+    }),
+  ]
+  for (const quote of quotes) {
+    paragraphs.push(
+      new Paragraph({
+        keepLines: true,
+        children: [
+          new TextRun({ text: `Art. ${quote.number} `, bold: true, size: LAW_SIZE }),
+          new TextRun({ text: quote.text, size: LAW_SIZE }),
+        ],
+      }),
+    )
+    const original = laws.original?.[quote.number]
+    if (original) {
+      paragraphs.push(
+        new Paragraph({
+          keepLines: true,
+          indent: { left: 360 },
+          children: [
+            new TextRun({ text: original, italics: true, size: LAW_SIZE, color: '555555' }),
+          ],
+        }),
+      )
+    }
+  }
+  paragraphs.push(new Paragraph({ spacing: { after: SPACE_AFTER_OPTION }, children: [] }))
+  return paragraphs
+}
+
 function answerKeyParagraphs(
   state: ExamGeneratorState,
   resolve: (id: string) => LoadedQuestion | undefined,
+  laws: { primary: LawTexts; original: LawTexts | null },
 ): (Paragraph | Table)[] {
   const ids = state.selectedQuestionIds
   const lang = state.language
@@ -584,6 +640,15 @@ function answerKeyParagraphs(
     if (explanation) {
       paragraphs.push(...textBlocks(explanation, { italics: true, after: SPACE_AFTER_OPTION }))
     }
+    paragraphs.push(
+      ...lawParagraphs(
+        question,
+        lang,
+        laws,
+        `${answer}
+${explanation ?? ''}`,
+      ),
+    )
   })
 
   return paragraphs
@@ -626,7 +691,12 @@ export async function buildExamDocument(
   children.push(...htmlToDocxParagraphs(state.footerHtml))
 
   if (state.includeAnswerKey) {
-    children.push(...answerKeyParagraphs(state, resolve))
+    const laws = {
+      primary: await loadLaws(state.language),
+      // The English original is an extra only for a Polish sheet; an English sheet quotes it already.
+      original: state.includeOriginalLaws && state.language === 'pl' ? await loadLaws('en') : null,
+    }
+    children.push(...answerKeyParagraphs(state, resolve, laws))
   }
 
   return new Document({

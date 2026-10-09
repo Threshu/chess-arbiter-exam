@@ -222,7 +222,8 @@
       "add": "Dodaj próg",
       "remove": "Usuń",
       "summary": "{cls}: zalicza co najmniej {required} z {max} pkt ({percent}%)"
-    }
+    },
+    "includeOriginalLaws": "Dołącz oryginał przepisów (EN) w kluczu"
   },
   "archive": {
     "title": "Archiwum egzaminów",

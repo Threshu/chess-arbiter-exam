@@ -222,7 +222,8 @@
       "add": "Add pass mark",
       "remove": "Remove",
       "summary": "{cls}: passes with at least {required} of {max} points ({percent}%)"
-    }
+    },
+    "includeOriginalLaws": "Add the original Laws (EN) to the key"
   },
   "archive": {
     "title": "Exam archive",
