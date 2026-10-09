@@ -63,3 +63,11 @@ na stronę, materiał równy.
 
 Szósta runda: 25 — zamiast pytania o procedurę reklamacji (dublowało temat z 26) wersja Kolegium z maila:
 K+G białopolowy vs K, poddanie po martwej pozycji = remis (`qO0yNiOVTA02jUB2QAh6`).
+
+Uwaga Macieja (Kolegium, 2026-10-09): pytanie 7 (`OTu06aMkvxMOFCmjAvzv`, reklamacja trzykrotnego powtórzenia po
+wykonaniu własnego ruchu, 3'+2'') miało w kluczu „odrzucić i dodać przeciwnikowi 1 min”. Według komentarza do art. 9.4
+w Arbiters' Manual 2026 utrata prawa do reklamacji przez dotknięcie bierki nie jest nieprawidłową reklamacją i nie
+karze się jej bonifikatą z 9.5.3 — sędzia może jedynie przyznać czas za przeszkadzanie. Opcje i klucz przepisane
+(poprawna d). Ten sam błąd w objaśnieniach WP 2021#16 (`YVVIK4plvTb9B6O5iRfQ`) i WP 2017#34 (`p3h4UGsi7vTTlWNPQSAF`)
+— poprawiony. Przy okazji cytaty aneksów w pytaniach 10, 14, 19, 22, 24 przeniesione na numerację z Manuala 2026
+(A.4.x → A.5.x, B.4 → B.3, bonifikata 1 min w szybkich: A.3).

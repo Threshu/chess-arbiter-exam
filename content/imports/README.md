@@ -12,6 +12,15 @@ Przy każdym PDF-ie podaj:
 - **rok i typ egzaminu** — do tagów, np. `WP 2021`
 - **czy w pliku jest klucz odpowiedzi** — a jeśli tak, na której stronie
 
+## Źródła do weryfikacji
+
+- `pdf/Przepisy gry FIDE - przeklad PZSzach 2018.pdf` — polski tekst Przepisów (numeracja artykułów 1–12).
+- `pdf/FIDE Arbiters Manual 2026.pdf` — Podręcznik Sędziego FIDE 2026 (arbiters.fide.com): aktualne Przepisy z
+  komentarzami interpretacyjnymi. Rozstrzyga, gdy przekład 2018 jest nieaktualny. Aneksy mają w nim nową numerację:
+  A.3 (kary 1 min w szybkich i błyskawicznych), A.5.x (dawne A.4.x), B.3 (dawne B.4).
+- Regulamin Klasyfikacyjny PZSzach 2025 (pzszach.pl) i kalkulatory norm (szachygrodzisk.pl/kalkulator,
+  szachowarodzina.pl/kalkulator) — do zadań z kategorii szachowych.
+
 ## Co powstaje
 
 Jeden plik `<slug-egzaminu>.md` na egzamin, commitowany do repo. To jest ślad audytowy: widać, skąd wzięło się każde pytanie i co zostało odrzucone jako duplikat. Pliki `.md` są źródłem, z którego generowany jest wsad do Firestore — nie edytuj pytań bezpośrednio w bazie, dopóki import trwa.
