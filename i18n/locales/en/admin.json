@@ -4,7 +4,8 @@
     "questions": "Questions",
     "knowledge": "Knowledge base",
     "examGenerator": "Exam generator",
-    "archive": "Exam archive"
+    "archive": "Exam archive",
+    "results": "Exam results"
   },
   "dashboard": {
     "title": "Admin dashboard",
@@ -241,5 +242,88 @@
     "backToList": "Back to the exam list",
     "sheetNotFound": "No such sheet was found.",
     "openInGenerator": "Open in exam generator"
+  },
+  "results": {
+    "title": "Exam results",
+    "subtitle": "Results of exams that were held: candidates, pass rate and question difficulty.",
+    "newSession": "Add exam",
+    "loading": "Loading…",
+    "error": "Could not load the results.",
+    "empty": "No results yet.",
+    "emptyHint": "Add an exam by picking a saved exam from the generator.",
+    "notFound": "Exam not found.",
+    "backToList": "Back to the list",
+    "candidateCount": "no candidates | {n} candidate | {n} candidates",
+    "questionCount": "{n} question | {n} questions",
+    "average": "average {value}",
+    "passRate": "{passed} of {graded} passed",
+    "export": "Export to Excel (CSV)",
+    "addCandidate": "Add candidate",
+    "editCandidate": "Candidate {name}",
+    "edit": "Edit",
+    "noCandidates": "No candidates entered yet.",
+    "passed": "passed",
+    "failed": "failed",
+    "required": "pass mark {points} pts",
+    "sortByDifficulty": "Hardest questions first",
+    "deleteSession": "Delete this exam and its results",
+    "stats": {
+      "candidates": "Candidates",
+      "average": "Average score",
+      "passed": "Passed"
+    },
+    "tabs": {
+      "candidates": "Candidates",
+      "questions": "Questions"
+    },
+    "columns": {
+      "candidate": "Candidate",
+      "level": "Class",
+      "points": "Points",
+      "percent": "Score",
+      "result": "Result",
+      "no": "No.",
+      "question": "Question",
+      "score": "Average",
+      "full": "Full marks",
+      "answers": "Answers chosen"
+    },
+    "levelShort": {
+      "youth": "Y",
+      "III": "3",
+      "II": "2"
+    },
+    "form": {
+      "candidate": "Candidate (initials)",
+      "candidateHint": "E.g. SB — no full names.",
+      "level": "Class",
+      "total": "Total: {total} / {max} pts",
+      "notApplicable": "not part of this class's exam",
+      "points": "Points for question {no}",
+      "note": "Answer or note for question {no}",
+      "notePlaceholder": "answer / note (optional)"
+    },
+    "create": {
+      "exam": "Exam from the generator",
+      "examHint": "Questions, points and pass marks are copied from today's version of the exam — later edits do not change the results.",
+      "questions": "{n} question | {n} questions",
+      "name": "Name",
+      "date": "Exam date",
+      "submit": "Add"
+    },
+    "compare": {
+      "title": "Exam comparison",
+      "hint": "Questions that appeared on at least two exams — the average score on each.",
+      "none": "No question has appeared on two exams yet.",
+      "question": "Question"
+    },
+    "deleteCandidate": {
+      "title": "Delete candidate?",
+      "description": "Candidate {name}'s sheet will be deleted."
+    },
+    "deleteSessionDialog": {
+      "title": "Delete exam?",
+      "description": "{name} — the exam and all entered results will be deleted. The saved exam in the generator stays."
+    }
   }
 }

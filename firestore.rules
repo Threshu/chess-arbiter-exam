@@ -59,5 +59,14 @@ service cloud.firestore {
     match /exams/{eid} {
       allow read, write: if isAdmin();
     }
+
+    // Wyniki przeprowadzonych egzaminow — inicjaly kandydatow i ich odpowiedzi, wiec tylko admin.
+    match /examSessions/{sid} {
+      allow read, write: if isAdmin();
+
+      match /results/{rid} {
+        allow read, write: if isAdmin();
+      }
+    }
   }
 }

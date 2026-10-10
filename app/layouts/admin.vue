@@ -3,7 +3,7 @@ const { t } = useI18n()
 const localePath = useLocalePath()
 
 type NavItem = {
-  key: 'dashboard' | 'questions' | 'examGenerator' | 'archive'
+  key: 'dashboard' | 'questions' | 'examGenerator' | 'archive' | 'results'
   to: string
   label: string
 }
@@ -17,6 +17,7 @@ const nav = computed<NavItem[]>(() => [
     to: localePath('/admin/exam-generator'),
     label: t('nav.examGenerator'),
   },
+  { key: 'results', to: localePath('/admin/results'), label: t('nav.results') },
 ])
 </script>
 
@@ -75,6 +76,15 @@ const nav = computed<NavItem[]>(() => [
                 <path
                   d="M3 4h18v4H3V4zm1 6h16v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9zm5 3v1.5h6V13H9z"
                 />
+              </svg>
+              <svg
+                v-else-if="item.key === 'results'"
+                viewBox="0 0 24 24"
+                class="h-6 w-6"
+                fill="currentColor"
+                aria-hidden="true"
+              >
+                <path d="M4 20h16v1.5H4V20zm1-2V11h3v7H5zm5.5 0V6h3v12h-3zM16 18v-9h3v9h-3z" />
               </svg>
               <svg
                 v-else-if="item.key === 'examGenerator'"

@@ -4,7 +4,8 @@
     "questions": "Pytania",
     "knowledge": "Baza wiedzy",
     "examGenerator": "Generator egzaminu",
-    "archive": "Archiwum egzaminów"
+    "archive": "Archiwum egzaminów",
+    "results": "Wyniki egzaminów"
   },
   "dashboard": {
     "title": "Panel administratora",
@@ -241,5 +242,88 @@
     "backToList": "Wróć do listy egzaminów",
     "sheetNotFound": "Nie znaleziono takiego arkusza.",
     "openInGenerator": "Otwórz w generatorze"
+  },
+  "results": {
+    "title": "Wyniki egzaminów",
+    "subtitle": "Wyniki przeprowadzonych egzaminów: kandydaci, zdawalność i trudność pytań.",
+    "newSession": "Dodaj egzamin",
+    "loading": "Wczytywanie…",
+    "error": "Nie udało się wczytać wyników.",
+    "empty": "Nie ma jeszcze żadnych wyników.",
+    "emptyHint": "Dodaj egzamin, wybierając zapisany egzamin z generatora.",
+    "notFound": "Nie znaleziono egzaminu.",
+    "backToList": "Wróć do listy",
+    "candidateCount": "brak kandydatów | {n} kandydat | {n} kandydatów",
+    "questionCount": "{n} pytanie | {n} pytań",
+    "average": "średnio {value}",
+    "passRate": "zdało {passed} z {graded}",
+    "export": "Eksport do Excela (CSV)",
+    "addCandidate": "Dodaj kandydata",
+    "editCandidate": "Kandydat {name}",
+    "edit": "Edytuj",
+    "noCandidates": "Nie wpisano jeszcze żadnego kandydata.",
+    "passed": "zdał",
+    "failed": "nie zdał",
+    "required": "próg {points} pkt",
+    "sortByDifficulty": "Najtrudniejsze pytania na górze",
+    "deleteSession": "Usuń ten egzamin z wynikami",
+    "stats": {
+      "candidates": "Kandydaci",
+      "average": "Średni wynik",
+      "passed": "Zdało"
+    },
+    "tabs": {
+      "candidates": "Kandydaci",
+      "questions": "Pytania"
+    },
+    "columns": {
+      "candidate": "Kandydat",
+      "level": "Klasa",
+      "points": "Punkty",
+      "percent": "Wynik",
+      "result": "Zaliczenie",
+      "no": "Nr",
+      "question": "Pytanie",
+      "score": "Średnio",
+      "full": "Komplet pkt",
+      "answers": "Zaznaczone odpowiedzi"
+    },
+    "levelShort": {
+      "youth": "M",
+      "III": "3",
+      "II": "2"
+    },
+    "form": {
+      "candidate": "Kandydat (inicjały)",
+      "candidateHint": "Np. SB — bez pełnych danych.",
+      "level": "Klasa",
+      "total": "Suma: {total} / {max} pkt",
+      "notApplicable": "nie dotyczy tej klasy",
+      "points": "Punkty za pytanie {no}",
+      "note": "Odpowiedź lub uwaga do pytania {no}",
+      "notePlaceholder": "odpowiedź / uwaga (opcjonalnie)"
+    },
+    "create": {
+      "exam": "Egzamin z generatora",
+      "examHint": "Pytania, punkty i progi zostaną skopiowane z dzisiejszej wersji egzaminu — późniejsze zmiany nie wpłyną na wyniki.",
+      "questions": "{n} pytanie | {n} pytań",
+      "name": "Nazwa",
+      "date": "Data egzaminu",
+      "submit": "Dodaj"
+    },
+    "compare": {
+      "title": "Porównanie egzaminów",
+      "hint": "Pytania, które wystąpiły na co najmniej dwóch egzaminach — średni wynik na każdym z nich.",
+      "none": "Żadne pytanie nie wystąpiło jeszcze na dwóch egzaminach.",
+      "question": "Pytanie"
+    },
+    "deleteCandidate": {
+      "title": "Usunąć kandydata?",
+      "description": "Arkusz kandydata {name} zostanie usunięty."
+    },
+    "deleteSessionDialog": {
+      "title": "Usunąć egzamin?",
+      "description": "{name} — egzamin i wszystkie wpisane wyniki zostaną usunięte. Zapisany egzamin w generatorze zostaje."
+    }
   }
 }
